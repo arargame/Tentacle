@@ -6,19 +6,10 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-header bg-transparent border-0 pt-3">
-                    <h5 class="card-title fw-bold text-primary">Requests</h5>
-                </div>
-                <div class="card-body text-center d-flex align-items-center justify-content-center p-4">
-                    <img src="Contents/Request/request_icon.png" class="img-fluid" style="max-height: 120px;" alt="Requests Icon">
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3 text-end">
-                    <a href="requests" class="btn btn-primary rounded-pill px-4">
-                        Show <i class="bi bi-arrow-right list-inline-item ms-1"></i>
-                    </a>
-                </div>
-            </div>
+            <TentacleCardComponent Title="Requests" 
+                                   ImageSource="Contents/Request/request_icon.png" 
+                                   TargetUrl="requests" 
+                                   ButtonText="Show" />
         </div>
     </div>
 </div>

@@ -26,6 +26,10 @@ namespace HydraTentacle.Blazor
 
 
 
+
+            builder.Services.AddScoped<HydraTentacle.Blazor.Core.Http.HttpClientService>();
+            HydraTentacle.Blazor.Core.DI.ServiceRegistration.AddViews(builder.Services);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
