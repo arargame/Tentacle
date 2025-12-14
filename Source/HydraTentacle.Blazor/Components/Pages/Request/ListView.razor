@@ -1,0 +1,78 @@
+@page "/requests"
+@using Hydra.RazorClassLibrary.Components
+@using HydraTentacle.Core.Models
+@inject HttpClient Http
+@rendermode InteractiveServer
+
+<PageTitle>Requests</PageTitle>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-6 fw-bold text-primary"><i class="bi bi-list-task me-2"></i>Requests</h1>
+        <button class="btn btn-outline-primary btn-sm" @onclick="ReloadRequests">
+            <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+        </button>
+    </div>
+
+    @if (Requests == null)
+    {
+        <div class="d-flex justify-content-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (!Requests.Any())
+    {
+        <div class="alert alert-info text-center shadow-sm" role="alert">
+            <i class="bi bi-info-circle me-2"></i> No requests found.
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="list-group list-group-flush rounded-3">
+                @foreach (var request in Requests)
+                {
+                    <div class="list-group-item list-group-item-action p-3 d-flex justify-content-between align-items-center">
+                        <span class="fw-medium text-dark">@request.Name</span>
+                        <span class="badge bg-light text-secondary border">ID: @request.Id</span>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private List<HydraTentacle.Core.Models.Request>? Requests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadRequests();
+    }
+
+    private async Task LoadRequests()
+    {
+        try
+        {
+            Requests = await Http.GetFromJsonAsync<List<HydraTentacle.Core.Models.Request>>("api/request/GetTestRequests");
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine("HTTP Error: " + ex.Message);
+            Requests = new List<HydraTentacle.Core.Models.Request>();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("General Error: " + ex.Message);
+            Requests = new List<HydraTentacle.Core.Models.Request>();
+        }
+    }
+    
+    private async Task ReloadRequests()
+    {
+        Requests = null;
+        await LoadRequests();
+    }
+}

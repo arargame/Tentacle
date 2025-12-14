@@ -1,0 +1,75 @@
+﻿@page "/htmlelementtest"
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Web
+
+<h3>Checkbox</h3>
+
+@* <CheckboxComponentTestPage></CheckboxComponentTestPage>
+
+<CheckboxComponent Value="@isChecked"
+                   ValueChanged="OnCheckedChanged"
+                   InfoStringEventCallbak="(str)=>{infoString=str;}"
+                   CssClass="accent-blue-600 cursor-pointer" /> *@
+
+<input type="text"
+       @bind="textValue"
+       @bind:event="oninput"
+       placeholder="Bir şeyler yaz..." />
+
+<p>Şu anki değer: @textValue</p>
+
+@code {
+    private bool isChecked = false;
+
+    private string infoString = string.Empty;
+
+    private string bindingvalue { get; set; } = "";
+
+    private string textValue = string.Empty;
+
+    public string BindingValue
+    {
+        get
+        {
+            return bindingvalue;
+        }
+        set
+        {
+            if (bindingvalue == value)
+                return;
+
+            bindingvalue = value;
+
+        }
+    }
+
+    private Task OnCheckedChanged(bool newValue)
+    {
+        isChecked = newValue;
+        Console.WriteLine($"Checked: {isChecked}");
+        return Task.CompletedTask;
+    }
+    protected async Task PressKeyDownEnter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+           // await EnterKeyPressed.InvokeAsync(BindingValue);
+        }
+    }
+
+    public void OnInput(ChangeEventArgs e)
+    {
+        // if (Input.Type == HtmlInputType.radio || Input.Type == HtmlInputType.checkbox)
+        //     return;
+
+        // SetBindingValue(e?.Value.ToString());
+    }
+
+    public void OnClick(MouseEventArgs e)
+    {
+        // if (Input.Type == HtmlInputType.radio || Input.Type == HtmlInputType.checkbox)
+        // {
+        //     SetBindingValue((!Input.IsChecked).ToString());
+        // }
+    }
+}
