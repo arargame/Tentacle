@@ -47,3 +47,7 @@ Desktop.ini
 *.log
 *.bak
 *.cache
+
+# Excluded Projects
+Source/BlazorApp1/
+Source/ConsoleAppForTesting/
