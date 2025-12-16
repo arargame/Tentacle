@@ -1,3 +1,8 @@
+using HydraTentacle.WebApi.Extensions;
+using HydraTentacle.Core.DAL.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Hydra.Services.Core;
+using HydraTentacle.Core.Models;
 
 namespace HydraTentacle.WebApi
 {
@@ -11,6 +16,13 @@ namespace HydraTentacle.WebApi
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            // Add Tentacle Dependencies (Includes Hydra Dependencies)
+            builder.Services.AddTentacleDependencies(builder.Configuration);
+
+            builder.Services.AddDbContext<TentacleDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -28,6 +40,25 @@ namespace HydraTentacle.WebApi
 
 
             var app = builder.Build();
+
+            // Ensure Database is Created
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    // Create DbContext manually for migration/creation if needed
+                    var context = services.GetRequiredService<TentacleDbContext>();
+                    context.Database.EnsureCreated();
+
+
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred creating the DB.");
+                }
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -50,7 +81,7 @@ namespace HydraTentacle.WebApi
                 Console.WriteLine($"Datetime : {DateTime.Now} Response: {context.Response.StatusCode} for {context.Request.Path}");
             });
 
-            // Middleware ile IP veya Origin kontrolü
+            // Middleware ile IP veya Origin kontrolÃ¼
             app.Use(async (context, next) =>
             {
                 var origin = context.Request.Headers["Origin"].ToString();
