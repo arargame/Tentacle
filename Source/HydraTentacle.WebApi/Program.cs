@@ -3,6 +3,9 @@ using HydraTentacle.Core.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Hydra.Services.Core;
 using HydraTentacle.Core.Models;
+using Hydra.AccessManagement;
+using Hydra.WebApi.Extensions;
+using Hydra.WebApi.Middlewares;
 
 namespace HydraTentacle.WebApi
 {
@@ -15,7 +18,9 @@ namespace HydraTentacle.WebApi
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            // Register Controllers from Hydra.WebApi
+            builder.Services.AddControllers()
+                .AddApplicationPart(typeof(MainController<>).Assembly);
 
             // Add Tentacle Dependencies (Includes Hydra Dependencies)
             builder.Services.AddTentacleDependencies(builder.Configuration);
@@ -70,6 +75,8 @@ namespace HydraTentacle.WebApi
 
 
             app.UseCors();
+
+            app.UseMiddleware<SessionMiddleware>();
 
 
             app.Use(async (context, next) =>
