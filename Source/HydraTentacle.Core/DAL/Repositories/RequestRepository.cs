@@ -1,6 +1,7 @@
+using Hydra.Core;
 using Hydra.DAL.Core;
-using HydraTentacle.Core.Models;
 using Hydra.DI;
+using HydraTentacle.Core.Models;
 
 namespace HydraTentacle.Core.DAL.Repositories
 {

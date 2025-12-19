@@ -20,7 +20,7 @@ namespace HydraTentacle.WebApi.Extensions
         public static IServiceCollection AddTentacleDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             // First, add standard Hydra dependencies
-            services.AddHydraDependencies(configuration);
+            // services.AddHydraDependencies(configuration); // Removed to be explicit in Program.cs
 
             // Define which assemblies to scan for Attributes (Only scan Tentacle specific ones, Hydra ones are handled by AddHydraDependencies)
             var assembliesToScan = new[]
@@ -60,15 +60,7 @@ namespace HydraTentacle.WebApi.Extensions
             services.AddScoped<RepositoryInjector>();
             services.AddScoped<FileService>();
 
-            // Override RepositoryFactoryService to include Tentacle assemblies
-            services.AddScoped<IRepositoryFactoryService>(sp =>
-            {
-                return new RepositoryFactoryService(
-                    sp,
-                    sp.GetRequiredService<LogService>(),
-                    assembliesToScan
-                );
-            });
+
 
             return services;
         }

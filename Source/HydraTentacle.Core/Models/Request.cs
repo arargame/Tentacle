@@ -12,7 +12,6 @@ namespace HydraTentacle.Core.Models
     {
         public Request() 
         {
-            
         }
     }
 }

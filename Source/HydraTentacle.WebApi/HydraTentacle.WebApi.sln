@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36121.58 d17.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11312.210 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraTentacle.WebApi", "HydraTentacle.WebApi.csproj", "{37BE208E-33E8-F413-229D-33DB4B87D89F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.WebApi", "..\..\..\Hydra.WebApi\Hydra.WebApi.csproj", "{B633B2A3-07F2-B5BC-395A-728E6F508496}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra", "..\..\..\Hydra\Hydra.csproj", "{C60DCC22-933B-8F41-5873-B1957C91B5A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraTentacle.Core", "..\HydraTentacle.Core\HydraTentacle.Core.csproj", "{039CACB0-C3B3-E2E5-42E3-EAFECABC64A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{37BE208E-33E8-F413-229D-33DB4B87D89F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37BE208E-33E8-F413-229D-33DB4B87D89F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37BE208E-33E8-F413-229D-33DB4B87D89F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B633B2A3-07F2-B5BC-395A-728E6F508496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B633B2A3-07F2-B5BC-395A-728E6F508496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B633B2A3-07F2-B5BC-395A-728E6F508496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B633B2A3-07F2-B5BC-395A-728E6F508496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C60DCC22-933B-8F41-5873-B1957C91B5A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C60DCC22-933B-8F41-5873-B1957C91B5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C60DCC22-933B-8F41-5873-B1957C91B5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C60DCC22-933B-8F41-5873-B1957C91B5A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{039CACB0-C3B3-E2E5-42E3-EAFECABC64A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{039CACB0-C3B3-E2E5-42E3-EAFECABC64A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{039CACB0-C3B3-E2E5-42E3-EAFECABC64A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{039CACB0-C3B3-E2E5-42E3-EAFECABC64A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

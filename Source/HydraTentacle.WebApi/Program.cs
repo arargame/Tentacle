@@ -22,8 +22,11 @@ namespace HydraTentacle.WebApi
             builder.Services.AddControllers()
                 .AddApplicationPart(typeof(MainController<>).Assembly);
 
-            // Add Tentacle Dependencies (Includes Hydra Dependencies)
+            // Add Tentacle Dependencies
             builder.Services.AddTentacleDependencies(builder.Configuration);
+            
+            // Add Hydra Dependencies Explicitly
+            builder.Services.AddHydraDependencies(builder.Configuration, typeof(Request).Assembly);
 
             builder.Services.AddDbContext<TentacleDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -46,24 +49,10 @@ namespace HydraTentacle.WebApi
 
             var app = builder.Build();
 
-            // Ensure Database is Created
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    // Create DbContext manually for migration/creation if needed
-                    var context = services.GetRequiredService<TentacleDbContext>();
-                    context.Database.EnsureCreated();
+            // Initialize Databases (Log & Main)
+            Hydra.Services.DbInitializer.InitializeAsync<TentacleDbContext>(app.Services, app.Configuration);
 
-
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred creating the DB.");
-                }
-            }
+            // Configure the HTTP request pipeline.
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
