@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11312.210 d18.3
+VisualStudioVersion = 18.3.11312.210
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraTentacle.WebApi", "HydraTentacle.WebApi.csproj", "{37BE208E-33E8-F413-229D-33DB4B87D89F}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra", "..\..\..\Hydra\Hydra.csproj", "{C60DCC22-933B-8F41-5873-B1957C91B5A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraTentacle.Core", "..\HydraTentacle.Core\HydraTentacle.Core.csproj", "{039CACB0-C3B3-E2E5-42E3-EAFECABC64A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.TestProject", "..\..\..\Hydra.TestProject\Hydra.TestProject.csproj", "{89D4E224-E076-4F4D-BB8C-9E85351CC58F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{039CACB0-C3B3-E2E5-42E3-EAFECABC64A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{039CACB0-C3B3-E2E5-42E3-EAFECABC64A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{039CACB0-C3B3-E2E5-42E3-EAFECABC64A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89D4E224-E076-4F4D-BB8C-9E85351CC58F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89D4E224-E076-4F4D-BB8C-9E85351CC58F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89D4E224-E076-4F4D-BB8C-9E85351CC58F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89D4E224-E076-4F4D-BB8C-9E85351CC58F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
