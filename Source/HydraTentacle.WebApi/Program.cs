@@ -74,6 +74,8 @@ namespace HydraTentacle.WebApi
 
             app.UseCors();
 
+            app.UseHydraContext();
+
             app.UseMiddleware<SessionMiddleware>();
 
 
