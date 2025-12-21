@@ -11,7 +11,8 @@ using Hydra.WebApi.Extensions;
 using HydraTentacle.Core.Models;
 using System.Reflection;
 using Hydra.DI.HttpContextDI;
-using HydraTentacle.Core.BusinessLayer.Services;
+using HydraTentacle.Core.BusinessLayer.Services.Request;
+using RequestModel = HydraTentacle.Core.Models.Request.Request;
 
 namespace HydraTentacle.WebApi.Extensions
 {
@@ -26,35 +27,32 @@ namespace HydraTentacle.WebApi.Extensions
             var assembliesToScan = new[]
             {
                 // Tentacle Core Assembly (for Request, RequestService etc)
-                typeof(Request).Assembly,
+                typeof(RequestModel).Assembly,
 
                 // Current WebApi Assembly (if there are any specific services here)
                 Assembly.GetExecutingAssembly()
             };
 
-            // Register Services
-            services.AddCustomServicesByAttribute<RegisterAsServiceAttribute>(assembliesToScan);
-
-            // Register Repositories
-            services.AddCustomServicesByAttribute<RegisterAsRepositoryAttribute>(assembliesToScan);
+            // Services and Repositories are registered by AddHydraDependencies in Program.cs passing the assembly.
+            // keeping this clean to avoid Duplication Exception.
 
             // Load ViewDTOs (if Tentacle has specific views, though ViewDTORegistryLoader in Hydra might handle generic + executing)
             // But we explicitly load Tentacle assembly views just in case
-            ViewDTORegistryLoader.LoadAllViewDTOs(typeof(Request).Assembly);
+            ViewDTORegistryLoader.LoadAllViewDTOs(typeof(RequestModel).Assembly);
 
             // Register DbContext for RepositoryInjector
             // Register DbContext for RepositoryInjector
             services.AddScoped<DbContext>(provider => provider.GetRequiredService<TentacleDbContext>());
             
-            // Explicitly register Core Hydra Services by concrete type
-            services.AddScoped<RoleSystemUserService>();
-            services.AddScoped<RoleService>();
-            services.AddScoped<SystemUserService>();
-            services.AddScoped<RolePermissionService>();
-            services.AddScoped<SystemUserPermissionService>();
-            services.AddScoped<PermissionService>();
-            services.AddScoped<IService<Request>, RequestService>(); // Explicit registration
-            services.AddScoped<LogService>(); // Register concrete LogService
+            // Concrete services are registered automatically by AddHydraDependencies -> AddBusinessLayerDependencies scanning Hydra.Services assembly.
+            // services.AddScoped<RoleSystemUserService>();
+            // services.AddScoped<RoleService>();
+            // services.AddScoped<SystemUserService>();
+            // services.AddScoped<RolePermissionService>();
+            // services.AddScoped<SystemUserPermissionService>();
+            // services.AddScoped<PermissionService>();
+            // services.AddScoped<IService<RequestModel>, RequestService>(); // Handled by Attribute scan in AddHydraDependencies
+            //services.AddScoped<LogService>(); // Register concrete LogService
             services.AddScoped<IHttpContextAccessorAbstraction, HttpContextAccessorWrapper>();
             
             services.AddScoped<RepositoryInjector>();

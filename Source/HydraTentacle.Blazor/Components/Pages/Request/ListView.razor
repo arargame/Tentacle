@@ -1,6 +1,5 @@
 @page "/requests"
 @using Hydra.RazorClassLibrary.Components
-@using HydraTentacle.Core.Models
 @inject HttpClient Http
 @rendermode InteractiveServer
 
@@ -45,7 +44,7 @@
 </div>
 
 @code {
-    private List<HydraTentacle.Core.Models.Request>? Requests;
+    private List<HydraTentacle.Core.Models.Request.Request>? Requests;
 
     protected override async Task OnInitializedAsync()
     {
@@ -56,17 +55,17 @@
     {
         try
         {
-            Requests = await Http.GetFromJsonAsync<List<HydraTentacle.Core.Models.Request>>("api/request/GetTestRequests");
+            Requests = await Http.GetFromJsonAsync<List<HydraTentacle.Core.Models.Request.Request>>("api/request/GetTestRequests");
         }
         catch (HttpRequestException ex)
         {
             Console.WriteLine("HTTP Error: " + ex.Message);
-            Requests = new List<HydraTentacle.Core.Models.Request>();
+            Requests = new List<HydraTentacle.Core.Models.Request.Request>();
         }
         catch (Exception ex)
         {
             Console.WriteLine("General Error: " + ex.Message);
-            Requests = new List<HydraTentacle.Core.Models.Request>();
+            Requests = new List<HydraTentacle.Core.Models.Request.Request>();
         }
     }
     

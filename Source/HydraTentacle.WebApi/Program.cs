@@ -26,7 +26,7 @@ namespace HydraTentacle.WebApi
             builder.Services.AddTentacleDependencies(builder.Configuration);
             
             // Add Hydra Dependencies Explicitly
-            builder.Services.AddHydraDependencies(builder.Configuration, typeof(Request).Assembly);
+            builder.Services.AddHydraDependencies(builder.Configuration, typeof(HydraTentacle.Core.Models.Request.Request).Assembly);
 
             builder.Services.AddDbContext<TentacleDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -48,6 +48,15 @@ namespace HydraTentacle.WebApi
 
 
             var app = builder.Build();
+
+            // Resolve LogService for Startup Logging
+            using (var scope = app.Services.CreateScope())
+            {
+                var logService = scope.ServiceProvider.GetRequiredService<Hydra.Services.ILogService>();
+                
+                logService.SaveAsync(Hydra.Core.LogFactory.Info("Startup", "Init", "Hydra Tentacle Starting..."), Hydra.Services.LogRecordType.Console).Wait();
+                logService.SaveAsync(Hydra.Core.LogFactory.Info("Startup", "Init", "Services Registered"), Hydra.Services.LogRecordType.Console).Wait();
+            }
 
             // Initialize Databases (Log & Main)
             Hydra.Services.DbInitializer.InitializeAsync<TentacleDbContext>(app.Services, app.Configuration);
@@ -102,6 +111,12 @@ namespace HydraTentacle.WebApi
 
 
             app.MapControllers();
+            
+            using (var scope = app.Services.CreateScope())
+            {
+                var logService = scope.ServiceProvider.GetRequiredService<Hydra.Services.ILogService>();
+                logService.SaveAsync(Hydra.Core.LogFactory.Info("Startup", "Init", $"Application Running at: {string.Join(", ", app.Urls)}"), Hydra.Services.LogRecordType.Console).Wait();
+            }
 
             app.Run();
         }
