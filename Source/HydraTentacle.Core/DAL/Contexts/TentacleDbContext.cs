@@ -21,7 +21,7 @@ namespace HydraTentacle.Core.DAL.Contexts
         public DbSet<Request> Request { get; set; }
         public DbSet<RequestCategory> RequestCategory { get; set; }
         public DbSet<RequestCategoryResponsiblePosition> RequestCategoryResponsiblePosition { get; set; }
-        public DbSet<RequestAssignment> RequestAssignment { get; set; }
+
         public DbSet<RequestAttachment> RequestAttachment { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

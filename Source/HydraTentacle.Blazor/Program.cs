@@ -1,4 +1,6 @@
+using Hydra.RazorClassLibrary.Utils;
 using HydraTentacle.Blazor.Components;
+using HydraTentacle.Blazor.Infrastructure;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Server;
 
@@ -15,20 +17,24 @@ namespace HydraTentacle.Blazor
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
+            // Register Hydra Razor Library Services (Auth, Http, Storage)
+            builder.Services.AddHydraRazorLibrary();
+
+            // Register Tentacle-specific services
+            builder.Services.AddTentacleDependencies();
+
             builder.Services.AddScoped(sp =>
             {
-                return new HttpClient { BaseAddress = new Uri("http://localhost:5132/") };
+                return new HttpClient { BaseAddress = new Uri("http://localhost:5132/api/") };
             });
 
             builder.Services.AddServerSideBlazor()
                             .AddCircuitOptions(options => { options.DetailedErrors = true; });
 
 
-
-
-
-            builder.Services.AddScoped<HydraTentacle.Blazor.Core.Http.HttpClientService>();
-            HydraTentacle.Blazor.Core.DI.ServiceRegistration.AddViews(builder.Services);
+            // Legacy Service - Temporarily kept until Views are migrated
+            // Legacy Service - Temporarily kept until Views are migrated
+            // HydraTentacle.Blazor.Core.DI.ServiceRegistration.AddViews(builder.Services);
 
             var app = builder.Build();
 

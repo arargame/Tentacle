@@ -1,21 +1,56 @@
 ﻿using Hydra.DI;
 using HydraTentacle.Core.DTOs;
-using HydraTentacle.Core.DTOs;
-using RequestModel = HydraTentacle.Core.Models.Request.Request;
+using HydraTentacle.Core.Models.Request;
 using Hydra.Services.Core;
 using Microsoft.AspNetCore.Mvc;
+using Hydra.DTOs.ViewDTOs;
+using Hydra.DTOs;
 
 namespace HydraTentacle.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequestController : MainController<RequestModel>
+    public class RequestController : MainController<Request>
     {
         private readonly IServiceFactory _serviceFactory;
 
         public RequestController(IControllerInjector injector) : base(injector)
         {
             _serviceFactory = injector.ServiceFactory;
+        }
+
+        [HttpPost]
+        [Route("Select")]
+        public override async Task<JsonResult> Select([FromBody] TableDTO? tableDTO = null, [FromQuery] ViewType? viewType = ViewType.ListView)
+        {
+            if (tableDTO == null)
+            {
+                tableDTO = new TableDTO();
+            }
+
+            if (string.IsNullOrEmpty(tableDTO.Name))
+            {
+                tableDTO.Name = "Request";
+            }
+
+            if (string.IsNullOrEmpty(tableDTO.ViewDTOTypeName))
+            {
+                tableDTO.ViewDTOTypeName = "RequestDTO";
+            }
+
+            var response = new Hydra.Http.ResponseObject()
+                .SetActionName(ActionName)
+                .UseDefaultMessages();
+
+            // Explicitly pass RequestDTO type for configuration loading
+            var (finalDTO, results) = await Service.SelectWithTableAsync<Request>(
+                tableDTO: tableDTO, 
+                viewType: viewType, 
+                viewDTOTypeToPrepareUsingConfigurations: typeof(RequestDTO)
+            );
+
+            return new JsonResult(response.SetSuccess(results?.Any() ?? false)
+                                          .SetData(finalDTO));
         }
 
 #if DEBUG
@@ -61,7 +96,7 @@ namespace HydraTentacle.WebApi.Controllers
             // 2. Generate Requests with valid FK
             for (int i = 0; i < count; i++)
             {
-                var request = Hydra.TestManagement.SampleDataFactory.CreateSample<RequestModel>();
+                var request = Hydra.TestManagement.SampleDataFactory.CreateSample<Request>();
                 request.CreatedByEmployeeId = employee.Id; // Fix FK
                 
                 // Ensure other FKs if necessary (RequestCategory)

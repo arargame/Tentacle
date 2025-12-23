@@ -39,7 +39,7 @@ namespace HydraTentacle.WebApi
             {
                 options.AddDefaultPolicy(policy =>
                 {
-                    policy.WithOrigins("http://localhost:5120", "https://localhost:7238")
+                    policy.WithOrigins("http://localhost:5120", "https://localhost:7238", "http://localhost:5121")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });
@@ -95,7 +95,7 @@ namespace HydraTentacle.WebApi
                 var remoteIp = context.Connection.RemoteIpAddress?.ToString();
 
                 // Sadece izinli origin veya IP
-                var allowedOrigins = new[] { "https://localhost:7238", "http://localhost:5120" };
+                var allowedOrigins = new[] { "https://localhost:7238", "http://localhost:5120", "http://localhost:5121" };
                 var allowedIps = new[] { "127.0.0.1", "::1" };
 
                 if (!allowedOrigins.Contains(origin) && !allowedIps.Contains(remoteIp))

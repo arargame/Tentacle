@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraTentacle.Core", "..\Hy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.TestProject", "..\..\..\Hydra.TestProject\Hydra.TestProject.csproj", "{89D4E224-E076-4F4D-BB8C-9E85351CC58F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraTentacle.Blazor", "..\HydraTentacle.Blazor\HydraTentacle.Blazor.csproj", "{D25D3F68-9F2D-3410-403E-6CED4B463408}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.RazorClassLibrary", "..\..\..\Hydra.RazorClassLibrary\Hydra.RazorClassLibrary\Hydra.RazorClassLibrary.csproj", "{9F9C436A-21E8-68E6-C8C6-AE7F3E8858C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{89D4E224-E076-4F4D-BB8C-9E85351CC58F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89D4E224-E076-4F4D-BB8C-9E85351CC58F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89D4E224-E076-4F4D-BB8C-9E85351CC58F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D25D3F68-9F2D-3410-403E-6CED4B463408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D25D3F68-9F2D-3410-403E-6CED4B463408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D25D3F68-9F2D-3410-403E-6CED4B463408}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D25D3F68-9F2D-3410-403E-6CED4B463408}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F9C436A-21E8-68E6-C8C6-AE7F3E8858C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9C436A-21E8-68E6-C8C6-AE7F3E8858C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9C436A-21E8-68E6-C8C6-AE7F3E8858C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9C436A-21E8-68E6-C8C6-AE7F3E8858C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

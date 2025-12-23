@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\Pages\**" />
+    <Compile Remove="Features\**" />
+    <Content Remove="Components\Pages\**" />
+    <Content Remove="Features\**" />
+    <EmbeddedResource Remove="Components\Pages\**" />
+    <EmbeddedResource Remove="Features\**" />
+    <None Remove="Components\Pages\**" />
+    <None Remove="Features\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HydraTentacle.Core\HydraTentacle.Core.csproj" />
   </ItemGroup>
 

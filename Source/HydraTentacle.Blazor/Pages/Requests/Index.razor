@@ -1,0 +1,10 @@
+@page "/Requests"
+@using HydraTentacle.Core.Models.Request
+@using Hydra.RazorClassLibrary.Components.CRUD
+@using HydraTentacle.Blazor.Services
+
+<GenericListView T="Request" Client="Client" Title="Talep Listesi" BasePath="Request" />
+
+@code {
+    [Inject] public RequestClient Client { get; set; } = default!;
+}
