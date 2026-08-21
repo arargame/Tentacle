@@ -1,19 +1,334 @@
-﻿@page "/"
-@using Hydra.RazorClassLibrary.Components
+@page "/"
+@layout EmptyLayout
 
-<PageTitle>Home</PageTitle>
+@* Tentacle herkese açık landing page'i — Stitch'in ürettiği tasarımın (Downloads\stitch_tentacle_marketing_copy_guide)
+   Blazor'a uyarlanmış hali. Tailwind CDN + Google Fonts sadece bu sayfada, HeadContent üzerinden yüklenir;
+   uygulamanın geri kalanı (Bootstrap tabanlı CRUD ekranları) bundan etkilenmez. Dashboard ve Login ekranları
+   ayrı olarak ele alınacak — bu sayfadaki "Get Started" / "Start Free Trial" gibi CTA'lar şimdilik doğrudan
+   mevcut Dashboard ve Talep listesine yönleniyor. *@
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-4">
-            <TentacleCardComponent Title="Requests" 
-                                   ImageSource="Contents/Request/request_icon.png" 
-                                   TargetUrl="requests" 
-                                   ButtonText="Show" />
+<PageTitle>Tentacle - Multi-Threaded Work Management</PageTitle>
+
+<HeadContent>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#8aebff",
+                        "on-primary-fixed-variant": "#004e5a",
+                        "surface-dim": "#101415",
+                        "tertiary-container": "#b2c2dc",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#afb4c9",
+                        "tertiary": "#cddef8",
+                        "on-tertiary": "#213145",
+                        "primary-fixed-dim": "#2fd9f4",
+                        "on-tertiary-container": "#405065",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "tertiary-fixed": "#d3e4fe",
+                        "inverse-surface": "#e0e3e5",
+                        "on-primary": "#00363e",
+                        "surface-container": "#1d2022",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#2fd9f4",
+                        "on-surface": "#e0e3e5",
+                        "surface-container-highest": "#323537",
+                        "surface-container-lowest": "#0b0f10",
+                        "primary-container": "#22d3ee",
+                        "on-surface-variant": "#bbc9cd",
+                        "primary-fixed": "#a2eeff",
+                        "inverse-primary": "#006877",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "on-secondary": "#2a3040",
+                        "on-primary-fixed": "#001f25",
+                        "inverse-on-surface": "#2d3133",
+                        "on-background": "#e0e3e5",
+                        "surface-bright": "#363a3b",
+                        "on-primary-container": "#005763",
+                        "secondary-fixed-dim": "#c1c6db",
+                        "error": "#ffb4ab",
+                        "outline": "#859397",
+                        "surface-container-low": "#191c1e",
+                        "on-secondary-fixed-variant": "#414658",
+                        "secondary-fixed": "#dde2f8",
+                        "secondary-container": "#414658",
+                        "on-secondary-fixed": "#151b2b",
+                        "error-container": "#93000a",
+                        "background": "#101415",
+                        "secondary": "#c1c6db",
+                        "surface-container-high": "#272a2c",
+                        "outline-variant": "#3c494c",
+                        "surface-variant": "#323537",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "surface": "#101415"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "40px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "mono-code": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "label-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "mono-code": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/landing.css" />
+</HeadContent>
+
+<div class="bg-background text-on-background font-body-md antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
+        <div class="flex justify-between items-center h-16 px-margin-desktop max-w-7xl mx-auto">
+            <div class="flex items-center gap-lg">
+                <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary-fixed-dim" href="#">
+                    Tentacle
+                </a>
+                <div class="hidden md:flex gap-lg font-label-md text-label-md">
+                    <a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Product</a>
+                    <a class="text-on-surface-variant hover:text-primary-container transition-all duration-200" href="#features">Features</a>
+                    <a class="text-on-surface-variant hover:text-primary-container transition-all duration-200" href="#">Pricing</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-md font-label-md text-label-md">
+                <a class="text-on-surface-variant hover:text-primary transition-colors hidden md:block" href="#">Log In</a>
+                <a class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-bold uppercase tracking-wider scale-95 active:scale-90 transition-transform glow-effect" href="Dashboard">
+                    Get Started
+                </a>
+            </div>
         </div>
-    </div>
-</div>
+    </nav>
 
-<div class="mt-5">
-    <TestComponent Value="hellow"></TestComponent>
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-xl min-h-[90vh] flex items-center overflow-hidden grid-bg">
+        <div class="absolute inset-0 bg-gradient-to-b from-background/0 via-background/50 to-background pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-margin-desktop relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+                <div class="lg:col-span-6 flex flex-col items-start gap-lg">
+                    <span class="font-label-sm text-label-sm text-primary-container uppercase tracking-widest border border-outline-variant rounded-full px-3 py-1 bg-surface-container-low/50 backdrop-blur">
+                        MULTI-THREADED WORK MANAGEMENT
+                    </span>
+                    <h1 class="font-display-lg text-display-lg text-on-background">
+                        One Body. Eight Arms. <br />
+                        <span class="text-primary-container">Zero Dropped Requests.</span>
+                    </h1>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                        Modern organizations are chaotic ecosystems. Teams are decentralized, systems are fragmented, and requests get lost in the noise between Slack, email, and disparate ticketing tools. Tentacle acts as the central nervous system for your operations.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-md pt-sm">
+                        <a class="bg-primary-container text-on-primary-container px-6 py-3 rounded font-bold uppercase tracking-wider scale-95 active:scale-90 transition-transform glow-effect" href="Dashboard">
+                            Start Free Trial
+                        </a>
+                        <a class="bg-transparent border border-primary-container text-primary-container px-6 py-3 rounded font-bold uppercase tracking-wider scale-95 active:scale-90 transition-transform hover:bg-primary-container/10" href="Request">
+                            Book a Demo
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:col-span-6 relative mt-xl lg:mt-0">
+                    <div class="aspect-square relative rounded-xl border border-outline-variant bg-surface-container-low overflow-hidden group">
+                        <div class="bg-cover bg-center w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBq9rp8TW7FB3EdrIPE-pC9se_wehY36QxSs0ISchMpiEhDC4FitmCY5ZniEXKokHHH8vJkY2LmWybqvqNP_aYDok8DB8LfnNp0_mNHAM0bmie32nzJhJWzIi5ld5ueUSHr7dV4ppsiefjWxZ8EvL7sX5ZyvILHXikHuYDw0HZe94SC2NPMx_MvdqZwBehlLK3mF42ztX9tKNcgD4ffX7Lnsl1i_ufix1uDmVjs2Wl3BDhRVYaloU38')"></div>
+                        <div class="absolute inset-0 ring-1 ring-inset ring-outline-variant/50 rounded-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-xl bg-surface-container-lowest border-y border-outline-variant/30">
+        <div class="max-w-7xl mx-auto px-margin-desktop">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+                <div class="lg:col-span-5 order-2 lg:order-1">
+                    <div class="aspect-[4/3] rounded-xl border border-outline-variant bg-surface-container overflow-hidden">
+                        <div class="bg-cover bg-center w-full h-full opacity-70"
+                             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBOIq5vkEzf2v_VCwoLlHbimdgMC2sI7GMnwS8LNcfT152sfxT7QHUro2Cf8s0JibEhK4VOD0Eg0tP0Swlrs9VflkPx_K5vu85281pkig7mb88CgXTS8yflaE_7mGsDNgrykcPK8lY9J_G2IhNbSloik1y8i1o4Gxfa7jU5rJwP8VI1QOysERSg-r3PSFAb6dEmDE6b2Gl0YqKGHSdnWPSIjDu9DfYPxU6dx4yaTkSQMZ9UGWl9yVdx')"></div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 order-1 lg:order-2 flex flex-col gap-md pl-0 lg:pl-xl">
+                    <h2 class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-on-background">
+                        Built like the animal, not just named after it.
+                    </h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+                        An octopus doesn't rely entirely on a central brain; each arm contains a localized cluster of neurons that can act independently while serving the whole.
+                        Tentacle operates on the same architectural principle. While the core system oversees all activity, individual departments—IT, HR, Finance, Operations—operate as independent "arms" with localized workflows, rules, and agents.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-xl grid-bg">
+        <div class="max-w-7xl mx-auto px-margin-desktop">
+            <div class="text-center mb-xl">
+                <h2 class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-on-background mb-sm">
+                    Everything is a Request. <br /><span class="text-primary-container">Everything gets a Response.</span>
+                </h2>
+                <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
+                    A streamlined, four-step lifecycle ensuring complete operational visibility.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-md relative">
+                <div class="hidden md:block absolute top-12 left-[12.5%] right-[12.5%] h-px bg-outline-variant z-0"></div>
+
+                <div class="relative z-10 flex flex-col items-center text-center p-md bg-surface-container-low border border-outline-variant rounded-xl glow-hover transition-all duration-300">
+                    <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center border border-primary-container mb-md glow-effect">
+                        <span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-on-background mb-xs">Raise it.</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant text-sm">Capture demand from any channel instantly.</p>
+                </div>
+
+                <div class="relative z-10 flex flex-col items-center text-center p-md bg-surface-container-low border border-outline-variant rounded-xl glow-hover transition-all duration-300">
+                    <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center border border-primary-container mb-md glow-effect">
+                        <span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">route</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-on-background mb-xs">Route it.</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant text-sm">Intelligent parsing to the correct operational arm.</p>
+                </div>
+
+                <div class="relative z-10 flex flex-col items-center text-center p-md bg-surface-container-low border border-outline-variant rounded-xl glow-hover transition-all duration-300">
+                    <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center border border-primary-container mb-md glow-effect">
+                        <span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">build</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-on-background mb-xs">Work it.</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant text-sm">Collaborative, context-rich execution.</p>
+                </div>
+
+                <div class="relative z-10 flex flex-col items-center text-center p-md bg-surface-container-low border border-outline-variant rounded-xl glow-hover transition-all duration-300">
+                    <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center border border-primary-container mb-md glow-effect">
+                        <span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-on-background mb-xs">Respond it.</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant text-sm">Automated closure and transparent communication.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-xl bg-surface-container-lowest">
+        <div class="max-w-7xl mx-auto px-margin-desktop">
+            <h2 class="font-headline-lg text-headline-lg md:text-headline-lg-mobile text-on-background mb-xl text-center">Core Infrastructure</h2>
+            <div class="grid grid-cols-1 md:grid-cols-6 gap-md">
+                <div class="md:col-span-4 bg-surface-container border border-outline-variant rounded-xl p-lg flex flex-col gap-md glow-hover transition-all duration-300 group">
+                    <div class="flex items-center gap-sm">
+                        <span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                        <h3 class="font-headline-md text-headline-md text-on-background">Smart Routing</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">The core engine automatically parses incoming requests, determining priority and routing them to the appropriate department's queue without manual triage.</p>
+                    <div class="mt-auto h-32 rounded bg-surface-container-lowest border border-outline-variant overflow-hidden relative">
+                        <div class="bg-cover bg-center w-full h-full opacity-60 group-hover:opacity-100 transition-opacity"
+                             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3DjVPcAx5Vno3ogdmwImg0kKPFpvAjPRK2icwgSOrL-aroUWXLZqoe11nbxwjrqshc6sJfJD-G6_WDq5Q_yN9SI560JDwe4Vgb8VPRP0_66EffGIJHlh6oUNQz6I3r9fSCLVMDfVYuZia0XaT9R-2Jkpy5REF2AaGh326xVs0Z8y2OgL5uX00uMOZEYv0Xzlx1FLkQtVUXYl6LpeXLNEtnHVryk2jy-09fad5Jta2mftou7fYOqmz')"></div>
+                    </div>
+                </div>
+                <div class="md:col-span-2 bg-surface-container border border-outline-variant rounded-xl p-lg flex flex-col gap-md glow-hover transition-all duration-300">
+                    <div class="flex items-center gap-sm">
+                        <span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                        <h3 class="font-headline-md text-headline-md text-on-background">One Pane of Glass</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">A unified interface for cross-departmental collaboration, eliminating siloed tools.</p>
+                </div>
+                <div class="md:col-span-2 bg-surface-container border border-outline-variant rounded-xl p-lg flex flex-col gap-md glow-hover transition-all duration-300">
+                    <div class="flex items-center gap-sm">
+                        <span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                        <h3 class="font-headline-md text-headline-md text-on-background">Executive Dashboard</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Real-time macro-view of organizational throughput and bottlenecks.</p>
+                </div>
+                <div class="md:col-span-2 bg-surface-container border border-outline-variant rounded-xl p-lg flex flex-col gap-md glow-hover transition-all duration-300">
+                    <div class="flex items-center gap-sm">
+                        <span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                        <h3 class="font-headline-md text-headline-md text-on-background">Built to Extend</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Robust API and webhook support to plug into your existing ecosystem.</p>
+                </div>
+                <div class="md:col-span-2 bg-surface-container border border-outline-variant rounded-xl p-lg flex flex-col gap-md glow-hover transition-all duration-300">
+                    <div class="flex items-center gap-sm">
+                        <span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                        <h3 class="font-headline-md text-headline-md text-on-background">Full Audit Trail</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Immutable record of every action taken on a request for compliance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="py-xl grid-bg border-t border-outline-variant/30">
+        <div class="max-w-4xl mx-auto px-margin-desktop text-center flex flex-col items-center gap-lg">
+            <h2 class="font-display-lg text-display-lg text-on-background">
+                Stop losing track of who's doing what.
+            </h2>
+            <div class="flex flex-wrap items-center justify-center gap-md pt-sm">
+                <a class="bg-primary-container text-on-primary-container px-8 py-4 rounded font-bold uppercase tracking-wider scale-95 active:scale-90 transition-transform glow-effect text-lg" href="Dashboard">
+                    Start Free Trial
+                </a>
+                <a class="bg-transparent border border-primary-container text-primary-container px-8 py-4 rounded font-bold uppercase tracking-wider scale-95 active:scale-90 transition-transform hover:bg-primary-container/10 text-lg" href="Request">
+                    Book a Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w-full py-xl bg-surface-container-lowest border-t border-outline-variant/20">
+        <div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-lg max-w-7xl mx-auto opacity-80 hover:opacity-100 transition-opacity">
+            <div class="font-headline-md text-headline-md font-bold text-primary-fixed-dim">
+                Tentacle
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-md font-body-md text-body-md text-on-surface-variant">
+                <a class="hover:text-primary underline transition-all" href="#">Privacy Policy</a>
+                <a class="hover:text-primary underline transition-all" href="#">Terms of Service</a>
+                <a class="hover:text-primary underline transition-all" href="#">Status</a>
+                <a class="hover:text-primary underline transition-all" href="#">Contact</a>
+                <a class="hover:text-primary underline transition-all" href="#">Documentation</a>
+            </div>
+            <div class="font-body-md text-body-md text-on-surface-variant">
+                © 2026 Tentacle Engine. Many Arms, One Brain.
+            </div>
+        </div>
+    </footer>
+
 </div>

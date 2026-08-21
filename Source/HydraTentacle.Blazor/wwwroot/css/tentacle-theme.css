@@ -1,0 +1,837 @@
+/* ============================================================================
+   Tentacle — uygulama teması ("Technical Organic" koyu tema)
+   ----------------------------------------------------------------------------
+   Hydra.RazorClassLibrary bileşenleri hiçbir CSS framework'üne bağlı değildir;
+   sadece anlamsal "hydra-*" class'ları basar. Bu dosya o class'ları Tentacle'ın
+   koyu paletiyle boyar. Yani "grid böyle görünsün" kararı BURADA verilir —
+   bileşenin kendisinde değil. Başka bir proje aynı bileşenleri alıp bambaşka
+   bir tema yazabilir.
+
+   Yükleme sırası (App.razor):
+       1) _content/Hydra.RazorClassLibrary/css/hydra-default.css   (nötr varsayılan)
+       2) css/tentacle-theme.css                                    (bu dosya, üzerine yazar)
+   ============================================================================ */
+
+/* ---------------------------------------------------------------- Palet */
+
+:root {
+    /* Stitch tasarımından gelen ham renkler */
+    --tnt-bg:              #0B1120;  /* sayfa zemini ("void") */
+    --tnt-surface:         #101415;  /* sidebar / yüzey */
+    --tnt-card:            #111827;  /* Level-1 kart */
+    --tnt-card-border:     #1E293B;  /* Level-1 kart kenarı */
+    --tnt-elevated:        #1F2937;  /* Level-2 popover/modal */
+
+    --tnt-cyan:            #22D3EE;  /* primary-container — aksiyon rengi */
+    --tnt-cyan-soft:       #8aebff;  /* primary */
+    --tnt-cyan-dim:        #2fd9f4;
+
+    --tnt-text:            #e0e3e5;
+    --tnt-text-muted:      #bbc9cd;
+    --tnt-outline:         #859397;
+    --tnt-outline-variant: #3c494c;
+
+    --tnt-surface-high:    #272a2c;  /* modal başlığı */
+    --tnt-surface-lowest:  #0b0f10;  /* modal alt bandı */
+    --tnt-surface-variant: #323537;  /* liste satırı hover */
+
+    --tnt-error:           #ffb4ab;
+    --tnt-success:         #4ade80;
+
+    /* Create aksiyonu yeşil (form gönderimi) — liste ekranındaki "Yeni Kayıt" cyan kalır */
+    --tnt-create:          #10B981;
+    --tnt-create-bright:   #34D399;
+
+    /* --- Hydra bileşen değişkenlerini koyu temaya çevir --- */
+    --hydra-bg:            var(--tnt-bg);
+    --hydra-bg-subtle:     var(--tnt-card);
+    --hydra-bg-hover:      rgba(34, 211, 238, 0.06);
+    --hydra-surface:       var(--tnt-card);
+    --hydra-border:        var(--tnt-card-border);
+    --hydra-border-strong: var(--tnt-outline);
+
+    --hydra-text:          var(--tnt-text);
+    --hydra-text-muted:    var(--tnt-text-muted);
+
+    --hydra-primary:       var(--tnt-cyan);
+    --hydra-on-primary:    var(--tnt-bg);
+    --hydra-create:        var(--tnt-cyan);
+    --hydra-edit:          var(--tnt-cyan-soft);
+    --hydra-delete:        var(--tnt-error);
+    --hydra-details:       var(--tnt-cyan);
+
+    --hydra-radius:        0.5rem;
+    --hydra-radius-sm:     0.25rem;
+
+    --tnt-glow:            0 0 8px rgba(34, 211, 238, 0.2);
+    --tnt-glow-strong:     0 0 12px rgba(34, 211, 238, 0.4);
+}
+
+html, body {
+    background-color: var(--tnt-bg);
+    color: var(--tnt-text);
+    font-family: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* ====================================================================
+   Uygulama kabuğu (MainLayout + NavMenu)
+   ==================================================================== */
+
+.tnt-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ------------------------------------------------------------- Sidebar */
+
+.tnt-sidebar {
+    width: 16rem;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--tnt-surface);
+    border-right: 1px solid var(--tnt-outline-variant);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.tnt-sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid var(--tnt-outline-variant);
+    text-decoration: none;
+}
+
+.tnt-sidebar__mark {
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background: var(--tnt-card);
+    border: 1px solid var(--tnt-outline-variant);
+    color: var(--tnt-cyan);
+    box-shadow: var(--tnt-glow);
+    font-size: 1.125rem;
+}
+
+.tnt-sidebar__title {
+    display: block;
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--tnt-cyan-soft);
+}
+
+.tnt-sidebar__subtitle {
+    margin: 0;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tnt-text-muted);
+}
+
+.tnt-nav {
+    flex: 1;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.tnt-nav__group-title {
+    margin: 0 0 0.375rem;
+    padding: 0 1rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tnt-text-muted);
+}
+
+.tnt-nav__list { list-style: none; margin: 0; padding: 0; }
+
+.tnt-nav__link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--tnt-text-muted);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: background-color .15s, color .15s, border-color .15s;
+}
+
+.tnt-nav__link:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--tnt-cyan-soft);
+}
+
+/* Blazor NavLink aktif sayfaya bu class'ı ekler */
+.tnt-nav__link.active {
+    color: var(--tnt-cyan);
+    background: rgba(34, 211, 238, 0.08);
+    border-left-color: var(--tnt-cyan);
+    box-shadow: inset 0 0 12px rgba(34, 211, 238, 0.06);
+}
+
+.tnt-nav__link i { font-size: 1rem; width: 1.125rem; text-align: center; }
+
+.tnt-sidebar__footer {
+    padding: 1rem;
+    border-top: 1px solid var(--tnt-outline-variant);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tnt-sidebar__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--tnt-bg);
+    background: var(--tnt-cyan);
+    border: none;
+    border-radius: var(--hydra-radius-sm);
+    text-decoration: none;
+    box-shadow: var(--tnt-glow);
+    transition: box-shadow .15s, filter .15s;
+}
+
+.tnt-sidebar__cta:hover { box-shadow: var(--tnt-glow-strong); filter: brightness(1.05); color: var(--tnt-bg); }
+
+.tnt-sidebar__minor {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.375rem 0.5rem;
+    font-size: 0.75rem;
+    color: var(--tnt-text-muted);
+    text-decoration: none;
+    border-radius: var(--hydra-radius-sm);
+    transition: background-color .15s, color .15s;
+}
+
+.tnt-sidebar__minor:hover { background: rgba(255, 255, 255, 0.04); color: var(--tnt-cyan-soft); }
+.tnt-sidebar__minor--danger:hover { color: var(--tnt-error); }
+
+/* ------------------------------------------------------- Main / mobile */
+
+.tnt-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tnt-topbar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    height: 3.5rem;
+    padding: 0 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(16, 20, 21, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--tnt-outline-variant);
+}
+
+.tnt-topbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: var(--tnt-cyan-soft);
+    text-decoration: none;
+}
+
+.tnt-topbar__toggle {
+    background: transparent;
+    border: none;
+    color: var(--tnt-text-muted);
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.tnt-content { flex: 1; padding: 2rem; }
+
+@media (max-width: 767.98px) {
+    .tnt-sidebar { display: none; }
+    .tnt-sidebar--open { display: flex; position: fixed; z-index: 50; }
+    .tnt-topbar { display: flex; }
+    .tnt-content { padding: 1rem; }
+}
+
+/* ====================================================================
+   Hydra bileşenleri — Tentacle görünümü
+   (markup RCL'den, görünüm buradan)
+   ==================================================================== */
+
+/* ------------------------------------------------------------ ListView */
+
+.hydra-listview {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Sayfa başlığı satırı: kart dışında, çıplak */
+.hydra-listview__header {
+    background: transparent;
+    border-bottom: none;
+    padding: 0;
+}
+
+.hydra-listview__title {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--tnt-text);
+}
+
+/* Filtre paneli ve grid, ayrı Level-1 kartlar hâlinde */
+.hydra-filterbar {
+    background: var(--tnt-card);
+    border: 1px solid var(--tnt-card-border);
+    border-radius: var(--hydra-radius);
+    margin: 0;
+}
+
+.hydra-listview__body {
+    background: var(--tnt-card);
+    border: 1px solid var(--tnt-card-border);
+    border-radius: var(--hydra-radius);
+    padding: 0;
+    overflow: hidden;
+}
+
+/* ------------------------------------------------------------- Butonlar */
+
+.hydra-btn {
+    border-radius: var(--hydra-radius-sm);
+    font-weight: 500;
+}
+
+.hydra-btn--create {
+    background: var(--tnt-cyan);
+    border-color: var(--tnt-cyan);
+    color: var(--tnt-bg);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: var(--tnt-glow);
+}
+
+.hydra-btn--create:hover { background: var(--tnt-cyan); box-shadow: var(--tnt-glow-strong); }
+
+.hydra-btn--primary {
+    background: var(--tnt-cyan);
+    border-color: var(--tnt-cyan);
+    color: var(--tnt-bg);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.hydra-btn--secondary {
+    border-color: var(--tnt-outline);
+    color: var(--tnt-text-muted);
+    background: transparent;
+}
+
+.hydra-btn--secondary:hover { border-color: var(--tnt-cyan); color: var(--tnt-cyan); background: transparent; }
+
+.hydra-btn--ghost { color: var(--tnt-text-muted); }
+.hydra-btn--ghost:hover { color: var(--tnt-text); background: transparent; }
+
+.hydra-btn--active { border-color: var(--tnt-cyan); color: var(--tnt-cyan); background: rgba(34, 211, 238, 0.08); }
+
+/* Satır aksiyonları: Detay = yuvarlak dolgulu, Düzenle/Sil = kare çerçeveli */
+.hydra-grid__cell--details .hydra-btn--details {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    justify-content: center;
+    border-radius: 9999px;
+    border-color: transparent;
+    background: rgba(34, 211, 238, 0.1);
+    color: var(--tnt-cyan);
+}
+
+.hydra-grid__cell--details .hydra-btn--details:hover {
+    background: rgba(34, 211, 238, 0.2);
+    color: var(--tnt-cyan);
+}
+
+.hydra-grid__cell--actions .hydra-btn--icon {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    justify-content: center;
+    background: transparent;
+}
+
+.hydra-btn--edit { border-color: var(--tnt-cyan-soft); color: var(--tnt-cyan-soft); }
+.hydra-btn--edit:hover { background: rgba(138, 235, 255, 0.12); color: var(--tnt-cyan-soft); }
+
+.hydra-btn--delete { border-color: var(--tnt-error); color: var(--tnt-error); }
+.hydra-btn--delete:hover { background: rgba(255, 180, 171, 0.12); color: var(--tnt-error); }
+
+/* --------------------------------------------------------------- Inputs */
+
+.hydra-input,
+.hydra-select {
+    background: var(--tnt-bg);
+    border-color: var(--tnt-outline);
+    color: var(--tnt-text);
+}
+
+.hydra-input::placeholder { color: rgba(187, 201, 205, 0.5); }
+.hydra-input:focus,
+.hydra-select:focus { border-color: var(--tnt-cyan); box-shadow: var(--tnt-glow); }
+
+.hydra-select { appearance: none; padding-right: 1.75rem; }
+
+/* ------------------------------------------------------------ FilterBar */
+
+.hydra-filterbar__label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--tnt-text-muted);
+}
+
+/* ----------------------------------------------------------------- Grid */
+
+/* Toolbar grid kartının içinde, kendi ayırıcısıyla */
+.hydra-grid__toolbar {
+    margin: 0;
+    padding: 1rem;
+    border-bottom: 1px solid var(--tnt-card-border);
+    background: rgba(17, 24, 39, 0.8);
+}
+
+.hydra-grid__search-input {
+    border-radius: 9999px;
+    padding-left: 2.25rem;
+}
+
+.hydra-grid__count {
+    font-size: 0.75rem;
+    color: var(--tnt-text-muted);
+}
+
+.hydra-grid__th {
+    background: var(--tnt-card);
+    border-bottom: 1px solid var(--tnt-card-border);
+    color: var(--tnt-text-muted);
+    padding: 0.75rem 1rem;
+}
+
+.hydra-grid__row { border-bottom: 1px solid var(--tnt-card-border); }
+.hydra-grid__row:hover { background: rgba(50, 53, 55, 0.3); }
+
+.hydra-grid__cell { padding: 0.75rem 1rem; color: var(--tnt-text); }
+
+.hydra-grid__empty {
+    background: transparent;
+    border: none;
+    color: var(--tnt-text-muted);
+    padding: 2.5rem 1rem;
+}
+
+/* ----------------------------------------------------------- Pagination */
+
+.hydra-pagination {
+    margin: 0;
+    padding: 1rem;
+    background: var(--tnt-card);
+    border-top: 1px solid var(--tnt-card-border);
+}
+
+.hydra-pagination__btn { color: var(--tnt-text); }
+.hydra-pagination__btn:hover:not(:disabled) { background: rgba(50, 53, 55, 0.6); }
+
+.hydra-pagination__btn--active {
+    background: rgba(34, 211, 238, 0.2);
+    color: var(--tnt-cyan);
+}
+
+/* -------------------------------------------------------------- Spinner */
+
+.hydra-spinner__ring { border-color: var(--tnt-outline-variant); border-top-color: var(--tnt-cyan); }
+
+/* ====================================================================
+   Form (Create / Edit) — Tentacle görünümü
+   ==================================================================== */
+
+.hydra-form {
+    background: var(--tnt-card);
+    border: 1px solid var(--tnt-card-border);
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
+}
+
+/* Create = yeşil aksan, Edit = cyan aksan (üst çizgi) */
+.hydra-form--create { border-top: 2px solid var(--tnt-create); }
+.hydra-form--edit   { border-top: 2px solid var(--tnt-cyan); }
+
+.hydra-form__header {
+    background: rgba(31, 41, 55, 0.5);
+    border-bottom: 1px solid var(--tnt-card-border);
+    padding: 1.5rem;
+}
+
+.hydra-form__title {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--tnt-text);
+}
+
+.hydra-form__subtitle { color: var(--tnt-text-muted); }
+
+.hydra-form__back { text-transform: none; }
+.hydra-form__back:hover { color: var(--tnt-cyan); background: transparent; }
+
+.hydra-form__banner {
+    background: rgba(147, 0, 10, 0.2);
+    border-bottom: 1px solid rgba(255, 180, 171, 0.5);
+}
+
+.hydra-form__banner-title { color: var(--tnt-error); }
+.hydra-form__banner-icon  { color: var(--tnt-error); }
+
+.hydra-form__body { padding: 2rem 1.5rem; }
+
+.hydra-form__label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--tnt-text);
+}
+
+.hydra-form__required { color: var(--tnt-error); }
+
+.hydra-form__badge {
+    background: #1B2533;
+    border-color: rgba(60, 73, 76, 0.5);
+    color: var(--tnt-cyan);
+}
+
+.hydra-form__footer {
+    background: var(--tnt-card);
+    border-top: 1px solid var(--tnt-card-border);
+    padding: 1.5rem;
+}
+
+/* Kaydet butonları: Create yeşil, Edit cyan — ikisi de glow'lu */
+.hydra-form--create .hydra-btn--create {
+    background: var(--tnt-create);
+    border-color: var(--tnt-create);
+    color: var(--tnt-bg);
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+}
+
+.hydra-form--create .hydra-btn--create:hover {
+    background: var(--tnt-create-bright);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+}
+
+.hydra-btn--edit-save {
+    background: var(--tnt-cyan);
+    border-color: var(--tnt-cyan);
+    color: var(--tnt-bg);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.hydra-btn--edit-save:hover { background: var(--tnt-cyan); box-shadow: var(--tnt-glow-strong); }
+
+/* Alanlar: koyu zemin, odakta cyan glow */
+.hydra-textarea {
+    background: var(--tnt-bg);
+    border-color: var(--tnt-card-border);
+    color: var(--tnt-text);
+}
+
+.hydra-input,
+.hydra-select,
+.hydra-textarea { padding: 0.75rem 1rem; border-color: var(--tnt-card-border); }
+
+.hydra-textarea:focus { border-color: var(--tnt-cyan); box-shadow: var(--tnt-glow); }
+
+.hydra-field__affix { color: var(--tnt-text-muted); }
+
+/* Tarih alanlarının yerleşik takvim ikonunu koyu temaya çevir */
+.hydra-input[type="date"],
+.hydra-input[type="datetime-local"] { color-scheme: dark; }
+
+.hydra-switch__track { background: var(--tnt-outline-variant); }
+.hydra-switch input:checked + .hydra-switch__track { background: var(--tnt-cyan); }
+
+/* ====================================================================
+   Modal'lar — Tentacle görünümü
+   ==================================================================== */
+
+.hydra-modal-backdrop {
+    background: rgba(11, 17, 32, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.hydra-modal {
+    background: var(--tnt-elevated);
+    border-color: var(--tnt-outline-variant);
+    border-radius: var(--hydra-radius-sm);
+}
+
+.hydra-modal--danger  { box-shadow: 0 0 8px rgba(255, 180, 171, 0.2); }
+.hydra-modal--primary { box-shadow: var(--tnt-glow); }
+
+.hydra-modal__header {
+    background: var(--tnt-surface-high);
+    border-bottom: 1px solid var(--tnt-outline-variant);
+}
+
+.hydra-modal__title { color: var(--tnt-text); }
+.hydra-modal__text  { color: var(--tnt-text-muted); }
+
+.hydra-modal__footer {
+    background: var(--tnt-surface-lowest);
+    border-top: 1px solid var(--tnt-outline-variant);
+}
+
+.hydra-modal--danger .hydra-modal__confirm {
+    background: var(--tnt-error);
+    color: #690005;
+    box-shadow: 0 0 8px rgba(255, 180, 171, 0.2);
+}
+
+.hydra-modal--primary .hydra-modal__confirm {
+    background: var(--tnt-cyan);
+    color: var(--tnt-bg);
+    box-shadow: var(--tnt-glow);
+}
+
+/* -------------------------------------------------------- Lookup modal */
+
+.hydra-lookup__search-bar {
+    background: var(--tnt-surface-lowest);
+    border-bottom: 1px solid var(--tnt-outline-variant);
+}
+
+.hydra-lookup__item {
+    border-color: var(--tnt-outline-variant);
+    background: transparent;
+}
+
+.hydra-lookup__item:hover { background: var(--tnt-surface-variant); }
+
+.hydra-lookup__item--selected {
+    border-color: var(--tnt-cyan);
+    background: rgba(34, 211, 238, 0.1);
+    position: relative;
+    overflow: hidden;
+    padding-left: 1.25rem;
+}
+
+/* Seçili satırın solundaki parlayan cyan şerit */
+.hydra-lookup__item--selected::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--tnt-cyan);
+    box-shadow: var(--tnt-glow);
+}
+
+.hydra-lookup__item-check { color: var(--tnt-cyan); }
+
+/* ====================================================================
+   Details ekranı — Tentacle görünümü
+   ==================================================================== */
+
+.hydra-details { position: relative; }
+
+.hydra-details__empty {
+    background: var(--tnt-card);
+    border-color: var(--tnt-card-border);
+    color: var(--tnt-text-muted);
+}
+
+/* --------------------------------------------------------- Başlık kartı */
+
+.hydra-details__header {
+    background: var(--tnt-card);
+    border: 1px solid var(--tnt-card-border);
+    border-radius: var(--hydra-radius);
+}
+
+.hydra-details__eyebrow { color: var(--tnt-cyan-soft); }
+
+.hydra-details__dot {
+    background: var(--tnt-cyan);
+    box-shadow: var(--tnt-glow);
+}
+
+.hydra-details__state {
+    background: rgba(50, 53, 55, 0.5);
+    border-color: rgba(60, 73, 76, 0.3);
+    color: var(--tnt-text-muted);
+}
+
+.hydra-details__title {
+    font-size: 3rem;
+    line-height: 1.15;
+    color: var(--tnt-text);
+}
+
+/* Başlık aksiyonları: Geri nötr, Düzenle cyan, Sil kırmızı — hepsi çerçeveli */
+.hydra-details__actions .hydra-btn { padding: 0.5rem 1rem; }
+
+.hydra-details__actions .hydra-btn--edit {
+    border-color: rgba(138, 235, 255, 0.5);
+    color: var(--tnt-cyan-soft);
+}
+
+.hydra-details__actions .hydra-btn--delete {
+    border-color: rgba(255, 180, 171, 0.5);
+    color: var(--tnt-error);
+}
+
+/* ---------------------------------------------------------- Özet kartı */
+
+.hydra-details__summary {
+    background: var(--tnt-card);
+    border: 1px solid var(--tnt-card-border);
+}
+
+.hydra-details__summary-header {
+    background: var(--tnt-surface-high);
+    border-bottom: 1px solid rgba(60, 73, 76, 0.5);
+}
+
+.hydra-details__summary-title { font-size: 1rem; color: var(--tnt-text); }
+
+.hydra-details__pair-label { color: var(--tnt-text-muted); }
+.hydra-details__pair-value { color: var(--tnt-text); }
+.hydra-details__link { color: var(--tnt-cyan-soft); }
+
+/* --------------------------------------------------------- Sekme kartı */
+
+.hydra-details__tabs-card {
+    background: var(--tnt-card);
+    border: 1px solid var(--tnt-card-border);
+}
+
+.hydra-details__tabstrip {
+    border-bottom: 1px solid rgba(60, 73, 76, 0.5);
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+}
+
+.hydra-details__tab {
+    color: var(--tnt-text);
+    border-bottom-width: 4px;
+    padding: 0.5rem 1rem 0.75rem;
+}
+
+.hydra-details__tab:hover {
+    color: var(--tnt-cyan);
+    background: rgba(34, 211, 238, 0.05);
+}
+
+.hydra-details__tab--active {
+    color: var(--tnt-cyan);
+    border-bottom-color: var(--tnt-cyan);
+    background: transparent;
+    cursor: default;
+}
+
+/* ------------------------------------------------------ Collection view */
+
+.hydra-collection__title { font-size: 1.125rem; color: var(--tnt-text); }
+
+.hydra-collection--standalone {
+    background: var(--tnt-card);
+    border-color: var(--tnt-card-border);
+}
+
+.hydra-collection--standalone .hydra-collection__header {
+    background: rgba(31, 41, 55, 0.5);
+    border-bottom-color: var(--tnt-card-border);
+}
+
+/* Sekme içindeki kompakt tablo: dış çerçeve soluk, başlık bandı yüksek yüzey */
+.hydra-collection__body .hydra-grid__scroll { border-color: rgba(60, 73, 76, 0.3); }
+
+.hydra-collection__body .hydra-grid__th {
+    background: var(--tnt-surface-high);
+    border-bottom-color: rgba(60, 73, 76, 0.3);
+}
+
+.hydra-collection__body .hydra-grid__row { border-bottom-color: rgba(60, 73, 76, 0.2); }
+.hydra-collection__body .hydra-grid__row:hover { background: rgba(50, 53, 55, 0.2); }
+
+/* "Ekle" butonu: soluk cyan dolgu */
+.hydra-btn--add {
+    background: rgba(34, 211, 238, 0.1);
+    border-color: rgba(34, 211, 238, 0.3);
+    color: var(--tnt-cyan);
+}
+
+.hydra-btn--add:hover { background: rgba(34, 211, 238, 0.2); color: var(--tnt-cyan); }
+
+/* Detay satır butonu sekme içinde daha sade: çerçevesiz ikon */
+.hydra-collection__body .hydra-grid__cell--details .hydra-btn--details {
+    background: transparent;
+    color: rgba(34, 211, 238, 0.7);
+}
+
+.hydra-collection__body .hydra-grid__cell--details .hydra-btn--details:hover {
+    background: transparent;
+    color: var(--tnt-cyan);
+}
+
+/* Details sayfasının sağ üstündeki atmosferik ışıma */
+.hydra-details::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 50%;
+    height: 50%;
+    background: rgba(34, 211, 238, 0.05);
+    filter: blur(120px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hydra-details > * { position: relative; z-index: 1; }

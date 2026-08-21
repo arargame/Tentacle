@@ -1,40 +1,108 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">HydraTentacle.Blazor</a>
+@* Sol menü. Görünüm wwwroot/css/tentacle-theme.css içindeki .tnt-nav / .tnt-sidebar
+   class'larından gelir. NavLink aktif sayfaya "active" class'ı ekler, tema onu boyar. *@
+
+<a class="tnt-sidebar__brand" href="">
+    <span class="tnt-sidebar__mark"><i class="bi bi-broadcast"></i></span>
+    <span>
+        <span class="tnt-sidebar__title">Tentacle</span>
+        <span class="tnt-sidebar__subtitle">Work Orchestration</span>
+    </span>
+</a>
+
+<nav class="tnt-nav" @onclick="NotifyNavigate">
+
+    <div>
+        <h3 class="tnt-nav__group-title">Genel</h3>
+        <ul class="tnt-nav__list">
+            <li>
+                <NavLink class="tnt-nav__link" href="Dashboard">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </NavLink>
+            </li>
+        </ul>
     </div>
+
+    <div>
+        <h3 class="tnt-nav__group-title">İş Takip</h3>
+        <ul class="tnt-nav__list">
+            <li>
+                <NavLink class="tnt-nav__link" href="Request">
+                    <i class="bi bi-card-checklist"></i> Talepler
+                </NavLink>
+            </li>
+            <li>
+                <NavLink class="tnt-nav__link" href="RequestCategory">
+                    <i class="bi bi-tags"></i> Kategoriler
+                </NavLink>
+            </li>
+            <li>
+                <NavLink class="tnt-nav__link" href="RequestCategoryResponsiblePosition">
+                    <i class="bi bi-diagram-3"></i> Kategori Sorumluları
+                </NavLink>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <h3 class="tnt-nav__group-title">İnsan Kaynakları</h3>
+        <ul class="tnt-nav__list">
+            <li>
+                <NavLink class="tnt-nav__link" href="Employee">
+                    <i class="bi bi-people"></i> Çalışanlar
+                </NavLink>
+            </li>
+            <li>
+                <NavLink class="tnt-nav__link" href="Position">
+                    <i class="bi bi-person-badge"></i> Pozisyonlar
+                </NavLink>
+            </li>
+            <li>
+                <NavLink class="tnt-nav__link" href="OrganizationUnit">
+                    <i class="bi bi-building"></i> Birimler
+                </NavLink>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <h3 class="tnt-nav__group-title">Yönetim</h3>
+        <ul class="tnt-nav__list">
+            <li>
+                <NavLink class="tnt-nav__link" href="SystemUser">
+                    <i class="bi bi-person-gear"></i> Kullanıcılar
+                </NavLink>
+            </li>
+            <li>
+                <NavLink class="tnt-nav__link" href="Role">
+                    <i class="bi bi-shield-lock"></i> Roller
+                </NavLink>
+            </li>
+            <li>
+                <NavLink class="tnt-nav__link" href="Permission">
+                    <i class="bi bi-key"></i> İzinler
+                </NavLink>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="tnt-sidebar__footer">
+    <a class="tnt-sidebar__cta" href="Request/Create">
+        <i class="bi bi-plus-lg"></i> Yeni Talep
+    </a>
+
+    @* Auth akışı henüz bağlı değil; şimdilik giriş ekranına link. *@
+    <a class="tnt-sidebar__minor" href="Login">
+        <i class="bi bi-box-arrow-in-right"></i> Giriş Yap
+    </a>
+    <a class="tnt-sidebar__minor tnt-sidebar__minor--danger" href="">
+        <i class="bi bi-house-door"></i> Siteye Dön
+    </a>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+@code {
+    /// <summary>Mobilde bir menü öğesine tıklanınca sidebar'ı kapatmak için MainLayout'a haber verir.</summary>
+    [Parameter] public EventCallback OnNavigate { get; set; }
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="requests">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Requests
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="htmlelementtest">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> HtmlElement Tests
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="input-test">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> HtmlElement Tests21r1
-            </NavLink>
-        </div>
-
-        
-    </nav>
-</div>
-
+    private Task NotifyNavigate() => OnNavigate.InvokeAsync();
+}

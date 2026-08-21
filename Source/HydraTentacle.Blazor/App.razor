@@ -1,12 +1,30 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
+
+    @* Bootstrap CSS artık yüklenmiyor: bütün CRUD bileşenleri hydra-* semantiğine geçti,
+       görünüm tentacle-theme.css'ten geliyor. (wwwroot/lib/bootstrap klasörü hâlâ diskte
+       duruyor — başka bir yerde kullanılmadığından silinebilir.) *@
+
+    @* Bootstrap Icons: yalnızca ikon fontu — Bootstrap CSS'inden bağımsız bir paket, kalıcı. *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    @* Geist: tasarımın tipografisi. *@
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
+
     <link rel="stylesheet" href="@Assets["app.css"]" />
+
+    @* Hydra bileşenlerinin nötr varsayılan görünümü... *@
+    <link rel="stylesheet" href="_content/Hydra.RazorClassLibrary/css/hydra-default.css" />
+    @* ...ve Tentacle'ın onu ezen koyu teması. Sıra önemli. *@
+    <link rel="stylesheet" href="css/tentacle-theme.css" />
+
     <link rel="stylesheet" href="@Assets["HydraTentacle.Blazor.styles.css"]" />
     <ImportMap />
     <link rel="icon" type="image/png" href="favicon.png" />

@@ -1,23 +1,43 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@* Uygulama kabuğu: sol sidebar + içerik alanı. Görünüm tamamen wwwroot/css/tentacle-theme.css
+   içindeki .tnt-* class'larından gelir (CSS framework kullanılmıyor).
+   Herkese açık sayfalar (Home, Login, Dashboard) bu layout'u değil EmptyLayout'u kullanır. *@
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<div class="tnt-shell">
 
-        <article class="content px-4">
+    <!-- Mobil üst bar (sidebar mobilde gizli, buradan açılır) -->
+    <header class="tnt-topbar">
+        <a class="tnt-topbar__brand" href="">
+            <i class="bi bi-broadcast"></i>
+            <span>Tentacle</span>
+        </a>
+        <button type="button" class="tnt-topbar__toggle" title="Menü" @onclick="ToggleMenu">
+            <i class="bi @(IsMenuOpen ? "bi-x-lg" : "bi-list")"></i>
+        </button>
+    </header>
+
+    <aside class="tnt-sidebar @(IsMenuOpen ? "tnt-sidebar--open" : "")">
+        <NavMenu OnNavigate="CloseMenu" />
+    </aside>
+
+    <main class="tnt-main">
+        <article class="tnt-content">
             @Body
         </article>
     </main>
 </div>
 
 <div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
+    Beklenmeyen bir hata oluştu.
+    <a href="." class="reload">Yenile</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    private bool IsMenuOpen;
+
+    private void ToggleMenu() => IsMenuOpen = !IsMenuOpen;
+
+    private void CloseMenu() => IsMenuOpen = false;
+}

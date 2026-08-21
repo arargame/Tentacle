@@ -1,0 +1,17 @@
+/* Tentacle Login Page — Stitch tasarımından gelen özel efektler.
+   Sadece Login.razor (@layout EmptyLayout) tarafından yüklenir; uygulamanın geri kalanını etkilemez. */
+
+@keyframes drift {
+    0% { transform: translateY(0) scale(1); opacity: 0.3; }
+    50% { transform: translateY(-20px) scale(1.05); opacity: 0.6; }
+    100% { transform: translateY(0) scale(1); opacity: 0.3; }
+}
+
+.neural-node {
+    animation: drift 8s infinite ease-in-out;
+}
+
+.input-glow:focus-within {
+    box-shadow: 0 0 8px 0 rgba(34, 211, 238, 0.2);
+    border-color: #22d3ee;
+}
