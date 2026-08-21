@@ -1,0 +1,12 @@
+@page "/Permission/Update/{Id:guid}"
+@using Hydra.IdentityAndAccess
+
+<PageTitle>İzin Düzenle</PageTitle>
+
+<GenericEditView T="Permission" Client="Client" Id="@Id" Title="İzin Düzenle" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<Permission> Client { get; set; } = default!;
+}

@@ -1,0 +1,12 @@
+@page "/Role/Update/{Id:guid}"
+@using Hydra.AccessManagement
+
+<PageTitle>Rol Düzenle</PageTitle>
+
+<GenericEditView T="Role" Client="Client" Id="@Id" Title="Rol Düzenle" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<Role> Client { get; set; } = default!;
+}

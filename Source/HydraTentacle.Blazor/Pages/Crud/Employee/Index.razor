@@ -1,0 +1,10 @@
+@page "/Employee"
+@using Hydra.Core.HumanResources
+
+<PageTitle>Çalışanlar</PageTitle>
+
+<GenericListView T="Employee" Client="Client" Title="Çalışanlar" />
+
+@code {
+    [Inject] public ApiClient<Employee> Client { get; set; } = default!;
+}

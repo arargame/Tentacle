@@ -1,0 +1,10 @@
+@page "/Request/Create"
+@using HydraTentacle.Core.Models.Request
+
+<PageTitle>Yeni Talep</PageTitle>
+
+<GenericCreateView T="Request" Client="Client" Title="Yeni Talep" />
+
+@code {
+    [Inject] public ApiClient<Request> Client { get; set; } = default!;
+}

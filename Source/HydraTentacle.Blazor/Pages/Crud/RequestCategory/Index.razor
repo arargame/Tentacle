@@ -1,0 +1,10 @@
+@page "/RequestCategory"
+@using HydraTentacle.Core.Models.Request
+
+<PageTitle>Talep Kategorileri</PageTitle>
+
+<GenericListView T="RequestCategory" Client="Client" Title="Talep Kategorileri" />
+
+@code {
+    [Inject] public ApiClient<RequestCategory> Client { get; set; } = default!;
+}

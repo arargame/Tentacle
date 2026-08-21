@@ -1,0 +1,10 @@
+@page "/RequestCategoryResponsiblePosition/Create"
+@using HydraTentacle.Core.Models.Request
+
+<PageTitle>Yeni Sorumlu Pozisyon</PageTitle>
+
+<GenericCreateView T="RequestCategoryResponsiblePosition" Client="Client" Title="Yeni Sorumlu Pozisyon" />
+
+@code {
+    [Inject] public ApiClient<RequestCategoryResponsiblePosition> Client { get; set; } = default!;
+}

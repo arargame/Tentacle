@@ -1,0 +1,17 @@
+@page "/OrganizationUnit/Details/{Id:guid}"
+@using Hydra.Core.HumanResources
+
+<PageTitle>Birim Detayı</PageTitle>
+
+<GenericDetailsView T="OrganizationUnit" Client="Client" Id="@Id" Title="Birim Detayı">
+    <CollectionViewSection Title="Birimdeki Pozisyonlar"
+                           Controller="Position"
+                           ForeignKeyName="OrganizationUnitId"
+                           ParentId="@Id" />
+</GenericDetailsView>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<OrganizationUnit> Client { get; set; } = default!;
+}

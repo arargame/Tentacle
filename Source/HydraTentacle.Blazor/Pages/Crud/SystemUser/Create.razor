@@ -1,0 +1,10 @@
+@page "/SystemUser/Create"
+@using Hydra.AccessManagement
+
+<PageTitle>Yeni Kullanıcı</PageTitle>
+
+<GenericCreateView T="SystemUser" Client="Client" Title="Yeni Kullanıcı" />
+
+@code {
+    [Inject] public ApiClient<SystemUser> Client { get; set; } = default!;
+}

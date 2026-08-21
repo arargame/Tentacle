@@ -1,0 +1,12 @@
+@page "/Employee/Details/{Id:guid}"
+@using Hydra.Core.HumanResources
+
+<PageTitle>Çalışan Detayı</PageTitle>
+
+<GenericDetailsView T="Employee" Client="Client" Id="@Id" Title="Çalışan Detayı" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<Employee> Client { get; set; } = default!;
+}

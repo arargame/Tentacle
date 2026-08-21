@@ -1,0 +1,10 @@
+@page "/Position/Create"
+@using Hydra.Core.HumanResources
+
+<PageTitle>Yeni Pozisyon</PageTitle>
+
+<GenericCreateView T="Position" Client="Client" Title="Yeni Pozisyon" />
+
+@code {
+    [Inject] public ApiClient<Position> Client { get; set; } = default!;
+}

@@ -1,0 +1,10 @@
+@page "/OrganizationUnit"
+@using Hydra.Core.HumanResources
+
+<PageTitle>Organizasyon Birimleri</PageTitle>
+
+<GenericListView T="OrganizationUnit" Client="Client" Title="Organizasyon Birimleri" />
+
+@code {
+    [Inject] public ApiClient<OrganizationUnit> Client { get; set; } = default!;
+}

@@ -1,0 +1,12 @@
+@page "/RequestCategoryResponsiblePosition/Update/{Id:guid}"
+@using HydraTentacle.Core.Models.Request
+
+<PageTitle>Sorumlu Pozisyon Düzenle</PageTitle>
+
+<GenericEditView T="RequestCategoryResponsiblePosition" Client="Client" Id="@Id" Title="Sorumlu Pozisyon Düzenle" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<RequestCategoryResponsiblePosition> Client { get; set; } = default!;
+}

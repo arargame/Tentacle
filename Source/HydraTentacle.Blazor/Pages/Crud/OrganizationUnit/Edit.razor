@@ -1,0 +1,12 @@
+@page "/OrganizationUnit/Update/{Id:guid}"
+@using Hydra.Core.HumanResources
+
+<PageTitle>Birim Düzenle</PageTitle>
+
+<GenericEditView T="OrganizationUnit" Client="Client" Id="@Id" Title="Birim Düzenle" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<OrganizationUnit> Client { get; set; } = default!;
+}

@@ -1,0 +1,10 @@
+@page "/Permission"
+@using Hydra.IdentityAndAccess
+
+<PageTitle>İzinler</PageTitle>
+
+<GenericListView T="Permission" Client="Client" Title="İzinler" />
+
+@code {
+    [Inject] public ApiClient<Permission> Client { get; set; } = default!;
+}

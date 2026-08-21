@@ -1,0 +1,12 @@
+@page "/RequestCategory/Update/{Id:guid}"
+@using HydraTentacle.Core.Models.Request
+
+<PageTitle>Kategori Düzenle</PageTitle>
+
+<GenericEditView T="RequestCategory" Client="Client" Id="@Id" Title="Kategori Düzenle" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<RequestCategory> Client { get; set; } = default!;
+}

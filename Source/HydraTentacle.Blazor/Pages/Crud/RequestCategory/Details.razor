@@ -1,0 +1,22 @@
+@page "/RequestCategory/Details/{Id:guid}"
+@using HydraTentacle.Core.Models.Request
+
+<PageTitle>Kategori Detayı</PageTitle>
+
+<GenericDetailsView T="RequestCategory" Client="Client" Id="@Id" Title="Kategori Detayı">
+    <CollectionViewSection Title="Bu Kategorideki Talepler"
+                           Controller="Request"
+                           ForeignKeyName="RequestCategoryId"
+                           ParentId="@Id" />
+
+    <CollectionViewSection Title="Sorumlu Pozisyonlar"
+                           Controller="RequestCategoryResponsiblePosition"
+                           ForeignKeyName="RequestCategoryId"
+                           ParentId="@Id" />
+</GenericDetailsView>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<RequestCategory> Client { get; set; } = default!;
+}

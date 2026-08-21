@@ -1,0 +1,10 @@
+@page "/Request"
+@using HydraTentacle.Core.Models.Request
+
+<PageTitle>Talepler</PageTitle>
+
+<GenericListView T="Request" Client="Client" Title="Talepler" />
+
+@code {
+    [Inject] public ApiClient<Request> Client { get; set; } = default!;
+}

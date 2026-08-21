@@ -1,0 +1,12 @@
+@page "/Role/Details/{Id:guid}"
+@using Hydra.AccessManagement
+
+<PageTitle>Rol Detayı</PageTitle>
+
+<GenericDetailsView T="Role" Client="Client" Id="@Id" Title="Rol Detayı" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<Role> Client { get; set; } = default!;
+}

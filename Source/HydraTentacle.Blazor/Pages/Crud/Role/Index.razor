@@ -1,0 +1,10 @@
+@page "/Role"
+@using Hydra.AccessManagement
+
+<PageTitle>Roller</PageTitle>
+
+<GenericListView T="Role" Client="Client" Title="Roller" />
+
+@code {
+    [Inject] public ApiClient<Role> Client { get; set; } = default!;
+}

@@ -1,10 +1,12 @@
 @page "/Requests"
-@using HydraTentacle.Core.Models.Request
-@using Hydra.RazorClassLibrary.Components.CRUD
-@using HydraTentacle.Blazor.Services
 
-<GenericListView T="Request" Client="Client" Title="Talep Listesi" BasePath="Request" />
+@* Eski rota — yeni CRUD sayfasına yönlendirir. *@
 
 @code {
-    [Inject] public RequestClient Client { get; set; } = default!;
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        Navigation.NavigateTo("/Request", replace: true);
+    }
 }

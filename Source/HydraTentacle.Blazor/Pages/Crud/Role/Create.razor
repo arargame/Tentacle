@@ -1,0 +1,10 @@
+@page "/Role/Create"
+@using Hydra.AccessManagement
+
+<PageTitle>Yeni Rol</PageTitle>
+
+<GenericCreateView T="Role" Client="Client" Title="Yeni Rol" />
+
+@code {
+    [Inject] public ApiClient<Role> Client { get; set; } = default!;
+}
