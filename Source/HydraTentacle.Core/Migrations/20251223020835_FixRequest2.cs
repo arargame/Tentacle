@@ -11,13 +11,15 @@ namespace HydraTentacle.Core.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "RequestAssignment");
+            // Bu migration daha once EnsureCreated() ile kurulmus DB'lere ilk kez uygulaniyor
+            // olabilir; asagidaki iki islem hedef nesne yoksa patlamasin diye guard'landi.
+            migrationBuilder.Sql(
+                "IF OBJECT_ID('RequestAssignment', 'U') IS NOT NULL DROP TABLE [RequestAssignment];");
 
-            migrationBuilder.RenameColumn(
-                name: "EntityName",
-                table: "Log",
-                newName: "EntityType");
+            migrationBuilder.Sql(
+                "IF COL_LENGTH('Log', 'EntityName') IS NOT NULL " +
+                "AND COL_LENGTH('Log', 'EntityType') IS NULL " +
+                "EXEC sp_rename 'Log.EntityName', 'EntityType', 'COLUMN';");
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "AddedDate",

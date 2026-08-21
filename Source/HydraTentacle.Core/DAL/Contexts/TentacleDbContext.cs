@@ -28,8 +28,14 @@ namespace HydraTentacle.Core.DAL.Contexts
         {
             base.OnModelCreating(modelBuilder);
 
+            //BaseObject konvansiyonuna uy: PK = Id (MainController'ın /{id:guid} rotaları ve
+            //generic Repository Id üzerinden çalışır). Aynı kategori+pozisyon ikilisi tekil olsun.
             modelBuilder.Entity<RequestCategoryResponsiblePosition>()
-                .HasKey(x => new { x.RequestCategoryId, x.PositionId });
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<RequestCategoryResponsiblePosition>()
+                .HasIndex(x => new { x.RequestCategoryId, x.PositionId })
+                .IsUnique();
         }
 
        
