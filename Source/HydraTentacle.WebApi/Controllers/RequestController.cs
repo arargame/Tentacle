@@ -19,39 +19,8 @@ namespace HydraTentacle.WebApi.Controllers
             _serviceFactory = injector.ServiceFactory;
         }
 
-        [HttpPost]
-        [Route("Select")]
-        public override async Task<JsonResult> Select([FromBody] TableDTO? tableDTO = null, [FromQuery] ViewType? viewType = ViewType.ListView)
-        {
-            if (tableDTO == null)
-            {
-                tableDTO = new TableDTO();
-            }
-
-            if (string.IsNullOrEmpty(tableDTO.Name))
-            {
-                tableDTO.Name = "Request";
-            }
-
-            if (string.IsNullOrEmpty(tableDTO.ViewDTOTypeName))
-            {
-                tableDTO.ViewDTOTypeName = "RequestDTO";
-            }
-
-            var response = new Hydra.Http.ResponseObject()
-                .SetActionName(ActionName)
-                .UseDefaultMessages();
-
-            // Explicitly pass RequestDTO type for configuration loading
-            var (finalDTO, results) = await Service.SelectWithTableAsync<Request>(
-                tableDTO: tableDTO, 
-                viewType: viewType, 
-                viewDTOTypeToPrepareUsingConfigurations: typeof(RequestDTO)
-            );
-
-            return new JsonResult(response.SetSuccess(results?.Any() ?? false)
-                                          .SetData(finalDTO));
-        }
+        //NOTE: The Select endpoint is fully handled by MainController<T>.
+        //It resolves RequestDTO by convention ("{Entity}DTO") and returns the TableDTO directly.
 
 #if DEBUG
         [HttpPost("Seed/{count:int}")]
