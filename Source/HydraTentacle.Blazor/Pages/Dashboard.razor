@@ -1,0 +1,725 @@
+@page "/Dashboard"
+@layout EmptyLayout
+@using System.Globalization
+@using System.Text
+@using Hydra.DTOs
+@using Hydra.DTOs.ViewDTOs
+@using HydraTentacle.Core.Models.Request
+@using HydraTentacle.Core.Constants
+@using Hydra.Core.HumanResources
+
+@* Tentacle Dashboard — Stitch tasarımının Blazor'a uyarlanmış hali, GERÇEK veriye bağlı.
+   Home/Login ile aynı desen: kendi kabuğunu (sidebar + topbar) içerir, EmptyLayout kullanır ve
+   Tailwind + Geist/Material Symbols yalnızca bu sayfada HeadContent üzerinden yüklenir.
+
+   Tasarımdaki örnek (uydurma) sayılar kullanılmadı; bütün rakamlar API'den geliyor. Tasarımda
+   olup gerçek karşılığı olmayan iki yer değiştirildi — ayrıntı için @@code bloğundaki notlara bak. *@
+
+<PageTitle>Dashboard - Tentacle</PageTitle>
+
+<HeadContent>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed-dim": "#2fd9f4",
+                        "surface": "#101415",
+                        "inverse-surface": "#e0e3e5",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "on-background": "#e0e3e5",
+                        "on-surface-variant": "#bbc9cd",
+                        "on-primary-fixed-variant": "#004e5a",
+                        "on-secondary-container": "#afb4c9",
+                        "surface-container-lowest": "#0b0f10",
+                        "on-tertiary": "#213145",
+                        "on-primary-container": "#005763",
+                        "surface-container-highest": "#323537",
+                        "on-tertiary-container": "#405065",
+                        "on-surface": "#e0e3e5",
+                        "secondary-fixed-dim": "#c1c6db",
+                        "on-error": "#690005",
+                        "on-secondary": "#2a3040",
+                        "surface-variant": "#323537",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "outline-variant": "#3c494c",
+                        "tertiary-fixed": "#d3e4fe",
+                        "surface-container-low": "#191c1e",
+                        "outline": "#859397",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "surface-container-high": "#272a2c",
+                        "surface-container": "#1d2022",
+                        "tertiary-container": "#b2c2dc",
+                        "inverse-primary": "#006877",
+                        "primary": "#8aebff",
+                        "surface-bright": "#363a3b",
+                        "on-primary-fixed": "#001f25",
+                        "secondary-fixed": "#dde2f8",
+                        "surface-dim": "#101415",
+                        "on-primary": "#00363e",
+                        "tertiary": "#cddef8",
+                        "error-container": "#93000a",
+                        "background": "#101415",
+                        "secondary-container": "#414658",
+                        "inverse-on-surface": "#2d3133",
+                        "on-secondary-fixed": "#151b2b",
+                        "primary-fixed": "#a2eeff",
+                        "primary-container": "#22d3ee",
+                        "surface-tint": "#2fd9f4",
+                        "secondary": "#c1c6db",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#414658"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "xl": "40px",
+                        "sm": "8px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "margin-desktop": "48px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "md": "16px",
+                        "gutter": "24px"
+                    },
+                    fontFamily: {
+                        "body-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "mono-code": ["Geist"],
+                        "label-md": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "display-lg": ["Geist"]
+                    },
+                    fontSize: {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "mono-code": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="css/dashboard.css" />
+</HeadContent>
+
+<div class="font-body-md text-body-md flex h-screen overflow-hidden antialiased text-on-background" style="background-color:#0B1120;">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-surface-container-lowest border-r border-outline-variant flex-col justify-between hidden md:flex shrink-0">
+        <div>
+            <div class="h-16 flex items-center px-lg border-b border-outline-variant">
+                <a href="" class="font-headline-md text-headline-md font-bold tracking-tighter text-primary flex items-center gap-sm no-underline">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+                    Tentacle
+                </a>
+            </div>
+
+            <nav class="p-md space-y-lg">
+                <!-- İş Takip -->
+                <div>
+                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">İş Takip</h3>
+                    <ul class="space-y-xs list-none p-0 m-0">
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-primary bg-primary/10 luminescent-glow font-label-md text-label-md relative no-underline" href="Request">
+                                <span class="absolute left-0 top-1/2 -translate-y-1/2 -ml-0.5 thread-indicator"></span>
+                                <span class="material-symbols-outlined mr-sm text-lg">list_alt</span>
+                                Talepler
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="RequestCategory">
+                                <span class="material-symbols-outlined mr-sm text-lg">category</span>
+                                Kategoriler
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="RequestCategoryResponsiblePosition">
+                                <span class="material-symbols-outlined mr-sm text-lg">rule</span>
+                                Kategori Sorumluları
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- İnsan Kaynakları -->
+                <div>
+                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">İnsan Kaynakları</h3>
+                    <ul class="space-y-xs list-none p-0 m-0">
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Employee">
+                                <span class="material-symbols-outlined mr-sm text-lg">group</span>
+                                Çalışanlar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Position">
+                                <span class="material-symbols-outlined mr-sm text-lg">badge</span>
+                                Pozisyonlar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="OrganizationUnit">
+                                <span class="material-symbols-outlined mr-sm text-lg">account_tree</span>
+                                Birimler
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Yönetim -->
+                <div>
+                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Yönetim</h3>
+                    <ul class="space-y-xs list-none p-0 m-0">
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="SystemUser">
+                                <span class="material-symbols-outlined mr-sm text-lg">manage_accounts</span>
+                                Kullanıcılar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Role">
+                                <span class="material-symbols-outlined mr-sm text-lg">security</span>
+                                Roller
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Permission">
+                                <span class="material-symbols-outlined mr-sm text-lg">key</span>
+                                İzinler
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Kullanıcı alanı: auth akışı henüz bağlı değil, bu yüzden oturum yerine Login'e link -->
+        <div class="p-md border-t border-outline-variant">
+            <a href="Login" class="flex items-center gap-sm no-underline group">
+                <div class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-on-surface-variant">person</span>
+                </div>
+                <div>
+                    <p class="font-label-md text-label-md text-on-surface m-0 group-hover:text-primary transition-colors">Oturum açılmadı</p>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant m-0">Giriş yap</p>
+                </div>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-background">
+
+        <!-- TopAppBar -->
+        <header class="h-16 flex items-center justify-between px-margin-desktop border-b border-outline-variant shrink-0 bg-surface-container-lowest/80 backdrop-blur-md">
+            <h1 class="font-headline-lg text-headline-lg text-on-surface m-0">Dashboard</h1>
+            <div class="flex items-center gap-lg">
+                <div class="relative hidden lg:block">
+                    <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                    <input class="bg-surface border border-outline-variant rounded pl-10 pr-sm py-1.5 font-body-md text-body-md text-on-surface focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary w-64 placeholder-on-surface-variant/50 transition-colors"
+                           placeholder="Taleplerde ara..." type="text"
+                           value="@_searchText"
+                           @oninput="e => _searchText = e.Value?.ToString() ?? string.Empty"
+                           @onkeydown="OnSearchKeyDown" />
+                </div>
+                <a href="Request/Create" class="bg-primary-container text-surface px-md py-1.5 rounded font-label-md text-label-md font-bold uppercase tracking-wider flex items-center gap-xs hover:bg-primary transition-colors luminescent-glow no-underline">
+                    <span class="material-symbols-outlined text-sm">add</span>
+                    Yeni Talep
+                </a>
+            </div>
+        </header>
+
+        <!-- Scrollable Canvas -->
+        <div class="flex-1 overflow-y-auto p-margin-desktop">
+            <div class="max-w-7xl mx-auto space-y-xl">
+
+                @if (IsLoading)
+                {
+                    <div class="flex items-center justify-center py-xl gap-sm text-on-surface-variant">
+                        <span class="material-symbols-outlined animate-spin">progress_activity</span>
+                        Yükleniyor...
+                    </div>
+                }
+                else
+                {
+                    <!-- KPI Row -->
+                    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
+                        <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
+                            <div class="flex justify-between items-start mb-md">
+                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Toplam Talep</h3>
+                                <span class="material-symbols-outlined text-primary">data_usage</span>
+                            </div>
+                            <div class="flex items-end justify-between">
+                                <span class="font-display-lg text-display-lg text-on-surface">@(TotalRequests.ToString("N0"))</span>
+                            </div>
+                        </div>
+
+                        <div class="level-1-card rounded-lg p-lg flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute inset-0 bg-primary/5"></div>
+                            <div class="flex justify-between items-start mb-md relative z-10">
+                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Açık</h3>
+                                <span class="material-symbols-outlined text-error">radio_button_unchecked</span>
+                            </div>
+                            <div class="flex items-end justify-between relative z-10">
+                                <span class="font-display-lg text-display-lg text-on-surface">@(GetStatusCount(RequestStatus.Open).ToString("N0"))</span>
+                                <span class="font-label-sm text-label-sm text-on-surface-variant">%@GetStatusPercent(RequestStatus.Open)</span>
+                            </div>
+                        </div>
+
+                        <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
+                            <div class="flex justify-between items-start mb-md">
+                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Devam Ediyor</h3>
+                                <span class="material-symbols-outlined text-primary-fixed-dim">hourglass_empty</span>
+                            </div>
+                            <div class="flex items-end justify-between">
+                                <span class="font-display-lg text-display-lg text-on-surface">@(GetStatusCount(RequestStatus.InProgress).ToString("N0"))</span>
+                                <span class="font-label-sm text-label-sm text-on-surface-variant">%@GetStatusPercent(RequestStatus.InProgress)</span>
+                            </div>
+                        </div>
+
+                        <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
+                            <div class="flex justify-between items-start mb-md">
+                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Tamamlandı</h3>
+                                <span class="material-symbols-outlined text-on-surface-variant">check_circle</span>
+                            </div>
+                            <div class="flex items-end justify-between">
+                                <span class="font-display-lg text-display-lg text-on-surface">@(GetStatusCount(RequestStatus.Completed).ToString("N0"))</span>
+                                <span class="font-label-sm text-label-sm text-primary">%@GetStatusPercent(RequestStatus.Completed)</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Durum Dağılımı -->
+                    <section class="level-1-card rounded-lg p-lg">
+                        <h3 class="font-label-md text-label-md text-on-surface-variant mb-md m-0">Genel Durum Dağılımı</h3>
+                        <div class="w-full h-4 rounded-full flex overflow-hidden bg-surface">
+                            @foreach (var status in Enum.GetValues<RequestStatus>())
+                            {
+                                var percent = GetStatusPercent(status);
+                                if (percent > 0)
+                                {
+                                    <div class="h-full border-r border-background"
+                                         style="width:@(percent.ToString(CultureInfo.InvariantCulture))%; background-color:@GetStatusColor(status);"
+                                         title="@GetStatusLabel(status) — %@percent"></div>
+                                }
+                            }
+                        </div>
+                        <div class="flex flex-wrap gap-md mt-sm font-label-sm text-label-sm text-on-surface-variant justify-between">
+                            @foreach (var status in Enum.GetValues<RequestStatus>())
+                            {
+                                <div class="flex items-center gap-xs">
+                                    <div class="w-2 h-2 rounded-full" style="background-color:@GetStatusColor(status);"></div>
+                                    <span>@GetStatusLabel(status)</span>
+                                    <span class="opacity-70">@GetStatusCount(status) · %@GetStatusPercent(status)</span>
+                                </div>
+                            }
+                        </div>
+                    </section>
+
+                    <!-- Orta Sıra -->
+                    <section class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+
+                        <!-- Kategoriye Göre Talepler (gerçek donut) -->
+                        <div class="level-1-card rounded-lg lg:col-span-1 flex flex-col">
+                            <div class="p-md bg-surface-container-low border-b border-outline-variant">
+                                <h3 class="font-label-md text-label-md text-on-surface m-0">Kategoriye Göre Talepler</h3>
+                            </div>
+                            <div class="p-lg flex-1 flex flex-col items-center justify-center gap-md min-h-[300px]">
+                                <div class="w-48 h-48 rounded-full relative flex items-center justify-center shrink-0"
+                                     style="background:@DonutGradient;">
+                                    <div class="w-28 h-28 rounded-full flex items-center justify-center text-center" style="background-color:#111827;">
+                                        <div>
+                                            <span class="block font-headline-md text-headline-md text-on-surface">@CategoryBreakdown.Count</span>
+                                            <span class="block font-label-sm text-label-sm text-on-surface-variant">Kategori</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <ul class="w-full space-y-xs list-none p-0 m-0">
+                                    @for (var i = 0; i < CategoryBreakdown.Count; i++)
+                                    {
+                                        var item = CategoryBreakdown[i];
+                                        <li class="flex items-center justify-between font-label-sm text-label-sm">
+                                            <span class="flex items-center gap-xs text-on-surface-variant truncate">
+                                                <span class="w-2 h-2 rounded-full shrink-0" style="background-color:@(DonutColors[i % DonutColors.Length]);"></span>
+                                                @item.Name
+                                            </span>
+                                            <span class="font-mono-code text-mono-code text-on-surface">@item.Count</span>
+                                        </li>
+                                    }
+                                    @if (CategoryBreakdown.Count == 0)
+                                    {
+                                        <li class="text-center text-on-surface-variant font-label-sm text-label-sm">Kategori bulunamadı.</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Önceliğe Göre Talepler -->
+                        <div class="level-1-card rounded-lg lg:col-span-2 flex flex-col">
+                            <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+                                <h3 class="font-label-md text-label-md text-on-surface m-0">Önceliğe Göre Talepler</h3>
+                                <a href="Request" class="text-primary hover:text-primary-container text-sm flex items-center gap-xs transition-colors no-underline">
+                                    Tümünü Gör <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </div>
+                            <div class="flex-1 p-0">
+                                <ul class="divide-y divide-outline-variant list-none p-0 m-0">
+                                    @{ var rank = 0; }
+                                    @foreach (var priority in PriorityOrder)
+                                    {
+                                        rank++;
+                                        var count = GetPriorityCount(priority);
+                                        var percent = TotalRequests > 0 ? (int)Math.Round(count * 100d / TotalRequests) : 0;
+                                        <li class="flex items-center justify-between p-md hover:bg-surface-container-lowest transition-colors group">
+                                            <div class="flex items-center gap-md">
+                                                <div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary font-label-md text-label-md group-hover:luminescent-glow transition-shadow">@rank</div>
+                                                <div>
+                                                    <p class="font-body-md text-body-md text-on-surface m-0">@GetPriorityLabel(priority)</p>
+                                                    <p class="font-label-sm text-label-sm text-on-surface-variant m-0">Toplamın %@(percent)'i</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-lg">
+                                                <div class="w-32 h-1.5 bg-surface rounded-full overflow-hidden hidden sm:block">
+                                                    <div class="h-full" style="width:@(percent.ToString(CultureInfo.InvariantCulture))%; background-color:@GetPriorityColor(priority);"></div>
+                                                </div>
+                                                <span class="font-mono-code text-mono-code text-on-surface w-12 text-right">@count</span>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Son Talepler -->
+                    <section class="level-1-card rounded-lg flex flex-col overflow-hidden">
+                        <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+                            <h3 class="font-label-md text-label-md text-on-surface m-0">Son Talepler</h3>
+                            <a href="Request" class="px-sm py-1 border border-outline-variant rounded font-label-sm text-label-sm text-on-surface hover:border-primary transition-colors flex items-center gap-xs no-underline">
+                                <span class="material-symbols-outlined text-sm">filter_list</span> Filtrele
+                            </a>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse min-w-[800px]">
+                                <thead>
+                                    <tr class="border-b border-outline-variant bg-surface-container-lowest/50">
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant w-12"></th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Başlık</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Kategori</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Talep Eden</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Sorumlu</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Durum</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Öncelik</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Tarih</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-outline-variant">
+                                    @if (RecentRequests?.Rows is { Count: > 0 } rows)
+                                    {
+                                        foreach (var row in rows)
+                                        {
+                                            var status = ParseEnum<RequestStatus>(Value(row, "Status"));
+                                            var priority = ParseEnum<RequestPriority>(Value(row, "Priority"));
+                                            <tr class="hover:bg-surface-container-lowest transition-colors group">
+                                                <td class="p-md text-center">
+                                                    <a class="text-on-surface-variant hover:text-primary transition-colors no-underline" href="@($"Request/Details/{row.Id}")" title="Detay">
+                                                        <span class="material-symbols-outlined text-lg align-middle">visibility</span>
+                                                    </a>
+                                                </td>
+                                                <td class="p-md font-body-md text-body-md text-on-surface font-medium">@Value(row, "Name")</td>
+                                                <td class="p-md font-label-md text-label-md text-on-surface-variant">@Value(row, "RequestCategory_Name")</td>
+                                                <td class="p-md font-body-md text-body-md text-on-surface">@Value(row, "CreatedByEmployee_Name")</td>
+                                                <td class="p-md font-label-md text-label-md text-on-surface-variant">@Value(row, "OwnerEmployee_Name")</td>
+                                                <td class="p-md">
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border"
+                                                          style="@GetStatusPillStyle(status)">
+                                                        @(status.HasValue ? GetStatusLabel(status.Value) : "—")
+                                                    </span>
+                                                </td>
+                                                <td class="p-md font-label-md text-label-md" style="color:@GetPriorityColorOrDefault(priority);">
+                                                    @(priority.HasValue ? GetPriorityLabel(priority.Value) : "—")
+                                                </td>
+                                                <td class="p-md font-mono-code text-mono-code text-on-surface-variant">@FormatDate(Value(row, "AddedDate"))</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="8" class="p-lg text-center text-on-surface-variant font-body-md text-body-md">Kayıt bulunamadı.</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <div class="h-lg"></div>
+                }
+            </div>
+        </div>
+    </main>
+</div>
+
+@code {
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
+    [Inject] public ApiClient<Request> RequestApi { get; set; } = default!;
+    [Inject] public ApiClient<RequestCategory> CategoryApi { get; set; } = default!;
+    [Inject] public ApiClient<Employee> EmployeeApi { get; set; } = default!;
+
+    private bool IsLoading = true;
+    private string _searchText = string.Empty;
+
+    private int TotalRequests;
+    private readonly Dictionary<RequestStatus, int> StatusCounts = new();
+    private readonly Dictionary<RequestPriority, int> PriorityCounts = new();
+    private List<CategorySlice> CategoryBreakdown = new();
+    private TableDTO? RecentRequests;
+    private string DonutGradient = "conic-gradient(#1E293B 0deg 360deg)";
+
+    private record CategorySlice(string Name, int Count);
+
+    //Öncelik panelinde en kritikten en düşüğe sıralı göster.
+    private static readonly RequestPriority[] PriorityOrder =
+    {
+        RequestPriority.Critical, RequestPriority.High, RequestPriority.Normal, RequestPriority.Low
+    };
+
+    //Donut dilim renkleri (cyan ailesinden koyudan açığa).
+    private static readonly string[] DonutColors =
+    {
+        "#22d3ee", "#2fd9f4", "#8aebff", "#006877", "#004e5a", "#b7c8e1", "#405065"
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            TotalRequests = await SelectCountAsync();
+
+            foreach (var status in Enum.GetValues<RequestStatus>())
+                StatusCounts[status] = await SelectCountAsync(status: status);
+
+            foreach (var priority in Enum.GetValues<RequestPriority>())
+                PriorityCounts[priority] = await SelectCountAsync(priority: priority);
+
+            await LoadCategoryBreakdownAsync();
+
+            RecentRequests = await RequestApi.SelectAsync(BuildRecentRequestsTable());
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    /// <summary>Kategori kırılımı: önce kategoriler çekilir, sonra her biri için FK filtreli sayım yapılır.
+    /// NOT: Bu N+1 istek demek (kategori sayısı kadar ek çağrı). Kategori sayısı azken sorun değil;
+    /// ileride API'ye tek seferde group-by dönen bir "istatistik" endpoint'i eklenirse buradaki döngü
+    /// tek çağrıya iner.</summary>
+    private async Task LoadCategoryBreakdownAsync()
+    {
+        var categoriesTable = await CategoryApi.SelectAsync(
+            new TableDTO("RequestCategory") { PageNumber = 1, PageSize = 50, ViewType = ViewType.ListView });
+
+        var slices = new List<CategorySlice>();
+
+        foreach (var row in categoriesTable?.Rows ?? new List<RowDTO>())
+        {
+            var name = Value(row, "Name")?.ToString();
+
+            if (string.IsNullOrWhiteSpace(name))
+                name = "(isimsiz)";
+
+            slices.Add(new CategorySlice(name, await SelectCountAsync(categoryId: row.Id)));
+        }
+
+        CategoryBreakdown = slices.Where(s => s.Count > 0)
+                                  .OrderByDescending(s => s.Count)
+                                  .ToList();
+
+        DonutGradient = BuildDonutGradient();
+    }
+
+    private string BuildDonutGradient()
+    {
+        var total = CategoryBreakdown.Sum(s => s.Count);
+
+        if (total == 0)
+            return "conic-gradient(#1E293B 0deg 360deg)";
+
+        var builder = new StringBuilder("conic-gradient(");
+        double cursor = 0;
+
+        for (var i = 0; i < CategoryBreakdown.Count; i++)
+        {
+            var end = cursor + (CategoryBreakdown[i].Count * 360d / total);
+
+            if (i > 0)
+                builder.Append(", ");
+
+            builder.Append(CultureInfo.InvariantCulture,
+                           $"{DonutColors[i % DonutColors.Length]} {cursor:0.##}deg {end:0.##}deg");
+
+            cursor = end;
+        }
+
+        return builder.Append(')').ToString();
+    }
+
+    /// <summary>Tek bir filtreli sayım çağrısı. Hiç filtre verilmezse toplam kayıt sayısını döner.</summary>
+    private async Task<int> SelectCountAsync(RequestStatus? status = null,
+                                             RequestPriority? priority = null,
+                                             Guid? categoryId = null)
+    {
+        var table = new TableDTO("Request") { PageSize = 1, PageNumber = 1, ViewType = ViewType.ListView };
+
+        var isFiltered = false;
+
+        if (status != null)
+        {
+            table.AlterOrAddMetaColumn(
+                MetaColumnDTO.CreateColumnDTOWithEqualFilter("Status", null, (int)status.Value, useFilterToCreateViewComponent: false));
+            isFiltered = true;
+        }
+
+        if (priority != null)
+        {
+            table.AlterOrAddMetaColumn(
+                MetaColumnDTO.CreateColumnDTOWithEqualFilter("Priority", null, (int)priority.Value, useFilterToCreateViewComponent: false));
+            isFiltered = true;
+        }
+
+        if (categoryId != null)
+        {
+            table.AlterOrAddMetaColumn(
+                MetaColumnDTO.CreateColumnDTOWithEqualFilter("RequestCategoryId", null, categoryId.Value, useFilterToCreateViewComponent: false));
+            isFiltered = true;
+        }
+
+        var result = await RequestApi.SelectAsync(table);
+
+        return isFiltered
+                    ? result?.FilteredTotalRecordsCount ?? 0
+                    : result?.TotalRecordsCount ?? 0;
+    }
+
+    private TableDTO BuildRecentRequestsTable()
+    {
+        var table = new TableDTO("Request") { PageSize = 8, PageNumber = 1, ViewType = ViewType.ListView };
+
+        table.AlterOrAddMetaColumn(
+            MetaColumnDTO.CreateColumnDTOToOrder("AddedDate", null, Hydra.DataModels.SortingDirection.Descending));
+
+        return table;
+    }
+
+    private void OnSearchKeyDown(KeyboardEventArgs e)
+    {
+        //Basit arama: Talep listesine, başlık filtresi query string'i ile git.
+        if (e.Key != "Enter" || string.IsNullOrWhiteSpace(_searchText))
+            return;
+
+        Navigation.NavigateTo($"Request?Name={Uri.EscapeDataString(_searchText.Trim())}");
+    }
+
+    private static object? Value(RowDTO row, string columnName) => row.GetValueByColumnName(columnName);
+
+    private static T? ParseEnum<T>(object? value) where T : struct, Enum
+    {
+        var text = value?.ToString();
+
+        if (string.IsNullOrWhiteSpace(text))
+            return null;
+
+        if (int.TryParse(text, out var numeric) && Enum.IsDefined(typeof(T), numeric))
+            return (T)Enum.ToObject(typeof(T), numeric);
+
+        return Enum.TryParse<T>(text, ignoreCase: true, out var parsed) ? parsed : null;
+    }
+
+    private static string FormatDate(object? value)
+        => DateTime.TryParse(value?.ToString(), out var date) ? date.ToString("dd.MM.yyyy") : string.Empty;
+
+    private int GetStatusCount(RequestStatus status)
+        => StatusCounts.TryGetValue(status, out var count) ? count : 0;
+
+    private int GetPriorityCount(RequestPriority priority)
+        => PriorityCounts.TryGetValue(priority, out var count) ? count : 0;
+
+    private int GetStatusPercent(RequestStatus status)
+        => TotalRequests > 0 ? (int)Math.Round(GetStatusCount(status) * 100d / TotalRequests) : 0;
+
+    private static string GetStatusLabel(RequestStatus status) => status switch
+    {
+        RequestStatus.Open => "Açık",
+        RequestStatus.InProgress => "Devam Ediyor",
+        RequestStatus.Waiting => "Bekliyor",
+        RequestStatus.Completed => "Tamamlandı",
+        RequestStatus.Cancelled => "İptal",
+        _ => status.ToString()
+    };
+
+    private static string GetStatusColor(RequestStatus status) => status switch
+    {
+        RequestStatus.Open => "#ffb4ab",        // error / dikkat
+        RequestStatus.InProgress => "#22d3ee",  // primary-container
+        RequestStatus.Waiting => "#b7c8e1",     // tertiary-fixed-dim
+        RequestStatus.Completed => "#8aebff",   // primary
+        RequestStatus.Cancelled => "#3c494c",   // outline-variant
+        _ => "#3c494c"
+    };
+
+    private static string GetStatusPillStyle(RequestStatus? status)
+    {
+        if (status == null)
+            return "color:#bbc9cd; border-color:#3c494c;";
+
+        var color = GetStatusColor(status.Value);
+
+        return $"color:{color}; border-color:{color}59; background-color:{color}1a;";
+    }
+
+    private static string GetPriorityLabel(RequestPriority priority) => priority switch
+    {
+        RequestPriority.Low => "Düşük",
+        RequestPriority.Normal => "Normal",
+        RequestPriority.High => "Yüksek",
+        RequestPriority.Critical => "Kritik",
+        _ => priority.ToString()
+    };
+
+    private static string GetPriorityColorOrDefault(RequestPriority? priority)
+        => priority.HasValue ? GetPriorityColor(priority.Value) : "#bbc9cd";
+
+    private static string GetPriorityColor(RequestPriority priority) => priority switch
+    {
+        RequestPriority.Critical => "#ffb4ab",
+        RequestPriority.High => "#2fd9f4",
+        RequestPriority.Normal => "#8aebff",
+        RequestPriority.Low => "#bbc9cd",
+        _ => "#bbc9cd"
+    };
+}
