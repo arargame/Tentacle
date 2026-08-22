@@ -138,25 +138,25 @@
             <nav class="p-md space-y-lg">
                 <!-- İş Takip -->
                 <div>
-                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">İş Takip</h3>
+                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Work Tracking</h3>
                     <ul class="space-y-xs list-none p-0 m-0">
                         <li>
                             <a class="flex items-center px-sm py-2 rounded text-primary bg-primary/10 luminescent-glow font-label-md text-label-md relative no-underline" href="Request">
                                 <span class="absolute left-0 top-1/2 -translate-y-1/2 -ml-0.5 thread-indicator"></span>
                                 <span class="material-symbols-outlined mr-sm text-lg">list_alt</span>
-                                Talepler
+                                Requests
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="RequestCategory">
                                 <span class="material-symbols-outlined mr-sm text-lg">category</span>
-                                Kategoriler
+                                Categories
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="RequestCategoryResponsiblePosition">
                                 <span class="material-symbols-outlined mr-sm text-lg">rule</span>
-                                Kategori Sorumluları
+                                Category Responsibilities
                             </a>
                         </li>
                     </ul>
@@ -164,24 +164,24 @@
 
                 <!-- İnsan Kaynakları -->
                 <div>
-                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">İnsan Kaynakları</h3>
+                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Human Resources</h3>
                     <ul class="space-y-xs list-none p-0 m-0">
                         <li>
                             <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Employee">
                                 <span class="material-symbols-outlined mr-sm text-lg">group</span>
-                                Çalışanlar
+                                Employees
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Position">
                                 <span class="material-symbols-outlined mr-sm text-lg">badge</span>
-                                Pozisyonlar
+                                Positions
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="OrganizationUnit">
                                 <span class="material-symbols-outlined mr-sm text-lg">account_tree</span>
-                                Birimler
+                                Organization Units
                             </a>
                         </li>
                     </ul>
@@ -189,24 +189,24 @@
 
                 <!-- Yönetim -->
                 <div>
-                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Yönetim</h3>
+                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Administration</h3>
                     <ul class="space-y-xs list-none p-0 m-0">
                         <li>
                             <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="SystemUser">
                                 <span class="material-symbols-outlined mr-sm text-lg">manage_accounts</span>
-                                Kullanıcılar
+                                Users
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Role">
                                 <span class="material-symbols-outlined mr-sm text-lg">security</span>
-                                Roller
+                                Roles
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Permission">
                                 <span class="material-symbols-outlined mr-sm text-lg">key</span>
-                                İzinler
+                                Permissions
                             </a>
                         </li>
                     </ul>
@@ -221,8 +221,8 @@
                     <span class="material-symbols-outlined text-on-surface-variant">person</span>
                 </div>
                 <div>
-                    <p class="font-label-md text-label-md text-on-surface m-0 group-hover:text-primary transition-colors">Oturum açılmadı</p>
-                    <p class="font-label-sm text-label-sm text-on-surface-variant m-0">Giriş yap</p>
+                    <p class="font-label-md text-label-md text-on-surface m-0 group-hover:text-primary transition-colors">Not signed in</p>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant m-0">Sign in</p>
                 </div>
             </a>
         </div>
@@ -238,14 +238,14 @@
                 <div class="relative hidden lg:block">
                     <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
                     <input class="bg-surface border border-outline-variant rounded pl-10 pr-sm py-1.5 font-body-md text-body-md text-on-surface focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary w-64 placeholder-on-surface-variant/50 transition-colors"
-                           placeholder="Taleplerde ara..." type="text"
+                           placeholder="Search requests..." type="text"
                            value="@_searchText"
                            @oninput="e => _searchText = e.Value?.ToString() ?? string.Empty"
                            @onkeydown="OnSearchKeyDown" />
                 </div>
                 <a href="Request/Create" class="bg-primary-container text-surface px-md py-1.5 rounded font-label-md text-label-md font-bold uppercase tracking-wider flex items-center gap-xs hover:bg-primary transition-colors luminescent-glow no-underline">
                     <span class="material-symbols-outlined text-sm">add</span>
-                    Yeni Talep
+                    New Request
                 </a>
             </div>
         </header>
@@ -258,7 +258,7 @@
                 {
                     <div class="flex items-center justify-center py-xl gap-sm text-on-surface-variant">
                         <span class="material-symbols-outlined animate-spin">progress_activity</span>
-                        Yükleniyor...
+                        Loading...
                     </div>
                 }
                 else
@@ -267,7 +267,7 @@
                     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
                         <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                             <div class="flex justify-between items-start mb-md">
-                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Toplam Talep</h3>
+                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Total Requests</h3>
                                 <span class="material-symbols-outlined text-primary">data_usage</span>
                             </div>
                             <div class="flex items-end justify-between">
@@ -278,7 +278,7 @@
                         <div class="level-1-card rounded-lg p-lg flex flex-col justify-between relative overflow-hidden">
                             <div class="absolute inset-0 bg-primary/5"></div>
                             <div class="flex justify-between items-start mb-md relative z-10">
-                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Açık</h3>
+                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Open</h3>
                                 <span class="material-symbols-outlined text-error">radio_button_unchecked</span>
                             </div>
                             <div class="flex items-end justify-between relative z-10">
@@ -289,7 +289,7 @@
 
                         <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                             <div class="flex justify-between items-start mb-md">
-                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Devam Ediyor</h3>
+                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">In Progress</h3>
                                 <span class="material-symbols-outlined text-primary-fixed-dim">hourglass_empty</span>
                             </div>
                             <div class="flex items-end justify-between">
@@ -300,7 +300,7 @@
 
                         <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                             <div class="flex justify-between items-start mb-md">
-                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Tamamlandı</h3>
+                                <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Completed</h3>
                                 <span class="material-symbols-outlined text-on-surface-variant">check_circle</span>
                             </div>
                             <div class="flex items-end justify-between">
@@ -312,7 +312,7 @@
 
                     <!-- Durum Dağılımı -->
                     <section class="level-1-card rounded-lg p-lg">
-                        <h3 class="font-label-md text-label-md text-on-surface-variant mb-md m-0">Genel Durum Dağılımı</h3>
+                        <h3 class="font-label-md text-label-md text-on-surface-variant mb-md m-0">Global Status Distribution</h3>
                         <div class="w-full h-4 rounded-full flex overflow-hidden bg-surface">
                             @foreach (var status in Enum.GetValues<RequestStatus>())
                             {
@@ -343,7 +343,7 @@
                         <!-- Kategoriye Göre Talepler (gerçek donut) -->
                         <div class="level-1-card rounded-lg lg:col-span-1 flex flex-col">
                             <div class="p-md bg-surface-container-low border-b border-outline-variant">
-                                <h3 class="font-label-md text-label-md text-on-surface m-0">Kategoriye Göre Talepler</h3>
+                                <h3 class="font-label-md text-label-md text-on-surface m-0">Requests by Category</h3>
                             </div>
                             <div class="p-lg flex-1 flex flex-col items-center justify-center gap-md min-h-[300px]">
                                 <div class="w-48 h-48 rounded-full relative flex items-center justify-center shrink-0"
@@ -351,7 +351,7 @@
                                     <div class="w-28 h-28 rounded-full flex items-center justify-center text-center" style="background-color:#111827;">
                                         <div>
                                             <span class="block font-headline-md text-headline-md text-on-surface">@CategoryBreakdown.Count</span>
-                                            <span class="block font-label-sm text-label-sm text-on-surface-variant">Kategori</span>
+                                            <span class="block font-label-sm text-label-sm text-on-surface-variant">Categories</span>
                                         </div>
                                     </div>
                                 </div>
@@ -370,7 +370,7 @@
                                     }
                                     @if (CategoryBreakdown.Count == 0)
                                     {
-                                        <li class="text-center text-on-surface-variant font-label-sm text-label-sm">Kategori bulunamadı.</li>
+                                        <li class="text-center text-on-surface-variant font-label-sm text-label-sm">No categories found.</li>
                                     }
                                 </ul>
                             </div>
@@ -379,9 +379,9 @@
                         <!-- Önceliğe Göre Talepler -->
                         <div class="level-1-card rounded-lg lg:col-span-2 flex flex-col">
                             <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
-                                <h3 class="font-label-md text-label-md text-on-surface m-0">Önceliğe Göre Talepler</h3>
+                                <h3 class="font-label-md text-label-md text-on-surface m-0">Requests by Priority</h3>
                                 <a href="Request" class="text-primary hover:text-primary-container text-sm flex items-center gap-xs transition-colors no-underline">
-                                    Tümünü Gör <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                    View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                 </a>
                             </div>
                             <div class="flex-1 p-0">
@@ -397,7 +397,7 @@
                                                 <div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary font-label-md text-label-md group-hover:luminescent-glow transition-shadow">@rank</div>
                                                 <div>
                                                     <p class="font-body-md text-body-md text-on-surface m-0">@GetPriorityLabel(priority)</p>
-                                                    <p class="font-label-sm text-label-sm text-on-surface-variant m-0">Toplamın %@(percent)'i</p>
+                                                    <p class="font-label-sm text-label-sm text-on-surface-variant m-0">@(percent)% of total</p>
                                                 </div>
                                             </div>
                                             <div class="flex items-center gap-lg">
@@ -416,9 +416,9 @@
                     <!-- Son Talepler -->
                     <section class="level-1-card rounded-lg flex flex-col overflow-hidden">
                         <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
-                            <h3 class="font-label-md text-label-md text-on-surface m-0">Son Talepler</h3>
+                            <h3 class="font-label-md text-label-md text-on-surface m-0">Recent Requests</h3>
                             <a href="Request" class="px-sm py-1 border border-outline-variant rounded font-label-sm text-label-sm text-on-surface hover:border-primary transition-colors flex items-center gap-xs no-underline">
-                                <span class="material-symbols-outlined text-sm">filter_list</span> Filtrele
+                                <span class="material-symbols-outlined text-sm">filter_list</span> Filter
                             </a>
                         </div>
                         <div class="overflow-x-auto">
@@ -426,13 +426,13 @@
                                 <thead>
                                     <tr class="border-b border-outline-variant bg-surface-container-lowest/50">
                                         <th class="p-md font-label-sm text-label-sm text-on-surface-variant w-12"></th>
-                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Başlık</th>
-                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Kategori</th>
-                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Talep Eden</th>
-                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Sorumlu</th>
-                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Durum</th>
-                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Öncelik</th>
-                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Tarih</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Title</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Category</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Requested By</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Owner</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Status</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Priority</th>
+                                        <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-outline-variant">
@@ -444,7 +444,7 @@
                                             var priority = ParseEnum<RequestPriority>(Value(row, "Priority"));
                                             <tr class="hover:bg-surface-container-lowest transition-colors group">
                                                 <td class="p-md text-center">
-                                                    <a class="text-on-surface-variant hover:text-primary transition-colors no-underline" href="@($"Request/Details/{row.Id}")" title="Detay">
+                                                    <a class="text-on-surface-variant hover:text-primary transition-colors no-underline" href="@($"Request/Details/{row.Id}")" title="Details">
                                                         <span class="material-symbols-outlined text-lg align-middle">visibility</span>
                                                     </a>
                                                 </td>
@@ -468,7 +468,7 @@
                                     else
                                     {
                                         <tr>
-                                            <td colspan="8" class="p-lg text-center text-on-surface-variant font-body-md text-body-md">Kayıt bulunamadı.</td>
+                                            <td colspan="8" class="p-lg text-center text-on-surface-variant font-body-md text-body-md">No records found.</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -485,6 +485,7 @@
 
 @code {
     [Inject] public NavigationManager Navigation { get; set; } = default!;
+    [Inject] public LookupService Lookup { get; set; } = default!;
     [Inject] public ApiClient<Request> RequestApi { get; set; } = default!;
     [Inject] public ApiClient<RequestCategory> CategoryApi { get; set; } = default!;
     [Inject] public ApiClient<Employee> EmployeeApi { get; set; } = default!;
@@ -672,15 +673,10 @@
     private int GetStatusPercent(RequestStatus status)
         => TotalRequests > 0 ? (int)Math.Round(GetStatusCount(status) * 100d / TotalRequests) : 0;
 
-    private static string GetStatusLabel(RequestStatus status) => status switch
-    {
-        RequestStatus.Open => "Açık",
-        RequestStatus.InProgress => "Devam Ediyor",
-        RequestStatus.Waiting => "Bekliyor",
-        RequestStatus.Completed => "Tamamlandı",
-        RequestStatus.Cancelled => "İptal",
-        _ => status.ToString()
-    };
+    //Etiketler enum'un kendi [Display(Name = "...")] attribute'undan gelir (bkz. RequestEnums.cs);
+    //böylece dashboard, grid, detay ekranı ve dropdown'lar aynı metni gösterir.
+    private string GetStatusLabel(RequestStatus status)
+        => Lookup.GetEnumDisplayText(nameof(RequestStatus), ((int)status).ToString()) ?? status.ToString();
 
     private static string GetStatusColor(RequestStatus status) => status switch
     {
@@ -702,14 +698,8 @@
         return $"color:{color}; border-color:{color}59; background-color:{color}1a;";
     }
 
-    private static string GetPriorityLabel(RequestPriority priority) => priority switch
-    {
-        RequestPriority.Low => "Düşük",
-        RequestPriority.Normal => "Normal",
-        RequestPriority.High => "Yüksek",
-        RequestPriority.Critical => "Kritik",
-        _ => priority.ToString()
-    };
+    private string GetPriorityLabel(RequestPriority priority)
+        => Lookup.GetEnumDisplayText(nameof(RequestPriority), ((int)priority).ToString()) ?? priority.ToString();
 
     private static string GetPriorityColorOrDefault(RequestPriority? priority)
         => priority.HasValue ? GetPriorityColor(priority.Value) : "#bbc9cd";
