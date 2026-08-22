@@ -1,9 +1,9 @@
 @page "/Position"
 @using Hydra.Core.HumanResources
 
-<PageTitle>Pozisyonlar</PageTitle>
+<PageTitle>Positions</PageTitle>
 
-<GenericListView T="Position" Client="Client" Title="Pozisyonlar" />
+<GenericListView T="Position" Client="Client" Title="Positions" />
 
 @code {
     [Inject] public ApiClient<Position> Client { get; set; } = default!;

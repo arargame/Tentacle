@@ -1,9 +1,9 @@
 @page "/RequestCategoryResponsiblePosition/Details/{Id:guid}"
 @using HydraTentacle.Core.Models.Request
 
-<PageTitle>Sorumlu Pozisyon Detayı</PageTitle>
+<PageTitle>Category Responsibility Details</PageTitle>
 
-<GenericDetailsView T="RequestCategoryResponsiblePosition" Client="Client" Id="@Id" Title="Sorumlu Pozisyon Detayı" />
+<GenericDetailsView T="RequestCategoryResponsiblePosition" Client="Client" Id="@Id" Title="Category Responsibility Details" />
 
 @code {
     [Parameter] public Guid Id { get; set; }

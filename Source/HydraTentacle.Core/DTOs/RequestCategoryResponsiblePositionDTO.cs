@@ -26,14 +26,14 @@ namespace HydraTentacle.Core.DTOs
                 leftTableKeyName: "RequestCategoryId",
                 rightTableName: "RequestCategory",
                 columnNameToDisplay: "Name",
-                displayName: "Kategori"
+                displayName: "Category"
             );
 
             SetConfigurationsForNavigations(
                 leftTableKeyName: "PositionId",
                 rightTableName: "Position",
                 columnNameToDisplay: "Name",
-                displayName: "Pozisyon"
+                displayName: "Position"
             );
 
             SetConfigurationsForBaseObjectMembers();

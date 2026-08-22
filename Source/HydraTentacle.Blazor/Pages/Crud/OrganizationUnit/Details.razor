@@ -1,10 +1,10 @@
 @page "/OrganizationUnit/Details/{Id:guid}"
 @using Hydra.Core.HumanResources
 
-<PageTitle>Birim Detayı</PageTitle>
+<PageTitle>Organization Unit Details</PageTitle>
 
-<GenericDetailsView T="OrganizationUnit" Client="Client" Id="@Id" Title="Birim Detayı">
-    <CollectionViewSection Title="Birimdeki Pozisyonlar"
+<GenericDetailsView T="OrganizationUnit" Client="Client" Id="@Id" Title="Organization Unit Details">
+    <CollectionViewSection Title="Positions"
                            Controller="Position"
                            ForeignKeyName="OrganizationUnitId"
                            ParentId="@Id" />

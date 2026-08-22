@@ -1,9 +1,9 @@
 @page "/Request/Details/{Id:guid}"
 @using HydraTentacle.Core.Models.Request
 
-<PageTitle>Talep Detayı</PageTitle>
+<PageTitle>Request Details</PageTitle>
 
-<GenericDetailsView T="Request" Client="Client" Id="@Id" Title="Talep Detayı" />
+<GenericDetailsView T="Request" Client="Client" Id="@Id" Title="Request Details" />
 
 @code {
     [Parameter] public Guid Id { get; set; }

@@ -1,9 +1,9 @@
 @page "/RequestCategory/Create"
 @using HydraTentacle.Core.Models.Request
 
-<PageTitle>Yeni Kategori</PageTitle>
+<PageTitle>New Request Category</PageTitle>
 
-<GenericCreateView T="RequestCategory" Client="Client" Title="Yeni Kategori" />
+<GenericCreateView T="RequestCategory" Client="Client" Title="New Request Category" />
 
 @code {
     [Inject] public ApiClient<RequestCategory> Client { get; set; } = default!;

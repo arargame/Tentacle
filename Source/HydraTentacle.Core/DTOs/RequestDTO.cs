@@ -40,27 +40,27 @@ namespace HydraTentacle.Core.DTOs
             // Name
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<RequestDTO>(x => x.Name),
-                displayName: "Talep Başlığı",
+                displayName: "Title",
                 attributeToFilter: new AttributeToFilter(nameof(ContainsFilter))
             );
 
             // Description
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<RequestDTO>(x => x.Description),
-                displayName: "Açıklama",
+                displayName: "Description",
                 htmlElementTypeInCreationAndEdit: HtmlElementType.TextArea
             );
 
             // Status
             SetConfigurationsViaEnumPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<RequestDTO>(x => x.Status),
-                displayName: "Durum"
+                displayName: "Status"
             );
 
             // Priority
             SetConfigurationsViaEnumPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<RequestDTO>(x => x.Priority),
-                displayName: "Öncelik"
+                displayName: "Priority"
             );
 
             // DueDate
@@ -74,14 +74,14 @@ namespace HydraTentacle.Core.DTOs
                                               toOrder: new AttributeToOrder(isOrderable: true)),
                     new DetailsViewConfiguration()
                 },
-                displayName: "Termin Tarihi");
+                displayName: "Due Date");
 
             // Category Navigation (ListView/Details join kolonları + CreateView/Edit FK dropdown)
             SetConfigurationsForNavigations(
                 leftTableKeyName: "RequestCategoryId",
                 rightTableName: "RequestCategory",
                 columnNameToDisplay: "Name",
-                displayName: "Kategori"
+                displayName: "Category"
             );
 
             // CreatedByEmployee — Employee tablosuna alias'lı join.
@@ -92,7 +92,7 @@ namespace HydraTentacle.Core.DTOs
                 rightTableAlias: "CreatedByEmployee",
                 rightTableKeyName: "Id",
                 columnNameToDisplay: "Name",
-                displayName: "Talep Eden",
+                displayName: "Requested By",
                 leftTableName: "Request"
             );
 
@@ -103,7 +103,7 @@ namespace HydraTentacle.Core.DTOs
                 rightTableAlias: "OwnerEmployee",
                 rightTableKeyName: "Id",
                 columnNameToDisplay: "Name",
-                displayName: "Sorumlu",
+                displayName: "Owner",
                 leftTableName: "Request"
             );
 

@@ -1,9 +1,9 @@
 @page "/Permission/Create"
 @using Hydra.IdentityAndAccess
 
-<PageTitle>Yeni İzin</PageTitle>
+<PageTitle>New Permission</PageTitle>
 
-<GenericCreateView T="Permission" Client="Client" Title="Yeni İzin" />
+<GenericCreateView T="Permission" Client="Client" Title="New Permission" />
 
 @code {
     [Inject] public ApiClient<Permission> Client { get; set; } = default!;

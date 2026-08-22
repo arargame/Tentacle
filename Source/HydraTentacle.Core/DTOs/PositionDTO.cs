@@ -22,13 +22,13 @@ namespace HydraTentacle.Core.DTOs
         {
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<PositionDTO>(x => x.Name),
-                displayName: "Pozisyon Adı",
+                displayName: "Name",
                 attributeToFilter: new AttributeToFilter(nameof(ContainsFilter))
             );
 
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<PositionDTO>(x => x.Description),
-                displayName: "Açıklama",
+                displayName: "Description",
                 htmlElementTypeInCreationAndEdit: HtmlElementType.TextArea
             );
 
@@ -36,7 +36,7 @@ namespace HydraTentacle.Core.DTOs
                 leftTableKeyName: "OrganizationUnitId",
                 rightTableName: "OrganizationUnit",
                 columnNameToDisplay: "Name",
-                displayName: "Birim"
+                displayName: "Organization Unit"
             );
 
             SetConfigurationsForBaseObjectMembers();

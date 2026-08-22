@@ -1,9 +1,9 @@
 @page "/Role/Create"
 @using Hydra.AccessManagement
 
-<PageTitle>Yeni Rol</PageTitle>
+<PageTitle>New Role</PageTitle>
 
-<GenericCreateView T="Role" Client="Client" Title="Yeni Rol" />
+<GenericCreateView T="Role" Client="Client" Title="New Role" />
 
 @code {
     [Inject] public ApiClient<Role> Client { get; set; } = default!;

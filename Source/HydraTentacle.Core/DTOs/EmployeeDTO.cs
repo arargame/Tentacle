@@ -24,26 +24,26 @@ namespace HydraTentacle.Core.DTOs
         {
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<EmployeeDTO>(x => x.Name),
-                displayName: "Ad Soyad",
+                displayName: "Full Name",
                 attributeToFilter: new AttributeToFilter(nameof(ContainsFilter))
             );
 
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<EmployeeDTO>(x => x.Description),
-                displayName: "Açıklama",
+                displayName: "Description",
                 htmlElementTypeInCreationAndEdit: HtmlElementType.TextArea
             );
 
             SetConfigurationsViaBooleanPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<EmployeeDTO>(x => x.IsActiveEmployee),
-                displayName: "Aktif Çalışan"
+                displayName: "Active"
             );
 
             SetConfigurationsForNavigations(
                 leftTableKeyName: "PositionId",
                 rightTableName: "Position",
                 columnNameToDisplay: "Name",
-                displayName: "Pozisyon"
+                displayName: "Position"
             );
 
             SetConfigurationsForBaseObjectMembers();

@@ -1,15 +1,15 @@
 @page "/RequestCategory/Details/{Id:guid}"
 @using HydraTentacle.Core.Models.Request
 
-<PageTitle>Kategori Detayı</PageTitle>
+<PageTitle>Request Category Details</PageTitle>
 
-<GenericDetailsView T="RequestCategory" Client="Client" Id="@Id" Title="Kategori Detayı">
-    <CollectionViewSection Title="Bu Kategorideki Talepler"
+<GenericDetailsView T="RequestCategory" Client="Client" Id="@Id" Title="Request Category Details">
+    <CollectionViewSection Title="Requests"
                            Controller="Request"
                            ForeignKeyName="RequestCategoryId"
                            ParentId="@Id" />
 
-    <CollectionViewSection Title="Sorumlu Pozisyonlar"
+    <CollectionViewSection Title="Responsible Positions"
                            Controller="RequestCategoryResponsiblePosition"
                            ForeignKeyName="RequestCategoryId"
                            ParentId="@Id" />

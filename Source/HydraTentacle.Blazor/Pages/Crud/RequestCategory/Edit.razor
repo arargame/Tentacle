@@ -1,9 +1,9 @@
 @page "/RequestCategory/Update/{Id:guid}"
 @using HydraTentacle.Core.Models.Request
 
-<PageTitle>Kategori Düzenle</PageTitle>
+<PageTitle>Edit Request Category</PageTitle>
 
-<GenericEditView T="RequestCategory" Client="Client" Id="@Id" Title="Kategori Düzenle" />
+<GenericEditView T="RequestCategory" Client="Client" Id="@Id" Title="Edit Request Category" />
 
 @code {
     [Parameter] public Guid Id { get; set; }

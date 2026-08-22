@@ -1,9 +1,9 @@
 @page "/Role/Update/{Id:guid}"
 @using Hydra.AccessManagement
 
-<PageTitle>Rol Düzenle</PageTitle>
+<PageTitle>Edit Role</PageTitle>
 
-<GenericEditView T="Role" Client="Client" Id="@Id" Title="Rol Düzenle" />
+<GenericEditView T="Role" Client="Client" Id="@Id" Title="Edit Role" />
 
 @code {
     [Parameter] public Guid Id { get; set; }

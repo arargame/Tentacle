@@ -1,9 +1,9 @@
 @page "/SystemUser"
 @using Hydra.AccessManagement
 
-<PageTitle>Sistem Kullanıcıları</PageTitle>
+<PageTitle>Users</PageTitle>
 
-<GenericListView T="SystemUser" Client="Client" Title="Sistem Kullanıcıları" />
+<GenericListView T="SystemUser" Client="Client" Title="Users" />
 
 @code {
     [Inject] public ApiClient<SystemUser> Client { get; set; } = default!;

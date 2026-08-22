@@ -18,13 +18,13 @@ namespace HydraTentacle.Core.DTOs
         {
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<OrganizationUnitDTO>(x => x.Name),
-                displayName: "Birim Adı",
+                displayName: "Name",
                 attributeToFilter: new AttributeToFilter(nameof(ContainsFilter))
             );
 
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<OrganizationUnitDTO>(x => x.Description),
-                displayName: "Açıklama",
+                displayName: "Description",
                 htmlElementTypeInCreationAndEdit: HtmlElementType.TextArea
             );
 

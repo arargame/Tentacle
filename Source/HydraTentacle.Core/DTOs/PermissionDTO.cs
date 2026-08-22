@@ -26,13 +26,13 @@ namespace HydraTentacle.Core.DTOs
         {
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<PermissionDTO>(x => x.Name),
-                displayName: "İzin Adı",
+                displayName: "Name",
                 attributeToFilter: new AttributeToFilter(nameof(ContainsFilter))
             );
 
             SetConfigurationsViaEnumPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<PermissionDTO>(x => x.Type),
-                displayName: "İzin Tipi"
+                displayName: "Permission Type"
             );
 
             SetConfigurationsViaStringPropertyInfo(
@@ -52,12 +52,12 @@ namespace HydraTentacle.Core.DTOs
 
             SetConfigurationsViaBooleanPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<PermissionDTO>(x => x.AllowAnonymous),
-                displayName: "Anonim Erişim"
+                displayName: "Anonymous Access"
             );
 
             SetConfigurationsViaBooleanPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<PermissionDTO>(x => x.Enabled),
-                displayName: "Etkin"
+                displayName: "Enabled"
             );
 
             SetConfigurationsForBaseObjectMembers();

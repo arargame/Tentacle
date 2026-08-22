@@ -1,9 +1,9 @@
 @page "/OrganizationUnit/Create"
 @using Hydra.Core.HumanResources
 
-<PageTitle>Yeni Birim</PageTitle>
+<PageTitle>New Organization Unit</PageTitle>
 
-<GenericCreateView T="OrganizationUnit" Client="Client" Title="Yeni Birim" />
+<GenericCreateView T="OrganizationUnit" Client="Client" Title="New Organization Unit" />
 
 @code {
     [Inject] public ApiClient<OrganizationUnit> Client { get; set; } = default!;

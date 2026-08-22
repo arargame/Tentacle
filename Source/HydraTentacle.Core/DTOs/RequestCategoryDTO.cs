@@ -20,19 +20,19 @@ namespace HydraTentacle.Core.DTOs
         {
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<RequestCategoryDTO>(x => x.Name),
-                displayName: "Kategori Adı",
+                displayName: "Name",
                 attributeToFilter: new AttributeToFilter(nameof(ContainsFilter))
             );
 
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<RequestCategoryDTO>(x => x.Description),
-                displayName: "Açıklama",
+                displayName: "Description",
                 htmlElementTypeInCreationAndEdit: HtmlElementType.TextArea
             );
 
             SetConfigurationsViaBooleanPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<RequestCategoryDTO>(x => x.IsAssignable),
-                displayName: "Atanabilir"
+                displayName: "Assignable"
             );
 
             SetConfigurationsForBaseObjectMembers();

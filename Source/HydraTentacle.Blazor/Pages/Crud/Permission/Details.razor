@@ -1,9 +1,9 @@
 @page "/Permission/Details/{Id:guid}"
 @using Hydra.IdentityAndAccess
 
-<PageTitle>İzin Detayı</PageTitle>
+<PageTitle>Permission Details</PageTitle>
 
-<GenericDetailsView T="Permission" Client="Client" Id="@Id" Title="İzin Detayı" />
+<GenericDetailsView T="Permission" Client="Client" Id="@Id" Title="Permission Details" />
 
 @code {
     [Parameter] public Guid Id { get; set; }

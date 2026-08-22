@@ -12,7 +12,7 @@
 <nav class="tnt-nav" @onclick="NotifyNavigate">
 
     <div>
-        <h3 class="tnt-nav__group-title">Genel</h3>
+        <h3 class="tnt-nav__group-title">General</h3>
         <ul class="tnt-nav__list">
             <li>
                 <NavLink class="tnt-nav__link" href="Dashboard">
@@ -23,63 +23,63 @@
     </div>
 
     <div>
-        <h3 class="tnt-nav__group-title">İş Takip</h3>
+        <h3 class="tnt-nav__group-title">Work Tracking</h3>
         <ul class="tnt-nav__list">
             <li>
                 <NavLink class="tnt-nav__link" href="Request">
-                    <i class="bi bi-card-checklist"></i> Talepler
+                    <i class="bi bi-card-checklist"></i> Requests
                 </NavLink>
             </li>
             <li>
                 <NavLink class="tnt-nav__link" href="RequestCategory">
-                    <i class="bi bi-tags"></i> Kategoriler
+                    <i class="bi bi-tags"></i> Categories
                 </NavLink>
             </li>
             <li>
                 <NavLink class="tnt-nav__link" href="RequestCategoryResponsiblePosition">
-                    <i class="bi bi-diagram-3"></i> Kategori Sorumluları
+                    <i class="bi bi-diagram-3"></i> Category Responsibilities
                 </NavLink>
             </li>
         </ul>
     </div>
 
     <div>
-        <h3 class="tnt-nav__group-title">İnsan Kaynakları</h3>
+        <h3 class="tnt-nav__group-title">Human Resources</h3>
         <ul class="tnt-nav__list">
             <li>
                 <NavLink class="tnt-nav__link" href="Employee">
-                    <i class="bi bi-people"></i> Çalışanlar
+                    <i class="bi bi-people"></i> Employees
                 </NavLink>
             </li>
             <li>
                 <NavLink class="tnt-nav__link" href="Position">
-                    <i class="bi bi-person-badge"></i> Pozisyonlar
+                    <i class="bi bi-person-badge"></i> Positions
                 </NavLink>
             </li>
             <li>
                 <NavLink class="tnt-nav__link" href="OrganizationUnit">
-                    <i class="bi bi-building"></i> Birimler
+                    <i class="bi bi-building"></i> Organization Units
                 </NavLink>
             </li>
         </ul>
     </div>
 
     <div>
-        <h3 class="tnt-nav__group-title">Yönetim</h3>
+        <h3 class="tnt-nav__group-title">Administration</h3>
         <ul class="tnt-nav__list">
             <li>
                 <NavLink class="tnt-nav__link" href="SystemUser">
-                    <i class="bi bi-person-gear"></i> Kullanıcılar
+                    <i class="bi bi-person-gear"></i> Users
                 </NavLink>
             </li>
             <li>
                 <NavLink class="tnt-nav__link" href="Role">
-                    <i class="bi bi-shield-lock"></i> Roller
+                    <i class="bi bi-shield-lock"></i> Roles
                 </NavLink>
             </li>
             <li>
                 <NavLink class="tnt-nav__link" href="Permission">
-                    <i class="bi bi-key"></i> İzinler
+                    <i class="bi bi-key"></i> Permissions
                 </NavLink>
             </li>
         </ul>
@@ -88,15 +88,15 @@
 
 <div class="tnt-sidebar__footer">
     <a class="tnt-sidebar__cta" href="Request/Create">
-        <i class="bi bi-plus-lg"></i> Yeni Talep
+        <i class="bi bi-plus-lg"></i> New Request
     </a>
 
     @* Auth akışı henüz bağlı değil; şimdilik giriş ekranına link. *@
     <a class="tnt-sidebar__minor" href="Login">
-        <i class="bi bi-box-arrow-in-right"></i> Giriş Yap
+        <i class="bi bi-box-arrow-in-right"></i> Sign In
     </a>
     <a class="tnt-sidebar__minor tnt-sidebar__minor--danger" href="">
-        <i class="bi bi-house-door"></i> Siteye Dön
+        <i class="bi bi-house-door"></i> Back to Site
     </a>
 </div>
 

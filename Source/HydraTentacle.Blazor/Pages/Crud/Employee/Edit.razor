@@ -1,9 +1,9 @@
 @page "/Employee/Update/{Id:guid}"
 @using Hydra.Core.HumanResources
 
-<PageTitle>Çalışan Düzenle</PageTitle>
+<PageTitle>Edit Employee</PageTitle>
 
-<GenericEditView T="Employee" Client="Client" Id="@Id" Title="Çalışan Düzenle" />
+<GenericEditView T="Employee" Client="Client" Id="@Id" Title="Edit Employee" />
 
 @code {
     [Parameter] public Guid Id { get; set; }

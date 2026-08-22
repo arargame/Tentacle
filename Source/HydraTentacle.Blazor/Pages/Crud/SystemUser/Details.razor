@@ -1,9 +1,9 @@
 @page "/SystemUser/Details/{Id:guid}"
 @using Hydra.AccessManagement
 
-<PageTitle>Kullanıcı Detayı</PageTitle>
+<PageTitle>User Details</PageTitle>
 
-<GenericDetailsView T="SystemUser" Client="Client" Id="@Id" Title="Kullanıcı Detayı" />
+<GenericDetailsView T="SystemUser" Client="Client" Id="@Id" Title="User Details" />
 
 @code {
     [Parameter] public Guid Id { get; set; }
