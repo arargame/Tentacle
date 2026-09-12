@@ -33,6 +33,8 @@ if %ERRORLEVEL% NEQ 0 (
 :RUN_APP
 echo.
 echo [3/3] Blazor UI baslatiliyor (http://localhost:5121)...
+echo Tarayici otomatik olarak aciliyor...
+start "" /min cmd /c "timeout /t 2 /nobreak >nul & start http://localhost:5121"
 dotnet run --project "%PROJECT%" -c Debug --no-build --launch-profile "http"
 if %ERRORLEVEL% NEQ 0 (
     echo.
