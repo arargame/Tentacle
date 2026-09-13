@@ -1,14 +1,21 @@
 @page "/Login"
 @layout EmptyLayout
+@attribute [AllowAnonymous]
 @inject NavigationManager Navigation
+@inject Hydra.RazorClassLibrary.Services.Authentication.IAuthenticationService AuthenticationService
 
 @* Tentacle giriş ekranı — Stitch'in ürettiği login tasarımının Blazor'a uyarlanmış hali.
    Tailwind CDN + Google Fonts sadece bu sayfada, HeadContent üzerinden yüklenir (Home.razor'daki
-   ile aynı desen). Gerçek kimlik doğrulama (Hydra AccessManagement / AuthenticationService /
-   HydraAuthenticationStateProvider) henüz bağlı değil (bkz. TENTACLE_SETUP.md, "Bilinen Kısıtlar") —
-   bu yüzden "Log In" şimdilik sadece Dashboard'a yönlendiren bir yer tutucu; gerçek auth akışı
-   kurulduğunda HandleLogin() içindeki TODO'yu değiştirmek yeterli. Şifre göster/gizle butonu ise
-   gerçekten çalışıyor.*@
+   ile aynı desen).
+
+   Kimlik doğrulama artık GERÇEK: HandleLogin, AuthenticationService.Login üzerinden
+   api/SystemUser/Login ucuna gidiyor, dönen JWT LocalStorage'a yazılıyor ve
+   HydraAuthenticationStateProvider'a haber veriliyor. Sunucu şifreyi PasswordHasher.Verify ile
+   kontrol ediyor (bkz. Academy 5.7). Başarısız girişte sunucu 401 + ResponseObject döndürüyor;
+   buradaki hata kutusu onu gösteriyor.
+
+   Bu sayfa [AllowAnonymous] taşır — HydraRouteGuard her rotayı varsayılan olarak kapattığı için
+   bu olmadan giriş ekranının kendisine de girilemezdi. *@
 
 <PageTitle>Login - Tentacle Engine</PageTitle>
 
@@ -165,10 +172,18 @@
                     </div>
                 </div>
 
+                @if (!string.IsNullOrEmpty(_errorMessage))
+                {
+                    <div class="flex items-start gap-sm p-md rounded border border-error/40 bg-error/10" role="alert">
+                        <span class="material-symbols-outlined text-error text-[20px]">error</span>
+                        <span class="font-body-md text-body-md text-error">@_errorMessage</span>
+                    </div>
+                }
+
                 <!-- Submit Button -->
-                <button class="w-full bg-primary-container text-surface-container-lowest font-label-md text-label-md py-md px-lg rounded font-bold uppercase tracking-wide hover:bg-primary transition-all duration-200 shadow-[0_0_12px_rgba(34,211,238,0.2)] hover:shadow-[0_0_16px_rgba(34,211,238,0.4)] active:scale-[0.98]"
-                        type="submit">
-                    Log In
+                <button class="w-full bg-primary-container text-surface-container-lowest font-label-md text-label-md py-md px-lg rounded font-bold uppercase tracking-wide hover:bg-primary transition-all duration-200 shadow-[0_0_12px_rgba(34,211,238,0.2)] hover:shadow-[0_0_16px_rgba(34,211,238,0.4)] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+                        type="submit" disabled="@_isBusy">
+                    @(_isBusy ? "Signing in..." : "Log In")
                 </button>
 
                 <!-- Divider -->
@@ -231,14 +246,52 @@
     private bool _showPassword;
     private string _email = string.Empty;
     private string _password = string.Empty;
+    private string? _errorMessage;
+    private bool _isBusy;
+
+    /// <summary>
+    /// HydraRouteGuard korunan bir sayfaya girmeye çalışan anonim kullanıcıyı buraya yollarken
+    /// nereye gitmek istediğini bu parametrede taşır — giriş başarılı olunca oraya dönüyoruz.
+    /// </summary>
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "returnUrl")]
+    public string? ReturnUrl { get; set; }
 
     private void TogglePasswordVisibility() => _showPassword = !_showPassword;
 
-    private void HandleLogin()
+    private async Task HandleLogin()
     {
-        //TODO: Gerçek kimlik doğrulama henüz bağlı değil (Hydra AccessManagement / AuthenticationService /
-        //HydraAuthenticationStateProvider hazır ama buraya kablolanmadı — bkz. TENTACLE_SETUP.md).
-        //Şimdilik tasarımı doğrulamak için doğrudan Dashboard'a yönlendiriyor.
-        Navigation.NavigateTo("Dashboard");
+        if (_isBusy)
+            return;
+
+        _errorMessage = null;
+        _isBusy = true;
+
+        try
+        {
+            var result = await AuthenticationService.Login(new Hydra.DTOs.ModelDTOs.SystemUserDTO.LoginViewDTO
+            {
+                UserNameOrEmailAddress = _email,
+                Password = _password
+            });
+
+            if (result is null)
+            {
+                //Sunucu "kullanıcı yok" ile "şifre yanlış" arasında bilerek ayrım yapmıyor:
+                //hangisi olduğunu söylemek, geçerli kullanıcı adlarını saymaya imkân verir.
+                _errorMessage = "We could not sign you in. Please check your email and password and try again.";
+                return;
+            }
+
+            Navigation.NavigateTo(string.IsNullOrWhiteSpace(ReturnUrl) ? "Dashboard" : ReturnUrl!);
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Sign in could not be completed: {ex.Message}";
+        }
+        finally
+        {
+            _isBusy = false;
+        }
     }
 }

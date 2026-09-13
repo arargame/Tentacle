@@ -28,10 +28,20 @@
     <link rel="stylesheet" href="@Assets["HydraTentacle.Blazor.styles.css"]" />
     <ImportMap />
     <link rel="icon" type="image/png" href="favicon.png" />
-    <HeadOutlet />
+    @* HeadOutlet, <Routes> ile AYNI render mode'da olmalı.
+
+       Home.razor ve Login.razor kendi Tailwind/font/CSS linklerini <HeadContent> üzerinden
+       yüklüyor. HeadContent, ancak kendisiyle aynı render ağacındaki bir HeadOutlet'e ulaşır:
+       HeadOutlet statik kalırsa interaktif sayfaların head içeriği hiç yazılmaz ve sayfa
+       tamamen stilsiz açılır. Resmî Blazor Web App şablonu da ikisine aynı mode'u verir. *@
+    <HeadOutlet @rendermode="InteractiveServer" />
 </head>
 
 <body>
+    @* Kimliğin LocalStorage'dan okunması (yani JS interop) prerender sırasında mümkün değil.
+       Bu sorun burada değil, HydraRouteGuard içinde çözülüyor: guard kararını ilk interaktif
+       render'a kadar erteliyor, prerender'da hiçbir şey çizmiyor. Herkese açık rotalar ise
+       prerender'da da çiziliyor — head içeriklerinin erken yazılabilmesi için. *@
     <Routes @rendermode="InteractiveServer" />
     <script src="_framework/blazor.web.js"></script>
 </body>

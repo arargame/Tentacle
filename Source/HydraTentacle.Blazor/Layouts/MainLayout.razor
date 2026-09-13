@@ -23,6 +23,10 @@
 
     <main class="tnt-main">
         <article class="tnt-content">
+            @* Başarısız API çağrıları artık sessizce yutulmuyor: 4xx/5xx burada görünür.
+               401/403 zaten yönlendiriliyor, o yüzden bu şerit onları göstermiyor. *@
+            <StatusMessageComponent />
+
             @Body
         </article>
     </main>

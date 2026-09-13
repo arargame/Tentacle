@@ -109,6 +109,11 @@ namespace HydraTentacle.WebApi
             });
 
 
+            //UseAuthentication ÖNCE gelmeli: kimliği kuran adım bu. Daha önce sadece
+            //UseAuthorization vardı, yani gelen Bearer token hiç okunmuyordu ve her istek
+            //anonim kabul ediliyordu (bkz. Academy 5.4 / 5.6).
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
 

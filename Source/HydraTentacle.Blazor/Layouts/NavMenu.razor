@@ -1,5 +1,14 @@
+@using System.Security.Claims
+@inject Hydra.RazorClassLibrary.Services.Authentication.IAuthenticationService AuthenticationService
+@inject NavigationManager Navigation
+
 @* Sol menü. Görünüm wwwroot/css/tentacle-theme.css içindeki .tnt-nav / .tnt-sidebar
-   class'larından gelir. NavLink aktif sayfaya "active" class'ı ekler, tema onu boyar. *@
+   class'larından gelir. NavLink aktif sayfaya "active" class'ı ekler, tema onu boyar.
+
+   Menü artık kullanıcının izinlerine göre çiziliyor (Academy 5.5'teki NavMenuBased katmanının
+   ilk hâli): token'daki "hydra:endpoint" claim'leri hangi controller'lara erişilebildiğini
+   söylüyor, erişilemeyen modülün linki DOM'a hiç basılmıyor. Bu bir güvenlik önlemi DEĞİL,
+   kullanıcıyı 403 duvarına yürütmeme nezaketi — asıl karar her istekte sunucuda veriliyor. *@
 
 <a class="tnt-sidebar__brand" href="">
     <span class="tnt-sidebar__mark"><i class="bi bi-broadcast"></i></span>
@@ -9,100 +18,182 @@
     </span>
 </a>
 
-<nav class="tnt-nav" @onclick="NotifyNavigate">
+<AuthorizeView Context="auth">
+    <Authorized>
+        <nav class="tnt-nav" @onclick="NotifyNavigate">
 
-    <div>
-        <h3 class="tnt-nav__group-title">General</h3>
-        <ul class="tnt-nav__list">
-            <li>
-                <NavLink class="tnt-nav__link" href="Dashboard">
-                    <i class="bi bi-speedometer2"></i> Dashboard
-                </NavLink>
-            </li>
-        </ul>
-    </div>
+            <div>
+                <h3 class="tnt-nav__group-title">General</h3>
+                <ul class="tnt-nav__list">
+                    <li>
+                        <NavLink class="tnt-nav__link" href="Dashboard">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
 
-    <div>
-        <h3 class="tnt-nav__group-title">Work Tracking</h3>
-        <ul class="tnt-nav__list">
-            <li>
-                <NavLink class="tnt-nav__link" href="Request">
-                    <i class="bi bi-card-checklist"></i> Requests
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="tnt-nav__link" href="RequestCategory">
-                    <i class="bi bi-tags"></i> Categories
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="tnt-nav__link" href="RequestCategoryResponsiblePosition">
-                    <i class="bi bi-diagram-3"></i> Category Responsibilities
-                </NavLink>
-            </li>
-        </ul>
-    </div>
+            @if (CanSeeAny(auth.User, "Request", "RequestCategory", "RequestCategoryResponsiblePosition"))
+            {
+                <div>
+                    <h3 class="tnt-nav__group-title">Work Tracking</h3>
+                    <ul class="tnt-nav__list">
+                        @if (CanSee(auth.User, "Request"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="Request">
+                                    <i class="bi bi-card-checklist"></i> Requests
+                                </NavLink>
+                            </li>
+                        }
+                        @if (CanSee(auth.User, "RequestCategory"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="RequestCategory">
+                                    <i class="bi bi-tags"></i> Categories
+                                </NavLink>
+                            </li>
+                        }
+                        @if (CanSee(auth.User, "RequestCategoryResponsiblePosition"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="RequestCategoryResponsiblePosition">
+                                    <i class="bi bi-diagram-3"></i> Category Responsibilities
+                                </NavLink>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
 
-    <div>
-        <h3 class="tnt-nav__group-title">Human Resources</h3>
-        <ul class="tnt-nav__list">
-            <li>
-                <NavLink class="tnt-nav__link" href="Employee">
-                    <i class="bi bi-people"></i> Employees
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="tnt-nav__link" href="Position">
-                    <i class="bi bi-person-badge"></i> Positions
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="tnt-nav__link" href="OrganizationUnit">
-                    <i class="bi bi-building"></i> Organization Units
-                </NavLink>
-            </li>
-        </ul>
-    </div>
+            @if (CanSeeAny(auth.User, "Employee", "Position", "OrganizationUnit"))
+            {
+                <div>
+                    <h3 class="tnt-nav__group-title">Human Resources</h3>
+                    <ul class="tnt-nav__list">
+                        @if (CanSee(auth.User, "Employee"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="Employee">
+                                    <i class="bi bi-people"></i> Employees
+                                </NavLink>
+                            </li>
+                        }
+                        @if (CanSee(auth.User, "Position"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="Position">
+                                    <i class="bi bi-person-badge"></i> Positions
+                                </NavLink>
+                            </li>
+                        }
+                        @if (CanSee(auth.User, "OrganizationUnit"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="OrganizationUnit">
+                                    <i class="bi bi-building"></i> Organization Units
+                                </NavLink>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
 
-    <div>
-        <h3 class="tnt-nav__group-title">Administration</h3>
-        <ul class="tnt-nav__list">
-            <li>
-                <NavLink class="tnt-nav__link" href="SystemUser">
-                    <i class="bi bi-person-gear"></i> Users
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="tnt-nav__link" href="Role">
-                    <i class="bi bi-shield-lock"></i> Roles
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="tnt-nav__link" href="Permission">
-                    <i class="bi bi-key"></i> Permissions
-                </NavLink>
-            </li>
-        </ul>
-    </div>
-</nav>
+            @if (CanSeeAny(auth.User, "SystemUser", "Role", "Permission"))
+            {
+                <div>
+                    <h3 class="tnt-nav__group-title">Administration</h3>
+                    <ul class="tnt-nav__list">
+                        @if (CanSee(auth.User, "SystemUser"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="SystemUser">
+                                    <i class="bi bi-person-gear"></i> Users
+                                </NavLink>
+                            </li>
+                        }
+                        @if (CanSee(auth.User, "Role"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="Role">
+                                    <i class="bi bi-shield-lock"></i> Roles
+                                </NavLink>
+                            </li>
+                        }
+                        @if (CanSee(auth.User, "Permission"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="Permission">
+                                    <i class="bi bi-key"></i> Permissions
+                                </NavLink>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </nav>
 
-<div class="tnt-sidebar__footer">
-    <a class="tnt-sidebar__cta" href="Request/Create">
-        <i class="bi bi-plus-lg"></i> New Request
-    </a>
+        <div class="tnt-sidebar__footer">
+            @if (CanSee(auth.User, "Request"))
+            {
+                <a class="tnt-sidebar__cta" href="Request/Create">
+                    <i class="bi bi-plus-lg"></i> New Request
+                </a>
+            }
 
-    @* Auth akışı henüz bağlı değil; şimdilik giriş ekranına link. *@
-    <a class="tnt-sidebar__minor" href="Login">
-        <i class="bi bi-box-arrow-in-right"></i> Sign In
-    </a>
-    <a class="tnt-sidebar__minor tnt-sidebar__minor--danger" href="">
-        <i class="bi bi-house-door"></i> Back to Site
-    </a>
-</div>
+            <div class="tnt-sidebar__user">
+                <i class="bi bi-person-circle"></i>
+                <span>@auth.User.DisplayName()</span>
+            </div>
+
+            <button type="button" class="tnt-sidebar__minor tnt-sidebar__minor--danger" @onclick="SignOut">
+                <i class="bi bi-box-arrow-right"></i> Sign Out
+            </button>
+        </div>
+    </Authorized>
+
+    <NotAuthorized>
+        <div class="tnt-sidebar__footer">
+            <a class="tnt-sidebar__cta" href="Login">
+                <i class="bi bi-box-arrow-in-right"></i> Sign In
+            </a>
+            <a class="tnt-sidebar__minor" href="">
+                <i class="bi bi-house-door"></i> Back to Site
+            </a>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+<style>
+    .tnt-sidebar__user {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 0;
+        font-size: 13px;
+        opacity: .75;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
 
 @code {
     /// <summary>Mobilde bir menü öğesine tıklanınca sidebar'ı kapatmak için MainLayout'a haber verir.</summary>
     [Parameter] public EventCallback OnNavigate { get; set; }
 
     private Task NotifyNavigate() => OnNavigate.InvokeAsync();
+
+    private static bool CanSee(ClaimsPrincipal user, string controller)
+        => user.CanAccessController(controller);
+
+    private static bool CanSeeAny(ClaimsPrincipal user, params string[] controllers)
+        => controllers.Any(c => user.CanAccessController(c));
+
+    private async Task SignOut()
+    {
+        await AuthenticationService.Logout();
+
+        Navigation.NavigateTo("Login", forceLoad: false, replace: true);
+    }
 }
