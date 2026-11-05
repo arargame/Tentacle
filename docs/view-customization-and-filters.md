@@ -84,3 +84,16 @@ Grid tablosunun alt kısmında, o anda tabloda uygulanan filtrelerin insan taraf
 
 - **`UserViewPreference`**: Kullanıcının gridlerde açıp kapattığı kolonları ve aktif filtreleri veritabanında saklayan entity. `SystemUserId` üzerinden kullanıcıya, `ViewKey` üzerinden ilgili ekrana bağlanır.
 - **`ColumnChooserModal`**: Kullanıcıların "Columns" butonuna tıklayarak istemedikleri kolonları gizleyebildikleri veya yeni kolon/filtre açabildikleri Blazor modal bileşeni.
+
+---
+
+## 6. Giriş Ekranı (Login) FOUC İyileştirmesi ve Hızlı Test Kolaylığı
+
+1. **FOUC (Flash of Unstyled Content) Engellendi:**
+   - İlk açılışta harici Tailwind CDN betiğinin geç yüklenmesi nedeniyle oluşan bozuk/kaymış görünüm ve devasa Google/Microsoft SVG ikonları sorunu çözüldü.
+   - `wwwroot/css/login.css` dosyası bağımsız saf CSS kuralları ile genişletildi ve `App.razor`'da statik olarak `<head>` içerisine bağlandı.
+   - Inline SVG bileşenlerine `width="20" height="20"` nitelikleri eklenerek stil gecikmelerinde dahi taşmaları önlendi.
+
+2. **Geliştirici Hızlı Giriş (⚡ 1-Click Admin Login):**
+   - Test ve geliştirme süreçlerinde her seferinde `admin@tentacle.com` ve `ChangeMe123!` yazma zahmetini ortadan kaldırmak için login formunun hemen üzerine bir **Hızlı Test Çubuğu** eklendi.
+   - Tek tıkla admin kimlik bilgilerini yükleyip doğrudan JWT oturumu açar ve Dashboard sayfasına yönlendirir.
