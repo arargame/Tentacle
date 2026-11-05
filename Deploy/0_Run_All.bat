@@ -9,6 +9,10 @@ echo.
 set "ROOT_DIR=%~dp0.."
 set "SLN=%ROOT_DIR%\HydraTentacle.sln"
 
+echo Onceki calisan ornekler sonlandiriliyor...
+taskkill /F /IM HydraTentacle.Blazor.exe 2>nul
+taskkill /F /IM HydraTentacle.WebApi.exe 2>nul
+
 echo [1/4] Tum solution bagimliliklari denetleniyor ve yukleniyor...
 dotnet restore "%SLN%"
 if %ERRORLEVEL% NEQ 0 (

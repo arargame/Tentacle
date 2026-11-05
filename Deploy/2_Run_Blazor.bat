@@ -9,6 +9,8 @@ echo.
 set "ROOT_DIR=%~dp0.."
 set "PROJECT=%ROOT_DIR%\Source\HydraTentacle.Blazor\HydraTentacle.Blazor.csproj"
 
+taskkill /F /IM HydraTentacle.Blazor.exe 2>nul
+
 if "%1"=="--no-build" goto RUN_APP
 
 echo [1/3] NuGet paket bagimliliklari denetleniyor ve yukleniyor...

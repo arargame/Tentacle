@@ -9,6 +9,8 @@ echo.
 set "ROOT_DIR=%~dp0.."
 set "PROJECT=%ROOT_DIR%\Source\HydraTentacle.WebApi\HydraTentacle.WebApi.csproj"
 
+taskkill /F /IM HydraTentacle.WebApi.exe 2>nul
+
 if "%1"=="--no-build" goto RUN_APP
 
 echo [1/3] NuGet paket bagimliliklari denetleniyor ve yukleniyor...
