@@ -52,17 +52,23 @@ SetConfigurationsForNavigations<UserViewPreferenceDTO, SystemUser>(
 
 ---
 
-## 3. Responsive Filtre Çubuğu (FilterBar) Izgarası
+## 3. Responsive Filtre Çubuğu (FilterBar) Izgarası ve Kompakt (Small Input) Standardı
 
-Filtre çubuğunda tüm alanların (`Name`, `Description`, `Added Date`, `Active`) eşit genişlikte bir ızgaraya oturması sağlanmıştır. Tarih aralığı filtreleri (`BetweenFilter`) diğer tekil filtrelerden daha fazla sütun kaplamaz (`span 1`); iki tarih kutusu ve aralarındaki ayırıcı (`–`) tek bir sütun hücresine kompakt şekilde sığdırılır:
+Filtre çubuğunda tüm alanların (`Name`, `Description`, `Added Date`, `Active`) eşit genişlikte bir ızgaraya oturması ve dikey alanı tasarruflu kullanarak okunaklılığı artırması sağlanmıştır:
+
+### 3.1 Kompakt Input Ölçüsü (form-control-sm Standardı):
+- **Yükseklik (Height)**: Hantal ve büyük kutular yerine Bootstrap `form-control-sm` standardı olan `1.875rem` (30px) sabit yükseklik uygulandı.
+- **İç Boşluk (Padding)**: `0.25rem 0.5rem` ile dikey boşluk israfı önlendi, metinler ortalandı.
+- **Yazı Tipi & Okunabilirlik**: `0.8125rem` (13px) net font boyutu ve `1.35` satır yüksekliği ile hem dar alanlarda taşma engellendi hem de okunabilirlik korundu.
+- **Karanlık Tema Paleti (Tentacle)**: Gözü yoran beyaz parlamalar kaldırılarak `#0f172a` (koyu slate) zemin, `#334155` ince çerçeve, `#f1f5f9` yüksek kontrastlı metin ve `#94a3b8` net placeholder renkleri sağlandı.
+- **Tarih Aralığı (BetweenFilter)**: İki tarih kutusu da aynı `1.875rem` (30px) yüksekliğe ve `0.78rem` fonta çekildi; takvim simgesi koyu temaya uygun olarak ters çevrildi (`filter: invert(0.8)`).
+- **Aksiyon Butonları**: `Clear` ve `Apply` butonları da `.hydra-btn--sm` ile 30px kompakt yüksekliğe getirildi.
 
 | Cihaz / Çözünürlük | Kolon Sayısı | Her Filtre Alanı (`Name`, `BetweenFilter` vb.) |
 |---|---|---|
 | **Masaüstü (Desktop)** | 4 Kolon (`grid-template-columns: repeat(4, 1fr)`) | `grid-column: span 1` (Tümü eşit 1 sütun) |
 | **Tablet (<= 1024px)** | 2 Kolon (`grid-template-columns: repeat(2, 1fr)`) | `grid-column: span 1` (Tümü eşit 1 sütun) |
 | **Mobil (<= 600px)** | 1 Kolon (`grid-template-columns: 1fr`) | `grid-column: span 1` (Tam genişlik) |
-
-`BetweenFilter` içindeki iki `date` input'u `flex: 1 1 0; min-width: 0; font-size: 0.75rem; text-align: center;` kurallarıyla boyutlandırılır ve `Name` alanıyla tam olarak aynı sütun genişliğini korur.
 
 ---
 
