@@ -182,4 +182,22 @@ Kullanıcı bir listede (örneğin `RequestCategory`) filtre uygulayıp başka b
    - Sol alttaki DevExpress tarzı aktif filtre paneli (`[Name] contains 'seed'`) görünmeye devam eder.
    - Kullanıcı filtreyi `Clear` butonu veya sol alttaki `[X]` ikonuyla temizlediğinde state otomatik olarak güncellenir.
 
+---
+
+## 8. Sonuç Bulunamadığında Tablo Bütünlüğünün Korunması (`Empty Row` Standardı)
+
+### 8.1. Sorun
+Filtre araması sonucunda eşleşen kayıt bulunamadığında (`Rows.Count == 0`), grid tüm tablo yapısını kaldırıp sadece boş bir `No records found` kutusu basıyordu. Bu durum:
+- Tablo başlıklarının (`NAME`, `DESCRIPTION`, `ACTIVE` vb.) kaybolmasına,
+- Sol alttaki DevExpress tarzı aktif filtre etiketinin (`[Name] contains 'test'`) ve silme butonunun (`[X]`) ekrandan silinmesine,
+- Kullanıcının filtreyi kaldırmak veya değiştirmek için boş bir ekrana bakmasına neden oluyordu.
+
+### 8.2. Çözüm
+- Kurumsal DataGrid standardına geçildi:
+  - Tablo başlıkları (`<thead>`) her zaman görünür kalır.
+  - Kayıt bulunamadığında `<tbody>` içine tüm sütunları kapsayan (`colspan="@TotalColumnCount"`) tek bir şık ve ortalanmış satır (`.hydra-grid__cell--empty`) eklenir:
+    `[i] No records found.`
+  - Tablonun altındaki aktif filtre paneli (`[Name] contains 'test' [X]`) ve sayaç görünmeye devam eder. Kullanıcı tek tıkla filtreyi kaldırabilir veya yeni filtre girebilir.
+
+
 
