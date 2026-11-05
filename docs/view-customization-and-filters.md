@@ -80,10 +80,29 @@ Grid tablosunun alt kısmında, o anda tabloda uygulanan filtrelerin insan taraf
 
 ---
 
-## 5. Dinamik Kolon Seçici ve Kullanıcı Tercihleri (Column Chooser & UserViewPreference)
+## 5. Dinamik Kolon Seçici ve Aday Kolon Mimarisi (Column Chooser & IsVisibleInColumnChooser)
+
+Kullanıcının varsayılan ekranda yer almayan alanları (örneğin `ModifiedDate`) sonradan Grid'e veya Filtre Çubuğuna ekleyebilmesi için iki katmanlı bayrak mimarisi kurulmuştur:
+
+### 5.1 Bayraklar ve Görevleri:
+- **`IsVisibleInListView` (bool, default: true)**: Alanın başlangıçta (sayfa ilk açıldığında) grid tablosunda ve filtre çubuğunda görünüp görünmeyeceğini belirler. `false` yapıldığında alan başlangıç tablosunda ve filtre barında yer almaz.
+- **`IsVisibleInColumnChooser` (bool, default: true)**: Alanın `ColumnChooserModal` (Kolon ve Filtre Özelleştirme) penceresinde kullanıcıya bir seçenek/aday kolon olarak sunulup sunulmayacağını belirler. `false` yapıldığında (ör. hassas hash'ler veya dahili join id'leri) modalda listelenmez.
+
+### 5.2 Aday Kolon (Candidate Column) Yaşam Döngüsü:
+1. `SetConfigurationsForBaseObjectMembers(category => category.ModifiedDate)` çağrıldığında `ModifiedDate` için:
+   - `IsVisibleInListView = false`
+   - `IsVisibleInColumnChooser = true`
+2. `TableDTO.BuildMetaColumnsFromConfiguration` ve `PrepareUsingConfigurations`:
+   - `IsVisibleInListView == true` olanları `SelectedColumn` olarak ekler (SQL SELECT'e girer, gridde görünür).
+   - `IsVisibleInListView == false` ve `IsVisibleInColumnChooser == true` olanları `MetaColumn` (aday kolon) olarak ekler (SQL SELECT'e girmez, gridde görünmez ama meta-veride taşınır).
+   - Filtre bileşeni için `CreateFilterComponentFromThis = false` set edilir (filtre barında ilk açılışta çıkmaz).
+3. `ColumnChooserModal.razor`:
+   - Modalda `ModifiedDate` listelenir, grid ve filtre onay kutuları (checkbox) **işaretsiz (unchecked)** olarak kullanıcının seçimine hazırdır.
+   - Kullanıcı `ModifiedDate` için "Show in Grid" veya "Filter Bar" işaretleyip **Apply** dediğinde; aday kolon `SelectedColumn` tipine dönüştürülür ve `TableChanged` ile API'ye gönderilir.
+   - API sorguyu yeniler, SQL `SELECT RequestCategory.ModifiedDate` işletilir ve hem tabloya hem filtre çubuğuna anında eklenir!
+   - Kullanıcı **Reset Defaults** dediğinde, tüm alanlar `MetaColumn.IsVisibleInListView` başlangıç değerlerine anında geri döner.
 
 - **`UserViewPreference`**: Kullanıcının gridlerde açıp kapattığı kolonları ve aktif filtreleri veritabanında saklayan entity. `SystemUserId` üzerinden kullanıcıya, `ViewKey` üzerinden ilgili ekrana bağlanır.
-- **`ColumnChooserModal`**: Kullanıcıların "Columns" butonuna tıklayarak istemedikleri kolonları gizleyebildikleri veya yeni kolon/filtre açabildikleri Blazor modal bileşeni.
 
 ---
 
