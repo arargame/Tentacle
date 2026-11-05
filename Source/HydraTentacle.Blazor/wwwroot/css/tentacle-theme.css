@@ -418,11 +418,50 @@ html, body {
 
 /* ------------------------------------------------------------ FilterBar */
 
+.hydra-filterbar__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--hydra-pad, 1rem);
+}
+
+.hydra-filterbar__field {
+    min-width: 0;
+}
+
 .hydra-filterbar__label {
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     color: var(--tnt-text-muted);
+}
+
+.hydra-filterbar__field--range {
+    grid-column: span 2;
+}
+
+/* Tablet / dar ekran: Satırda 2 filtre */
+@media (max-width: 1024px) {
+    .hydra-filterbar__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .hydra-filterbar__field--range {
+        grid-column: span 2;
+    }
+}
+
+/* Mobil: Satırda 1 filtre */
+@media (max-width: 600px) {
+    .hydra-filterbar__grid {
+        grid-template-columns: 1fr;
+    }
+    .hydra-filterbar__field--range {
+        grid-column: span 1;
+    }
+}
+
+.hydra-filterbar__range .hydra-input {
+    min-width: 0;
+    width: 100%;
 }
 
 /* ----------------------------------------------------------------- Grid */
@@ -435,9 +474,16 @@ html, body {
     background: rgba(17, 24, 39, 0.8);
 }
 
+.hydra-grid__search-icon {
+    left: 1rem;
+    color: var(--tnt-text-muted);
+    z-index: 1;
+}
+
 .hydra-grid__search-input {
     border-radius: 9999px;
-    padding-left: 2.25rem;
+    padding-left: 2.75rem !important;
+    padding-right: 1.25rem;
 }
 
 .hydra-grid__count {
@@ -677,7 +723,14 @@ html, body {
    Details ekranı — Tentacle görünümü
    ==================================================================== */
 
-.hydra-details { position: relative; }
+.hydra-details {
+    position: relative;
+    background: var(--tnt-card);
+    border: 1px solid var(--tnt-card-border);
+    border-radius: var(--hydra-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
 
 .hydra-details__empty {
     background: var(--tnt-card);
@@ -685,12 +738,14 @@ html, body {
     color: var(--tnt-text-muted);
 }
 
-/* --------------------------------------------------------- Başlık kartı */
+/* --------------------------------------------------------- Başlık ve İşlem Butonları */
 
 .hydra-details__header {
-    background: var(--tnt-card);
-    border: 1px solid var(--tnt-card-border);
-    border-radius: var(--hydra-radius);
+    background: rgba(17, 24, 39, 0.6);
+    border: none;
+    border-bottom: 1px solid var(--tnt-card-border);
+    border-radius: 0;
+    padding: 1.5rem 1.75rem;
 }
 
 .hydra-details__eyebrow { color: var(--tnt-cyan-soft); }
@@ -707,7 +762,7 @@ html, body {
 }
 
 .hydra-details__title {
-    font-size: 3rem;
+    font-size: 2.25rem;
     line-height: 1.15;
     color: var(--tnt-text);
 }
@@ -725,41 +780,48 @@ html, body {
     color: var(--tnt-error);
 }
 
-/* ---------------------------------------------------------- Özet kartı */
+/* ---------------------------------------------------------- Alanlar (Fields) */
 
-.hydra-details__summary {
-    background: var(--tnt-card);
-    border: 1px solid var(--tnt-card-border);
+.hydra-details__body {
+    display: flex;
+    flex-direction: column;
 }
 
-.hydra-details__summary-header {
-    background: var(--tnt-surface-high);
-    border-bottom: 1px solid rgba(60, 73, 76, 0.5);
+.hydra-details__summary-body {
+    padding: 1.75rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
 }
 
-.hydra-details__summary-title { font-size: 1rem; color: var(--tnt-text); }
+.hydra-details__pair-label {
+    color: var(--tnt-text-muted);
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
 
-.hydra-details__pair-label { color: var(--tnt-text-muted); }
-.hydra-details__pair-value { color: var(--tnt-text); }
+.hydra-details__pair-value {
+    color: var(--tnt-text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+}
+
 .hydra-details__link { color: var(--tnt-cyan-soft); }
 
-/* --------------------------------------------------------- Sekme kartı */
-
-.hydra-details__tabs-card {
-    background: var(--tnt-card);
-    border: 1px solid var(--tnt-card-border);
-}
+/* --------------------------------------------------------- Sekmeler (Tabs) */
 
 .hydra-details__tabstrip {
+    border-top: 1px solid var(--tnt-card-border);
     border-bottom: 1px solid rgba(60, 73, 76, 0.5);
+    background: rgba(17, 24, 39, 0.4);
     gap: 1.5rem;
-    padding: 0 1.5rem;
+    padding: 0 1.75rem;
 }
 
 .hydra-details__tab {
-    color: var(--tnt-text);
+    color: var(--tnt-text-muted);
     border-bottom-width: 4px;
-    padding: 0.5rem 1rem 0.75rem;
+    padding: 0.75rem 1rem;
 }
 
 .hydra-details__tab:hover {
@@ -772,6 +834,10 @@ html, body {
     border-bottom-color: var(--tnt-cyan);
     background: transparent;
     cursor: default;
+}
+
+.hydra-details__tabpanels {
+    padding: 1.75rem;
 }
 
 /* ------------------------------------------------------ Collection view */

@@ -35,7 +35,7 @@ namespace HydraTentacle.Core.DTOs
                 displayName: "Assignable"
             );
 
-            SetConfigurationsForBaseObjectMembers();
+            SetConfigurationsForBaseObjectMembers(x => x.ModifiedDate);
 
             return this;
         }
