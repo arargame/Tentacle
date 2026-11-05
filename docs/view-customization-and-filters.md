@@ -199,5 +199,29 @@ Filtre araması sonucunda eşleşen kayıt bulunamadığında (`Rows.Count == 0`
     `[i] No records found.`
   - Tablonun altındaki aktif filtre paneli (`[Name] contains 'test' [X]`) ve sayaç görünmeye devam eder. Kullanıcı tek tıkla filtreyi kaldırabilir veya yeni filtre girebilir.
 
+---
+
+## 9. State Hidrasyonunda Kanonik Kolon Tiplerinin (ValueType) Korunması
+
+### 9.1. Sorun
+Sayfa ilk açılışında kayıtlı filtreler geri yüklenirken `Name` gibi metin (String) giriş alanlarının bir anda `— All —`, `Yes`, `No` seçeneklerine sahip Boolean bir Dropdown'a dönüşmesi problemi gözlemlendi.
+- **Kök Neden:**
+  1. `ColumnValueType` enum'ının 0. indeksteki ilk elemanı `Boolean`'dır (`public enum ColumnValueType { Boolean = 0, ... }`).
+  2. `TableStateManager.ApplyStateToRequest`, tablo henüz backend'den çekilmeden önce `MetaColumnDTO.CreateColumnDTOWithContainsFilter` metodunu kullanarak boş istek nesnesine sentetik bir DTO enjekte ediyordu.
+  3. `CreateColumnDTOWithContainsFilter` metodu içerisinde `ValueType` açıkça atanmadığından C# varsayılanı olarak `0` (`ColumnValueType.Boolean`) değerini alıyordu.
+  4. Backend bu sentetik kolonu alıp geri gönderdiğinde, `Name` kolonunun tipi `Boolean` olarak işaretlenmiş oluyor ve `FilterBarComponent.razor` bileşeni `column.ValueType == ColumnValueType.Boolean` şartı sağlandığı için metin kutusu yerine evet/hayır dropdown'ı basıyordu.
+
+### 9.2. Çözüm
+1. **Kanonik Metadata Önceliği (`GenericListView.razor`):**
+   - Sayfa ilk açıldığında doğrudan backend'den tam `TableDTO` (orijinal tipler: `String`, `Boolean`, `DateTime`) çekilir.
+   - Ardından saklanan state (`savedState`) mevcut tablo kolonları üzerinden eşleştirilerek sadece filtre parametreleri (`FilterDTO.SetParameters(...)`) giydirilir; kolon tipleri asla ezilmez.
+   - Eğer filtre varsa, filtreli veri sorgusu tam `TableDTO` ile sunucuya iletilir.
+2. **FilterBar Tip İzolasyonu (`FilterBarComponent.razor`):**
+   - Input tipi belirleme mantığında `Enum`, `Boolean` ve `ForeignKey` dışındaki alanların options cache'i (`_optionsByField`) temizlenerek bir String alanın select render etmesi imkansız hale getirildi.
+   - Aktif filtre temizlendiğinde veya harici olarak sıfırlandığında input değerleri (`_rawValues`) senkron şekilde sıfırlanır.
+3. **DTO Fabrika Metodu İyileştirmesi (`MetaColumnDTO.cs`):**
+   - `CreateColumnDTOWithContainsFilter` metodu artık açıkça `col.ValueType = ColumnValueType.String;` atamasını yapar.
+
+
 
 
