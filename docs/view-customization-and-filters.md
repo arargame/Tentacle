@@ -54,15 +54,15 @@ SetConfigurationsForNavigations<UserViewPreferenceDTO, SystemUser>(
 
 ## 3. Responsive Filtre Çubuğu (FilterBar) Izgarası
 
-Filtre çubuğunda tarih aralığı filtrelerinin (`BetweenFilter`) 2 ayrı `date` input'u içermesi nedeniyle sütun genişliğine sığmaması ve taşması problemi çözülmüştür:
+Filtre çubuğunda tüm alanların (`Name`, `Description`, `Added Date`, `Active`) eşit genişlikte bir ızgaraya oturması sağlanmıştır. Tarih aralığı filtreleri (`BetweenFilter`) diğer tekil filtrelerden daha fazla sütun kaplamaz (`span 1`); iki tarih kutusu ve aralarındaki ayırıcı (`–`) tek bir sütun hücresine kompakt şekilde sığdırılır:
 
-| Cihaz / Çözünürlük | Kolon Sayısı | BetweenFilter (Tarih Aralığı) |
+| Cihaz / Çözünürlük | Kolon Sayısı | Her Filtre Alanı (`Name`, `BetweenFilter` vb.) |
 |---|---|---|
-| **Masaüstü (Desktop)** | 4 Kolon (`grid-template-columns: repeat(4, 1fr)`) | `grid-column: span 2` (2 kolon kaplar) |
-| **Tablet (<= 1024px)** | 2 Kolon (`grid-template-columns: repeat(2, 1fr)`) | `grid-column: span 2` (Tam satır kaplar) |
+| **Masaüstü (Desktop)** | 4 Kolon (`grid-template-columns: repeat(4, 1fr)`) | `grid-column: span 1` (Tümü eşit 1 sütun) |
+| **Tablet (<= 1024px)** | 2 Kolon (`grid-template-columns: repeat(2, 1fr)`) | `grid-column: span 1` (Tümü eşit 1 sütun) |
 | **Mobil (<= 600px)** | 1 Kolon (`grid-template-columns: 1fr`) | `grid-column: span 1` (Tam genişlik) |
 
-Bu sayede masaüstünde 4 birimlik bir ızgara düzeni korunurken, tarih aralıkları çift sütun genişliğinde rahatça görüntülenir.
+`BetweenFilter` içindeki iki `date` input'u `flex: 1 1 0; min-width: 0; font-size: 0.75rem; text-align: center;` kurallarıyla boyutlandırılır ve `Name` alanıyla tam olarak aynı sütun genişliğini korur.
 
 ---
 

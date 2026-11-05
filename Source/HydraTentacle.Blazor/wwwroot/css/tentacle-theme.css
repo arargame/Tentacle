@@ -436,7 +436,7 @@ html, body {
 }
 
 .hydra-filterbar__field--range {
-    grid-column: span 2;
+    grid-column: span 1;
 }
 
 /* Tablet / dar ekran: Satırda 2 filtre */
@@ -445,8 +445,8 @@ html, body {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .hydra-filterbar__field--range {
-        grid-column: span 2;
-    }
+    grid-column: span 1;
+}
 }
 
 /* Mobil: Satırda 1 filtre */
@@ -459,9 +459,33 @@ html, body {
     }
 }
 
+.hydra-filterbar__range {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: 100%;
+    min-width: 0;
+}
+
 .hydra-filterbar__range .hydra-input {
+    flex: 1 1 0;
     min-width: 0;
     width: 100%;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.25rem;
+    text-align: center;
+}
+
+.hydra-filterbar__range input[type="date"]::-webkit-calendar-picker-indicator {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.hydra-filterbar__range-sep {
+    color: var(--tnt-text-muted);
+    flex-shrink: 0;
+    font-size: 0.75rem;
 }
 
 /* ----------------------------------------------------------------- Grid */
