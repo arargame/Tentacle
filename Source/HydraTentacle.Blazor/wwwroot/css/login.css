@@ -1,5 +1,7 @@
-/* Tentacle Login Page — Stitch tasarımından gelen özel efektler.
-   Sadece Login.razor (@layout EmptyLayout) tarafından yüklenir; uygulamanın geri kalanını etkilemez. */
+/* ====================================================================
+   Tentacle Login Page Styles
+   Saf CSS ile tasarlanmıştır; Tailwind CDN gecikmesi ve FOUC engellenmiştir.
+   ==================================================================== */
 
 @keyframes drift {
     0% { transform: translateY(0) scale(1); opacity: 0.3; }
@@ -11,7 +13,482 @@
     animation: drift 8s infinite ease-in-out;
 }
 
-.input-glow:focus-within {
-    box-shadow: 0 0 8px 0 rgba(34, 211, 238, 0.2);
+.tentacle-login {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #101415;
+    color: #e0e3e5;
+    font-family: 'Geist', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+    .tentacle-login {
+        flex-direction: row;
+    }
+}
+
+/* ----------------------------------------------------------- Sol Taraf: Form */
+.tentacle-login__left {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+    z-index: 10;
+    background: #101415;
+    box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+    .tentacle-login__left {
+        width: 50%;
+        padding: 3rem;
+    }
+}
+
+.tentacle-login__grid-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: linear-gradient(#859397 1px, transparent 1px), linear-gradient(90deg, #859397 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.tentacle-login__box {
+    width: 100%;
+    max-width: 28rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* ----------------------------------------------------------- Logo / Başlık */
+.tentacle-login__brand {
+    width: 3rem;
+    height: 3rem;
+    background: #1d2022;
+    border: 1px solid #3c494c;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.15);
+    position: relative;
+}
+
+.tentacle-login__brand-icon {
+    color: #22d3ee;
+    font-size: 28px !important;
+}
+
+.tentacle-login__brand-dot {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background: #22d3ee;
+    border-radius: 9999px;
+    box-shadow: 0 0 8px rgba(34, 211, 238, 0.8);
+}
+
+.tentacle-login__title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #e0e3e5;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.01em;
+}
+
+.tentacle-login__subtitle {
+    font-size: 1rem;
+    color: #bbc9cd;
+    margin: 0 0 1.75rem 0;
+}
+
+/* ----------------------------------------------------------- Dev / Test Çubuğu */
+.tentacle-login__dev-box {
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: rgba(6, 44, 58, 0.45);
+    border: 1px solid rgba(34, 211, 238, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    backdrop-filter: blur(8px);
+}
+
+.tentacle-login__dev-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tentacle-login__dev-icon {
+    color: #22d3ee;
+    font-size: 20px !important;
+}
+
+.tentacle-login__dev-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.tentacle-login__dev-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #8aebff;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.tentacle-login__dev-email {
+    font-size: 0.6875rem;
+    color: #bbc9cd;
+}
+
+.tentacle-login__dev-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tentacle-login__dev-btn {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #0b0f10;
+    background: #22d3ee;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.tentacle-login__dev-btn:hover:not(:disabled) {
+    background: #8aebff;
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.6);
+    transform: translateY(-1px);
+}
+
+.tentacle-login__dev-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ----------------------------------------------------------- Form Alanları */
+.tentacle-login__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.tentacle-login__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.tentacle-login__label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tentacle-login__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #bbc9cd;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tentacle-login__forgot {
+    font-size: 0.75rem;
+    color: #8aebff;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.tentacle-login__forgot:hover {
+    color: #22d3ee;
+    text-decoration: underline;
+}
+
+.tentacle-login__input-wrap {
+    position: relative;
+    background: #1d2022;
+    border-radius: 0.25rem;
+    border: 1px solid #3c494c;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.tentacle-login__input-wrap:focus-within {
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.25);
     border-color: #22d3ee;
+}
+
+.tentacle-login__input-icon {
+    position: absolute;
+    left: 0.875rem;
+    color: #bbc9cd;
+    font-size: 20px !important;
+    pointer-events: none;
+}
+
+.tentacle-login__input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    color: #e0e3e5;
+    font-size: 0.9375rem;
+    font-family: inherit;
+    outline: none;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+}
+
+.tentacle-login__input--password {
+    padding-right: 2.75rem;
+}
+
+.tentacle-login__input::placeholder {
+    color: rgba(187, 201, 205, 0.4);
+}
+
+.tentacle-login__toggle-pw {
+    position: absolute;
+    right: 0.875rem;
+    color: #bbc9cd;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease;
+}
+
+.tentacle-login__toggle-pw:hover {
+    color: #e0e3e5;
+}
+
+.tentacle-login__toggle-pw span {
+    font-size: 20px !important;
+}
+
+/* ----------------------------------------------------------- Hata Bildirimi */
+.tentacle-login__error {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(255, 180, 171, 0.4);
+    background: rgba(147, 0, 10, 0.18);
+    color: #ffb4ab;
+    font-size: 0.875rem;
+}
+
+.tentacle-login__error span {
+    font-size: 20px !important;
+}
+
+/* ----------------------------------------------------------- Submit Butonu */
+.tentacle-login__submit {
+    width: 100%;
+    background: #22d3ee;
+    color: #0b0f10;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.875rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
+    margin-top: 0.25rem;
+}
+
+.tentacle-login__submit:hover:not(:disabled) {
+    background: #8aebff;
+    box-shadow: 0 0 18px rgba(34, 211, 238, 0.45);
+    transform: translateY(-1px);
+}
+
+.tentacle-login__submit:active:not(:disabled) {
+    transform: scale(0.99);
+}
+
+.tentacle-login__submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ----------------------------------------------------------- Divider & SSO */
+.tentacle-login__divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.5rem 0;
+}
+
+.tentacle-login__divider-line {
+    height: 1px;
+    background: #3c494c;
+    flex: 1;
+}
+
+.tentacle-login__divider-text {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #bbc9cd;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.tentacle-login__sso-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.tentacle-login__sso-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border: 1px solid #3c494c;
+    border-radius: 0.25rem;
+    background: #101415;
+    color: #e0e3e5;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.tentacle-login__sso-btn:hover {
+    background: #1d2022;
+    border-color: #859397;
+}
+
+.tentacle-login__sso-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    flex-shrink: 0;
+    fill: currentColor;
+    color: #bbc9cd;
+}
+
+.tentacle-login__footer-link {
+    margin-top: 1.75rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #bbc9cd;
+}
+
+.tentacle-login__footer-link a {
+    color: #8aebff;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(138, 235, 255, 0.3);
+    transition: all 0.15s ease;
+    margin-left: 0.25rem;
+}
+
+.tentacle-login__footer-link a:hover {
+    color: #22d3ee;
+    border-bottom-color: #22d3ee;
+}
+
+/* ----------------------------------------------------------- Sağ Taraf: Hero */
+.tentacle-login__right {
+    display: none;
+    width: 50%;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: #050b14;
+    border-left: 1px solid rgba(60, 73, 76, 0.3);
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3rem;
+    box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+    .tentacle-login__right {
+        display: flex;
+    }
+}
+
+.tentacle-login__right-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #020610 0%, #051329 50%, #0a2342 100%);
+    opacity: 0.8;
+    z-index: 0;
+}
+
+.tentacle-login__right-fx {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: screen;
+}
+
+.tentacle-login__hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 32rem;
+    margin-bottom: 2.5rem;
+}
+
+.tentacle-login__hero-title {
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: #e0e3e5;
+    margin: 0 0 1rem 0;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, #b7c8e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tentacle-login__hero-accent {
+    width: 3rem;
+    height: 4px;
+    background: #22d3ee;
+    box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+    border-radius: 2px;
 }
