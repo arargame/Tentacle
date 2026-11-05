@@ -164,3 +164,22 @@ Referans proje `GedenLines` mimarisi örnek alınarak `HydraGrid.razor` bileşen
    - İkon yeniden yönsüz soluk `bi bi-arrow-down-up` durumuna döner.
    - Backend `Table.GetOrderedMetaColumnsIncludingJoins` sorgusundan ilgili kolon düştüğü için SQL'deki `ORDER BY` ifadesi kalkar ve veriler orijinal sıralamasına döner.
 
+---
+
+## 7. Sayfalar Arası Filtre ve Görünüm Tercihlerinin Korunması (`TableStateManager`)
+
+### 7.1. Sorun Analizi
+Kullanıcı bir listede (örneğin `RequestCategory`) filtre uygulayıp başka bir menüye (örneğin Dashboard) geçip geri geldiğinde:
+- Blazor router'ı yeni bir `GenericListView` bileşeni oluşturuyor ve `Table` nesnesi `null` olarak başlıyordu.
+- Bu durum, kullanıcının filtreyi temizlemeden ayrılmış olmasına rağmen önceki arama kriterlerinin (`[Name] contains 'seed'`) kaybolmasına ve listenin tekrar filtresiz yüklenmesine neden oluyordu.
+
+### 7.2. Çözüm Mimarisi: Katmanlı State ve Tercih Yönetimi
+`Hydra.RazorClassLibrary` katmanına `ITableStateManager` / `TableStateManager` servisi eklendi:
+1. **In-Memory Cache (Anında Hatırlama):** Scoped servis seviyesinde tutulan `ConcurrentDictionary<string, ViewPreferenceState>` sayesinde SPA içerisinde sayfalar arası gezinirken hiçbir gecikme olmadan son filtre değerleri, sayfalama ve sıralama korunur.
+2. **LocalStorage Senkronizasyonu (Kalıcılık):** Sayfa yenilendiğinde (F5) veya sekme kapatılıp açıldığında kullanıcının filtre kriterleri tarayıcı yerel deposundan otomatik geri yüklenir.
+3. **Filtre Barı ve Aktif Filtre Paneli Entegrasyonu:**
+   - Sayfa ilk açıldığında saklanan filtreler `TableDTO`'ya giydirilir; `FilterBarComponent` içerisindeki inputlara kullanıcının yazdığı değerler otomatik doldurulur.
+   - Sol alttaki DevExpress tarzı aktif filtre paneli (`[Name] contains 'seed'`) görünmeye devam eder.
+   - Kullanıcı filtreyi `Clear` butonu veya sol alttaki `[X]` ikonuyla temizlediğinde state otomatik olarak güncellenir.
+
+
