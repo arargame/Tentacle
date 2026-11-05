@@ -122,3 +122,45 @@ Kullanıcının varsayılan ekranda yer almayan alanları (örneğin `ModifiedDa
 2. **Geliştirici Hızlı Giriş (⚡ 1-Click Admin Login):**
    - Test ve geliştirme süreçlerinde her seferinde `admin@tentacle.com` ve `ChangeMe123!` yazma zahmetini ortadan kaldırmak için login formunun hemen üzerine bir **Hızlı Test Çubuğu** eklendi.
    - Tek tıkla admin kimlik bilgilerini yükleyip doğrudan JWT oturumu açar ve Dashboard sayfasına yönlendirir.
+
+---
+
+## 4. Grid Toolbar Temizliği ve Modern UI Deneyimi
+
+### 4.1. Sol Üstteki Client-Side Arama Kutusunun Kaldırılması
+- **Gerekçe:** Kullanıcı sunucu taraflı filtreleme (FilterBar) kullanırken, grid üzerindeki lokal "Search this page..." arama kutusu gereksiz karmaşa yaratıyordu.
+- **Uygulama:** `HydraGrid.razor` üzerinde `ShowSearchBox` parametresi varsayılan olarak `false` yapıldı. Sayfa kayıt sayacı (`RecordCountText`) ise `margin-left: auto` ile sağ tarafa hizalanarak toolbar temiz ve dengeli bir yerleşime kavuşturuldu.
+
+---
+
+## 5. Modern & Şık Scrollbar (Sidebar ve Global)
+
+### 5.1. Sidebar (Navigasyon Konteyneri) Scrollbar İyileştirmesi
+- **Sorun:** Windows üzerinde Chromium tarayıcılarının sol sidebar (`.tnt-sidebar`) için çizdiği 17 piksellik gri ve oklu varsayılan scrollbar, koyu tema bütünlüğünü bozuyordu.
+- **Çözüm:**
+  - `tentacle-theme.css` ve `hydra-default.css` içerisine modern webkit ve W3C scrollbar kuralları uygulandı.
+  - Sidebar scrollbar genişliği `4px` olarak ayarlandı, rayı (track) şeffaf yapıldı.
+  - Thumb rengi yarı saydam nötr (`rgba(133, 147, 151, 0.2)`), hover durumunda ise canlı cyan (`--tnt-cyan`) renge geçiş yapacak şekilde tasarlandı.
+  - Firefox ve standart uyumluluk için `scrollbar-width: thin` ve `scrollbar-color` eklendi.
+
+---
+
+## 6. GedenLines Referanslı 3 Aşamalı Kolon Sıralama (3-State Sorting Cycle)
+
+### 6.1. Sıralama Yaşam Döngüsü
+Referans proje `GedenLines` mimarisi örnek alınarak `HydraGrid.razor` bileşeninde 3 durumlu sıralama döngüsü kuruldu:
+1. **Durum 0 (Nötr / Yönsüz):**
+   - Kolon sıralanmamıştır (`IsOrdered = false`).
+   - Başlıkta soluk/nötr (`opacity: 0.35`) yönsüz sıralama ikonu (`bi bi-arrow-down-up`) görünür. Kullanıcıya kolonun sıralanabilir olduğunu hissettirir.
+2. **Durum 1 (İlk Tıklama - Ascending):**
+   - Kolon artan sırada sıralanır (`IsOrdered = true`, `Direction = Ascending`).
+   - Diğer kolonların sıralaması temizlenir (tekil sıralama kuralı).
+   - Başlıkta aktif cyan renkte ve parıltılı `bi bi-sort-alpha-down` ikonu belirir.
+3. **Durum 2 (İkinci Tıklama - Descending):**
+   - Kolon azalan sırada sıralanır (`IsOrdered = true`, `Direction = Descending`).
+   - Başlıkta aktif cyan renkte `bi bi-sort-alpha-up-alt` ikonu belirir.
+4. **Durum 3 (Üçüncü Tıklama - Nötr / Sıfırlama):**
+   - Kolon sıralamadan çıkartılır (`existingSort.IsOrdered = false`).
+   - İkon yeniden yönsüz soluk `bi bi-arrow-down-up` durumuna döner.
+   - Backend `Table.GetOrderedMetaColumnsIncludingJoins` sorgusundan ilgili kolon düştüğü için SQL'deki `ORDER BY` ifadesi kalkar ve veriler orijinal sıralamasına döner.
+

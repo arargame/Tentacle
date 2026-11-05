@@ -1,4 +1,4 @@
-/* ============================================================================
+﻿/* ============================================================================
    Tentacle — uygulama teması ("Technical Organic" koyu tema)
    ----------------------------------------------------------------------------
    Hydra.RazorClassLibrary bileşenleri hiçbir CSS framework'üne bağlı değildir;
@@ -1053,4 +1053,31 @@ html, body {
 .hydra-grid__active-filter-clear:hover {
     color: #ef4444;
     background: rgba(239, 68, 68, 0.12);
+}
+
+
+/* ============================================================================
+   Global Sleek Scrollbar (Windows default gri scrollbar yerine modern ince stil)
+   ============================================================================ */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 9999px;
+    transition: background 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 211, 238, 0.5);
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.2) transparent;
 }
