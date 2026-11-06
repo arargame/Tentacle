@@ -24,7 +24,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -125,40 +124,40 @@
     <link rel="stylesheet" href="css/dashboard.css" />
 </HeadContent>
 
-<div class="font-body-md text-body-md flex h-screen overflow-hidden antialiased text-on-background" style="background-color:#0B1120;">
+<div class="dashboard-shell font-body-md text-body-md flex h-screen overflow-hidden antialiased text-on-background" style="background-color:#0B1120;">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-surface-container-lowest border-r border-outline-variant flex-col justify-between hidden md:flex shrink-0">
+    <aside class="dashboard-sidebar w-64 bg-surface-container-lowest border-r border-outline-variant flex-col justify-between hidden md:flex shrink-0">
         <div>
-            <div class="h-16 flex items-center px-lg border-b border-outline-variant">
-                <a href="" class="font-headline-md text-headline-md font-bold tracking-tighter text-primary flex items-center gap-sm no-underline">
-                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
-                    Tentacle
+            <div class="dashboard-sidebar__brand-box h-16 flex items-center px-lg border-b border-outline-variant">
+                <a href="" class="dashboard-sidebar__brand font-headline-md text-headline-md font-bold tracking-tighter text-primary flex items-center gap-sm no-underline">
+                    <i class="bi bi-broadcast dashboard-sidebar__brand-icon"></i>
+                    <span>Tentacle</span>
                 </a>
             </div>
 
-            <nav class="p-md space-y-lg">
+            <nav class="dashboard-sidebar__nav p-md space-y-lg">
                 <!-- İş Takip -->
                 <div>
-                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Work Tracking</h3>
-                    <ul class="space-y-xs list-none p-0 m-0">
+                    <h3 class="dashboard-sidebar__group-title font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Work Tracking</h3>
+                    <ul class="dashboard-sidebar__menu space-y-xs list-none p-0 m-0">
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-primary bg-primary/10 luminescent-glow font-label-md text-label-md relative no-underline" href="Request">
+                            <a class="dashboard-sidebar__link dashboard-sidebar__link--active flex items-center px-sm py-2 rounded text-primary bg-primary/10 luminescent-glow font-label-md text-label-md relative no-underline" href="Request">
                                 <span class="absolute left-0 top-1/2 -translate-y-1/2 -ml-0.5 thread-indicator"></span>
-                                <span class="material-symbols-outlined mr-sm text-lg">list_alt</span>
-                                Requests
+                                <i class="bi bi-card-checklist mr-sm text-lg"></i>
+                                <span>Requests</span>
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="RequestCategory">
-                                <span class="material-symbols-outlined mr-sm text-lg">category</span>
-                                Categories
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="RequestCategory">
+                                <i class="bi bi-tags mr-sm text-lg"></i>
+                                <span>Categories</span>
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="RequestCategoryResponsiblePosition">
-                                <span class="material-symbols-outlined mr-sm text-lg">rule</span>
-                                Category Responsibilities
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="RequestCategoryResponsiblePosition">
+                                <i class="bi bi-diagram-3 mr-sm text-lg"></i>
+                                <span>Category Responsibilities</span>
                             </a>
                         </li>
                     </ul>
@@ -166,24 +165,24 @@
 
                 <!-- İnsan Kaynakları -->
                 <div>
-                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Human Resources</h3>
-                    <ul class="space-y-xs list-none p-0 m-0">
+                    <h3 class="dashboard-sidebar__group-title font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Human Resources</h3>
+                    <ul class="dashboard-sidebar__menu space-y-xs list-none p-0 m-0">
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Employee">
-                                <span class="material-symbols-outlined mr-sm text-lg">group</span>
-                                Employees
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Employee">
+                                <i class="bi bi-people mr-sm text-lg"></i>
+                                <span>Employees</span>
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Position">
-                                <span class="material-symbols-outlined mr-sm text-lg">badge</span>
-                                Positions
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Position">
+                                <i class="bi bi-person-badge mr-sm text-lg"></i>
+                                <span>Positions</span>
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="OrganizationUnit">
-                                <span class="material-symbols-outlined mr-sm text-lg">account_tree</span>
-                                Organization Units
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="OrganizationUnit">
+                                <i class="bi bi-building mr-sm text-lg"></i>
+                                <span>Organization Units</span>
                             </a>
                         </li>
                     </ul>
@@ -191,24 +190,24 @@
 
                 <!-- Mail Yönetimi -->
                 <div>
-                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Mail Management</h3>
-                    <ul class="space-y-xs list-none p-0 m-0">
+                    <h3 class="dashboard-sidebar__group-title font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Mail Management</h3>
+                    <ul class="dashboard-sidebar__menu space-y-xs list-none p-0 m-0">
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Mail">
-                                <span class="material-symbols-outlined mr-sm text-lg">mail</span>
-                                Mails
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Mail">
+                                <i class="bi bi-envelope mr-sm text-lg"></i>
+                                <span>Mails</span>
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="MailTemplate">
-                                <span class="material-symbols-outlined mr-sm text-lg">description</span>
-                                Templates
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="MailTemplate">
+                                <i class="bi bi-file-earmark-text mr-sm text-lg"></i>
+                                <span>Templates</span>
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="MailAttachment">
-                                <span class="material-symbols-outlined mr-sm text-lg">attach_file</span>
-                                Attachments
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="MailAttachment">
+                                <i class="bi bi-paperclip mr-sm text-lg"></i>
+                                <span>Attachments</span>
                             </a>
                         </li>
                     </ul>
@@ -216,24 +215,24 @@
 
                 <!-- Yönetim -->
                 <div>
-                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Administration</h3>
-                    <ul class="space-y-xs list-none p-0 m-0">
+                    <h3 class="dashboard-sidebar__group-title font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Administration</h3>
+                    <ul class="dashboard-sidebar__menu space-y-xs list-none p-0 m-0">
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="SystemUser">
-                                <span class="material-symbols-outlined mr-sm text-lg">manage_accounts</span>
-                                Users
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="SystemUser">
+                                <i class="bi bi-person-gear mr-sm text-lg"></i>
+                                <span>Users</span>
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Role">
-                                <span class="material-symbols-outlined mr-sm text-lg">security</span>
-                                Roles
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Role">
+                                <i class="bi bi-shield-check mr-sm text-lg"></i>
+                                <span>Roles</span>
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Permission">
-                                <span class="material-symbols-outlined mr-sm text-lg">key</span>
-                                Permissions
+                            <a class="dashboard-sidebar__link flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Permission">
+                                <i class="bi bi-key mr-sm text-lg"></i>
+                                <span>Permissions</span>
                             </a>
                         </li>
                     </ul>
@@ -242,50 +241,101 @@
         </div>
 
         <!-- Kullanıcı alanı: auth akışı henüz bağlı değil, bu yüzden oturum yerine Login'e link -->
-        <div class="p-md border-t border-outline-variant">
-            <a href="Login" class="flex items-center gap-sm no-underline group">
-                <div class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined text-on-surface-variant">person</span>
+        <div class="dashboard-sidebar__footer p-md border-t border-outline-variant">
+            <a href="Login" class="dashboard-sidebar__user flex items-center gap-sm no-underline group">
+                <div class="dashboard-sidebar__avatar w-10 h-10 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shrink-0">
+                    <i class="bi bi-person text-lg text-on-surface-variant"></i>
                 </div>
                 <div>
-                    <p class="font-label-md text-label-md text-on-surface m-0 group-hover:text-primary transition-colors">Not signed in</p>
-                    <p class="font-label-sm text-label-sm text-on-surface-variant m-0">Sign in</p>
+                    <p class="dashboard-sidebar__user-name font-label-md text-label-md text-on-surface m-0 group-hover:text-primary transition-colors">Not signed in</p>
+                    <p class="dashboard-sidebar__user-sub font-label-sm text-label-sm text-on-surface-variant m-0">Sign in</p>
                 </div>
             </a>
         </div>
     </aside>
 
     <!-- Main -->
-    <main class="flex-1 flex flex-col h-full overflow-hidden bg-background">
+    <main class="dashboard-main flex-1 flex flex-col h-full overflow-hidden bg-background">
 
         <!-- TopAppBar -->
-        <header class="h-16 flex items-center justify-between px-margin-desktop border-b border-outline-variant shrink-0 bg-surface-container-lowest/80 backdrop-blur-md">
-            <h1 class="font-headline-lg text-headline-lg text-on-surface m-0">Dashboard</h1>
-            <div class="flex items-center gap-lg">
-                <div class="relative hidden lg:block">
-                    <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+        <header class="dashboard-header h-16 flex items-center justify-between px-margin-desktop border-b border-outline-variant shrink-0 bg-surface-container-lowest/80 backdrop-blur-md">
+            <h1 class="dashboard-header__title font-headline-lg text-headline-lg text-on-surface m-0">Dashboard</h1>
+            <div class="dashboard-header__actions flex items-center gap-lg">
+                <div class="dashboard-header__search relative hidden lg:block">
+                    <i class="bi bi-search"></i>
                     <input class="bg-surface border border-outline-variant rounded pl-10 pr-sm py-1.5 font-body-md text-body-md text-on-surface focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary w-64 placeholder-on-surface-variant/50 transition-colors"
                            placeholder="Search requests..." type="text"
                            value="@_searchText"
                            @oninput="e => _searchText = e.Value?.ToString() ?? string.Empty"
                            @onkeydown="OnSearchKeyDown" />
                 </div>
-                <a href="Request/Create" class="bg-primary-container text-surface px-md py-1.5 rounded font-label-md text-label-md font-bold uppercase tracking-wider flex items-center gap-xs hover:bg-primary transition-colors luminescent-glow no-underline">
-                    <span class="material-symbols-outlined text-sm">add</span>
-                    New Request
+                <a href="Request/Create" class="dashboard-header__btn-new bg-primary-container text-surface px-md py-1.5 rounded font-label-md text-label-md font-bold uppercase tracking-wider flex items-center gap-xs hover:bg-primary transition-colors luminescent-glow no-underline">
+                    <i class="bi bi-plus-lg"></i>
+                    <span>New Request</span>
                 </a>
             </div>
         </header>
 
         <!-- Scrollable Canvas -->
-        <div class="flex-1 overflow-y-auto p-margin-desktop">
-            <div class="max-w-7xl mx-auto space-y-xl">
+        <div class="dashboard-canvas flex-1 overflow-y-auto p-margin-desktop">
+            <div class="dashboard-canvas__container max-w-7xl mx-auto space-y-xl">
 
                 @if (IsLoading)
                 {
-                    <div class="flex items-center justify-center py-xl gap-sm text-on-surface-variant">
-                        <span class="material-symbols-outlined animate-spin">progress_activity</span>
-                        Loading...
+                    <!-- Xbox Live / AAA-grade Shimmer Skeleton -->
+                    <div class="dashboard-skeleton space-y-xl" aria-busy="true" aria-label="Loading dashboard...">
+                        <!-- KPI Skeletons -->
+                        <div class="dashboard-skeleton__grid-4">
+                            @for (int i = 0; i < 4; i++)
+                            {
+                                <div class="dashboard-skeleton__kpi-card">
+                                    <div class="flex justify-between items-center">
+                                        <div class="dashboard-skeleton__box h-4 w-24"></div>
+                                        <div class="dashboard-skeleton__box h-5 w-5 rounded-full"></div>
+                                    </div>
+                                    <div class="dashboard-skeleton__box h-8 w-16"></div>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Status Distribution Skeleton -->
+                        <div class="dashboard-skeleton__dist-card">
+                            <div class="dashboard-skeleton__box h-4 w-44"></div>
+                            <div class="dashboard-skeleton__box h-3 w-full rounded-full"></div>
+                        </div>
+
+                        <!-- Mid Row Skeletons -->
+                        <div class="dashboard-skeleton__mid-row">
+                            <div class="dashboard-skeleton__panel">
+                                <div class="dashboard-skeleton__box h-5 w-36"></div>
+                                <div class="flex items-center justify-center flex-1">
+                                    <div class="dashboard-skeleton__box w-36 h-36 rounded-full"></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="dashboard-skeleton__box h-3 w-full"></div>
+                                    <div class="dashboard-skeleton__box h-3 w-3/4"></div>
+                                </div>
+                            </div>
+                            <div class="dashboard-skeleton__panel">
+                                <div class="flex justify-between items-center">
+                                    <div class="dashboard-skeleton__box h-5 w-40"></div>
+                                    <div class="dashboard-skeleton__box h-4 w-20"></div>
+                                </div>
+                                <div class="space-y-3 flex-1 flex flex-col justify-around">
+                                    @for (int j = 0; j < 4; j++)
+                                    {
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <div class="dashboard-skeleton__box h-7 w-7 rounded"></div>
+                                                <div class="dashboard-skeleton__box h-4 w-28"></div>
+                                            </div>
+                                            <div class="dashboard-skeleton__box h-2 w-24 hidden sm:block"></div>
+                                            <div class="dashboard-skeleton__box h-4 w-8"></div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 }
                 else
@@ -295,7 +345,7 @@
                         <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                             <div class="flex justify-between items-start mb-md">
                                 <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Total Requests</h3>
-                                <span class="material-symbols-outlined text-primary">data_usage</span>
+                                <i class="bi bi-pie-chart text-xl text-primary"></i>
                             </div>
                             <div class="flex items-end justify-between">
                                 <span class="font-display-lg text-display-lg text-on-surface">@(TotalRequests.ToString("N0"))</span>
@@ -306,7 +356,7 @@
                             <div class="absolute inset-0 bg-primary/5"></div>
                             <div class="flex justify-between items-start mb-md relative z-10">
                                 <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Open</h3>
-                                <span class="material-symbols-outlined text-error">radio_button_unchecked</span>
+                                <i class="bi bi-circle text-xl text-error"></i>
                             </div>
                             <div class="flex items-end justify-between relative z-10">
                                 <span class="font-display-lg text-display-lg text-on-surface">@(GetStatusCount(RequestStatus.Open).ToString("N0"))</span>
@@ -317,7 +367,7 @@
                         <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                             <div class="flex justify-between items-start mb-md">
                                 <h3 class="font-label-md text-label-md text-on-surface-variant m-0">In Progress</h3>
-                                <span class="material-symbols-outlined text-primary-fixed-dim">hourglass_empty</span>
+                                <i class="bi bi-hourglass-split text-xl text-primary-fixed-dim"></i>
                             </div>
                             <div class="flex items-end justify-between">
                                 <span class="font-display-lg text-display-lg text-on-surface">@(GetStatusCount(RequestStatus.InProgress).ToString("N0"))</span>
@@ -328,7 +378,7 @@
                         <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                             <div class="flex justify-between items-start mb-md">
                                 <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Completed</h3>
-                                <span class="material-symbols-outlined text-on-surface-variant">check_circle</span>
+                                <i class="bi bi-check-circle text-xl text-on-surface-variant"></i>
                             </div>
                             <div class="flex items-end justify-between">
                                 <span class="font-display-lg text-display-lg text-on-surface">@(GetStatusCount(RequestStatus.Completed).ToString("N0"))</span>
@@ -408,7 +458,7 @@
                             <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
                                 <h3 class="font-label-md text-label-md text-on-surface m-0">Requests by Priority</h3>
                                 <a href="Request" class="text-primary hover:text-primary-container text-sm flex items-center gap-xs transition-colors no-underline">
-                                    View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                    View All <i class="bi bi-arrow-right text-xs"></i>
                                 </a>
                             </div>
                             <div class="flex-1 p-0">
@@ -446,10 +496,10 @@
                             <h2 class="font-headline-md text-headline-md text-on-surface m-0">Mail Management</h2>
                             <div class="flex items-center gap-sm">
                                 <a href="MailTemplate" class="px-sm py-1 border border-outline-variant rounded font-label-sm text-label-sm text-on-surface hover:border-primary transition-colors flex items-center gap-xs no-underline">
-                                    <span class="material-symbols-outlined text-sm">description</span> Templates
+                                    <i class="bi bi-file-earmark-text text-sm"></i> Templates
                                 </a>
                                 <a href="Mail/Create" class="px-sm py-1 border border-outline-variant rounded font-label-sm text-label-sm text-on-surface hover:border-primary transition-colors flex items-center gap-xs no-underline">
-                                    <span class="material-symbols-outlined text-sm">add</span> New Mail
+                                    <i class="bi bi-plus-lg text-sm"></i> New Mail
                                 </a>
                             </div>
                         </div>
@@ -461,7 +511,7 @@
                             <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                                 <div class="flex justify-between items-start mb-md">
                                     <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Total Mails</h3>
-                                    <span class="material-symbols-outlined text-primary">mail</span>
+                                    <i class="bi bi-envelope text-xl text-primary"></i>
                                 </div>
                                 <div class="flex items-end justify-between">
                                     <span class="font-display-lg text-display-lg text-on-surface">@(TotalMails.ToString("N0"))</span>
@@ -470,7 +520,7 @@
                             <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                                 <div class="flex justify-between items-start mb-md">
                                     <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Queued</h3>
-                                    <span class="material-symbols-outlined text-primary-fixed-dim">schedule_send</span>
+                                    <i class="bi bi-clock-history text-xl text-primary-fixed-dim"></i>
                                 </div>
                                 <div class="flex items-end justify-between">
                                     <span class="font-display-lg text-display-lg text-on-surface">@(GetMailCount(MailStatus.Queued).ToString("N0"))</span>
@@ -479,7 +529,7 @@
                             <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                                 <div class="flex justify-between items-start mb-md">
                                     <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Sent</h3>
-                                    <span class="material-symbols-outlined text-on-surface-variant">mark_email_read</span>
+                                    <i class="bi bi-envelope-check text-xl text-on-surface-variant"></i>
                                 </div>
                                 <div class="flex items-end justify-between">
                                     <span class="font-display-lg text-display-lg text-on-surface">@(GetMailCount(MailStatus.Sent).ToString("N0"))</span>
@@ -488,7 +538,7 @@
                             <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
                                 <div class="flex justify-between items-start mb-md">
                                     <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Failed</h3>
-                                    <span class="material-symbols-outlined text-error">error</span>
+                                    <i class="bi bi-exclamation-triangle text-xl text-error"></i>
                                 </div>
                                 <div class="flex items-end justify-between">
                                     <span class="font-display-lg text-display-lg text-on-surface">@(GetMailCount(MailStatus.Failed).ToString("N0"))</span>
@@ -501,7 +551,7 @@
                             <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
                                 <h3 class="font-label-md text-label-md text-on-surface m-0">Recent Mails</h3>
                                 <a href="Mail" class="text-primary hover:text-primary-container text-sm flex items-center gap-xs transition-colors no-underline">
-                                    View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                    View All <i class="bi bi-arrow-right text-xs"></i>
                                 </a>
                             </div>
                             <div class="overflow-x-auto">
@@ -525,7 +575,7 @@
                                                 <tr class="hover:bg-surface-container-lowest transition-colors">
                                                     <td class="p-md text-center">
                                                         <a class="text-on-surface-variant hover:text-primary transition-colors no-underline" href="@($"Mail/Details/{row.Id}")" title="Details">
-                                                            <span class="material-symbols-outlined text-lg align-middle">visibility</span>
+                                                            <i class="bi bi-eye text-base align-middle"></i>
                                                         </a>
                                                     </td>
                                                     <td class="p-md font-body-md text-body-md text-on-surface font-medium">@Value(row, "Subject")</td>
@@ -558,7 +608,7 @@
                         <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
                             <h3 class="font-label-md text-label-md text-on-surface m-0">Recent Requests</h3>
                             <a href="Request" class="px-sm py-1 border border-outline-variant rounded font-label-sm text-label-sm text-on-surface hover:border-primary transition-colors flex items-center gap-xs no-underline">
-                                <span class="material-symbols-outlined text-sm">filter_list</span> Filter
+                                <i class="bi bi-funnel text-sm"></i> Filter
                             </a>
                         </div>
                         <div class="overflow-x-auto">
@@ -585,7 +635,7 @@
                                             <tr class="hover:bg-surface-container-lowest transition-colors group">
                                                 <td class="p-md text-center">
                                                     <a class="text-on-surface-variant hover:text-primary transition-colors no-underline" href="@($"Request/Details/{row.Id}")" title="Details">
-                                                        <span class="material-symbols-outlined text-lg align-middle">visibility</span>
+                                                        <i class="bi bi-eye text-base align-middle"></i>
                                                     </a>
                                                 </td>
                                                 <td class="p-md font-body-md text-body-md text-on-surface font-medium">@Value(row, "Name")</td>
