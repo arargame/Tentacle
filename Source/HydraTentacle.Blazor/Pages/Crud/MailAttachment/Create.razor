@@ -1,0 +1,11 @@
+@page "/MailAttachment/Create"
+@attribute [HydraRequirePermission("MailAttachment", "Create")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>New Mail Attachment</PageTitle>
+
+<GenericCreateView T="MailAttachment" Client="Client" Title="New Mail Attachment" />
+
+@code {
+    [Inject] public ApiClient<MailAttachment> Client { get; set; } = default!;
+}

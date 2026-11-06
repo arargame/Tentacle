@@ -1,0 +1,11 @@
+@page "/RoleSystemUser/Create"
+@attribute [HydraRequirePermission("RoleSystemUser", "Create")]
+@using Hydra.AccessManagement
+
+<PageTitle>New Role Member</PageTitle>
+
+<GenericCreateView T="RoleSystemUser" Client="Client" Title="New Role Member" />
+
+@code {
+    [Inject] public ApiClient<RoleSystemUser> Client { get; set; } = default!;
+}

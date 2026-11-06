@@ -1,0 +1,11 @@
+@page "/RoleSystemUser"
+@attribute [HydraRequirePermission("RoleSystemUser", "Select")]
+@using Hydra.AccessManagement
+
+<PageTitle>Role Members</PageTitle>
+
+<GenericListView T="RoleSystemUser" Client="Client" Title="Role Members" />
+
+@code {
+    [Inject] public ApiClient<RoleSystemUser> Client { get; set; } = default!;
+}

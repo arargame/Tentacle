@@ -64,3 +64,26 @@ Sistemi en hızlı şekilde ayağa kaldırmak için `Deploy/` klasöründeki scr
    `Deploy/2_Run_Blazor.bat`
 4. **Veri Tabanı Migration'larını Uygulamak:**
    `Deploy/3_Update_Database.bat`
+
+---
+
+## 5. Dokümanlar
+
+| Doküman | İçerik |
+|---|---|
+| [adding-a-new-object.md](adding-a-new-object.md) | **Yeni bir obje (entity) ekleme adımları** — entity'den şemaya, controller'dan Blazor ekranına, menüden izne kadar uçtan uca kontrol listesi. Örnek: `Hydra.MailManagement` (Mail / MailTemplate / MailAttachment) entegrasyonu. |
+| [login-to-dashboard-flow.md](login-to-dashboard-flow.md) | Login → JWT → Dashboard akışı ve Tentacle tarafındaki bağlantı adımları. |
+| [DEPLOYMENT_SCRIPTS.md](DEPLOYMENT_SCRIPTS.md) | `Deploy/` altındaki başlatma ve dağıtım scriptleri. |
+
+---
+
+## 6. Kurulu Modüller
+
+| Modül | Nesneler | Ekran |
+|---|---|---|
+| **Hydra.MailManagement** | `Mail`, `MailTemplate`, `MailAttachment`, `BaseObjectMail` | Dashboard → **Mail Management** (`/Mail`, `/MailTemplate`, `/MailAttachment`) |
+
+Mail modülü `Hydra/Hydra.MailManagement` ve `Hydra/Hydra.MailManagement.WebApi` projelerinden
+gelir; controller'lar ApplicationPart olarak bağlanır, Tentacle'da tek satır mail controller
+kodu yoktur. Ayarlar `appsettings.json` → `MailSettings`. Modülün kendi kılavuzu:
+`Hydra/Hydra.MailManagement/INTEGRATION_PLAYBOOK.md`.

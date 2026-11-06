@@ -24,6 +24,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Hydra\Hydra.csproj" />
     <ProjectReference Include="..\..\..\Hydra.RazorClassLibrary\Hydra.RazorClassLibrary\Hydra.RazorClassLibrary.csproj" />
+    <!-- Mail sayfaları ApiClient<Mail> gibi kapalı generic'ler kuruyor: entity tipleri gerekli. -->
+    <ProjectReference Include="..\..\..\Hydra\Hydra.MailManagement\Hydra.MailManagement.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,28 @@
+@page "/Mail/Details/{Id:guid}"
+@attribute [HydraRequirePermission("Mail", "Details")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>Mail Details</PageTitle>
+
+@* İki koleksiyon sekmesi, ikisi de BASİT FK modunda (Role/Permission ekranlarındaki gibi
+   cross-table Link/Unlink DEĞİL): bir ek ya da bir polimorfik bağ, iki bağımsız kaydı
+   birbirine bağlamıyor — mailin parçası olarak doğuyor. Bu yüzden "Link" değil "New" akışı
+   doğru olan. *@
+
+<GenericDetailsView T="Mail" Client="Client" Id="@Id" Title="Mail Details">
+    <CollectionViewSection Title="Attachments"
+                           Controller="MailAttachment"
+                           ForeignKeyName="MailId"
+                           ParentId="@Id" />
+
+    <CollectionViewSection Title="Linked Records"
+                           Controller="BaseObjectMail"
+                           ForeignKeyName="MailId"
+                           ParentId="@Id" />
+</GenericDetailsView>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<Mail> Client { get; set; } = default!;
+}

@@ -1,0 +1,15 @@
+@page "/Mail/Create"
+@attribute [HydraRequirePermission("Mail", "Create")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>New Mail</PageTitle>
+
+@* Buradan oluşan kayıt GÖNDERİLMEZ, yalnızca yazılır (varsayılan Status = Draft).
+   Fiziksel gönderim POST api/Mail/Send/{id} ucuyla olur — modülün sözleşmesi
+   "Draft/Queued → iletim → Sent/Failed" akışını zorunlu kılıyor. *@
+
+<GenericCreateView T="Mail" Client="Client" Title="New Mail" />
+
+@code {
+    [Inject] public ApiClient<Mail> Client { get; set; } = default!;
+}

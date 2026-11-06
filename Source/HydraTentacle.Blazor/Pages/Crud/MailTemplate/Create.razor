@@ -1,0 +1,14 @@
+@page "/MailTemplate/Create"
+@attribute [HydraRequirePermission("MailTemplate", "Create")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>New Mail Template</PageTitle>
+
+@* Code alanı veritabanında tekil: kod içinden şablon Id ile değil
+   GetByCodeAsync("WELCOME_USER") ile çağrılıyor. *@
+
+<GenericCreateView T="MailTemplate" Client="Client" Title="New Mail Template" />
+
+@code {
+    [Inject] public ApiClient<MailTemplate> Client { get; set; } = default!;
+}

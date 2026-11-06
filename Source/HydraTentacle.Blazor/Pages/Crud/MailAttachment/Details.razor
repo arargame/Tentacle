@@ -1,0 +1,13 @@
+@page "/MailAttachment/Details/{Id:guid}"
+@attribute [HydraRequirePermission("MailAttachment", "Details")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>Mail Attachment Details</PageTitle>
+
+<GenericDetailsView T="MailAttachment" Client="Client" Id="@Id" Title="Mail Attachment Details" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<MailAttachment> Client { get; set; } = default!;
+}

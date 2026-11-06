@@ -1,0 +1,11 @@
+@page "/MailTemplate"
+@attribute [HydraRequirePermission("MailTemplate", "Select")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>Mail Templates</PageTitle>
+
+<GenericListView T="MailTemplate" Client="Client" Title="Mail Templates" />
+
+@code {
+    [Inject] public ApiClient<MailTemplate> Client { get; set; } = default!;
+}

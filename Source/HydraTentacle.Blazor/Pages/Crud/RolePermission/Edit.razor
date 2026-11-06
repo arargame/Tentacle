@@ -1,0 +1,13 @@
+@page "/RolePermission/Update/{Id:guid}"
+@attribute [HydraRequirePermission("RolePermission", "Update")]
+@using Hydra.AccessManagement
+
+<PageTitle>Edit Role Permission</PageTitle>
+
+<GenericEditView T="RolePermission" Client="Client" Id="@Id" Title="Edit Role Permission" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<RolePermission> Client { get; set; } = default!;
+}

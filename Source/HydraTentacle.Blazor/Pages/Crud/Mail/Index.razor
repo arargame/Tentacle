@@ -1,0 +1,15 @@
+@page "/Mail"
+@attribute [HydraRequirePermission("Mail", "Select")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>Mails</PageTitle>
+
+@* Gönderim kuyruğu. Kolonlar MailViewDTO'dan geliyor: Body listede yok (HTML gövde satırı
+   onlarca satır yüksekliğe çıkarırdı), Status enum etiketiyle, Template ise Guid yerine
+   şablonun Code'uyla görünüyor. *@
+
+<GenericListView T="Mail" Client="Client" Title="Mails" />
+
+@code {
+    [Inject] public ApiClient<Mail> Client { get; set; } = default!;
+}

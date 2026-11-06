@@ -38,7 +38,13 @@ namespace HydraTentacle.WebApi.Extensions
 
             // Load ViewDTOs (if Tentacle has specific views, though ViewDTORegistryLoader in Hydra might handle generic + executing)
             // But we explicitly load Tentacle assembly views just in case
+            //ViewDTO kayıtları: AddHydraDependencies yalnızca Hydra core + Hydra.WebApi
+            //assembly'lerini tarıyor, ek assembly parametresini ViewDTO için KULLANMIYOR.
+            //Bu yüzden hem Tentacle'ın hem mail modülünün ViewDTO'ları burada elle yükleniyor —
+            //yüklenmezlerse MailViewDTO hiç bulunamaz ve Mail ekranları çıplak entity kolonlarına
+            //düşer (navigation'lar, enum etiketleri, gizlenen Body kaybolur).
             ViewDTORegistryLoader.LoadAllViewDTOs(typeof(RequestModel).Assembly);
+            ViewDTORegistryLoader.LoadAllViewDTOs(typeof(Hydra.MailManagement.DTOs.MailViewDTO).Assembly);
 
             // Register DbContext for RepositoryInjector
             // Register DbContext for RepositoryInjector

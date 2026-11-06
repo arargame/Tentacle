@@ -23,6 +23,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Hydra\Hydra.csproj" />
     <ProjectReference Include="..\..\..\Hydra.WebApi\Hydra.WebApi.csproj" />
+    <!-- MailController / MailTemplateController / MailAttachmentController ApplicationPart
+         olarak bağlanır; bu projede tek satır controller kodu yok. -->
+    <ProjectReference Include="..\..\..\Hydra\Hydra.MailManagement.WebApi\Hydra.MailManagement.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

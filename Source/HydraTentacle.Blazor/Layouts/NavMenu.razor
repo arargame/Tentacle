@@ -99,6 +99,39 @@
                 </div>
             }
 
+            @if (CanSeeAny(auth.User, "Mail", "MailTemplate", "MailAttachment"))
+            {
+                <div>
+                    <h3 class="tnt-nav__group-title">Mail Management</h3>
+                    <ul class="tnt-nav__list">
+                        @if (CanSee(auth.User, "Mail"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="Mail">
+                                    <i class="bi bi-envelope"></i> Mails
+                                </NavLink>
+                            </li>
+                        }
+                        @if (CanSee(auth.User, "MailTemplate"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="MailTemplate">
+                                    <i class="bi bi-file-earmark-text"></i> Templates
+                                </NavLink>
+                            </li>
+                        }
+                        @if (CanSee(auth.User, "MailAttachment"))
+                        {
+                            <li>
+                                <NavLink class="tnt-nav__link" href="MailAttachment">
+                                    <i class="bi bi-paperclip"></i> Attachments
+                                </NavLink>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+
             @if (CanSeeAny(auth.User, "SystemUser", "Role", "Permission"))
             {
                 <div>

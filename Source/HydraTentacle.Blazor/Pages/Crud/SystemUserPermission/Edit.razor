@@ -1,0 +1,13 @@
+@page "/SystemUserPermission/Update/{Id:guid}"
+@attribute [HydraRequirePermission("SystemUserPermission", "Update")]
+@using Hydra.AccessManagement
+
+<PageTitle>Edit Direct User Permission</PageTitle>
+
+<GenericEditView T="SystemUserPermission" Client="Client" Id="@Id" Title="Edit Direct User Permission" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<SystemUserPermission> Client { get; set; } = default!;
+}

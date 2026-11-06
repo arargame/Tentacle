@@ -1,0 +1,11 @@
+@page "/SystemUserPermission"
+@attribute [HydraRequirePermission("SystemUserPermission", "Select")]
+@using Hydra.AccessManagement
+
+<PageTitle>Direct User Permissions</PageTitle>
+
+<GenericListView T="SystemUserPermission" Client="Client" Title="Direct User Permissions" />
+
+@code {
+    [Inject] public ApiClient<SystemUserPermission> Client { get; set; } = default!;
+}

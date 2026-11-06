@@ -1,0 +1,15 @@
+@page "/MailAttachment"
+@attribute [HydraRequirePermission("MailAttachment", "Select")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>Mail Attachments</PageTitle>
+
+@* Data (byte[]) kolonu MailAttachmentViewDTO'da bilinçli olarak YOK: 20 satırlık bir sayfa
+   yüzlerce MB'lık bir TableDTO'ya dönerdi. Dosyanın kendisi GET api/MailAttachment/Download/{id}
+   ucundan alınır. *@
+
+<GenericListView T="MailAttachment" Client="Client" Title="Mail Attachments" />
+
+@code {
+    [Inject] public ApiClient<MailAttachment> Client { get; set; } = default!;
+}

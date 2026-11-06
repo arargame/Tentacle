@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraTentacle.Blazor", "Sou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.RazorClassLibrary", "..\Hydra.RazorClassLibrary\Hydra.RazorClassLibrary\Hydra.RazorClassLibrary.csproj", "{41998750-6ABF-4598-8AAD-420FCC998135}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.MailManagement", "..\Hydra\Hydra.MailManagement\Hydra.MailManagement.csproj", "{DAA0A644-C83C-4F84-9994-A3226C7A77B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.MailManagement.WebApi", "..\Hydra\Hydra.MailManagement.WebApi\Hydra.MailManagement.WebApi.csproj", "{D6B87970-926D-4C46-8BE2-DA03047F837A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,30 @@ Global
 		{41998750-6ABF-4598-8AAD-420FCC998135}.Release|x64.Build.0 = Release|Any CPU
 		{41998750-6ABF-4598-8AAD-420FCC998135}.Release|x86.ActiveCfg = Release|Any CPU
 		{41998750-6ABF-4598-8AAD-420FCC998135}.Release|x86.Build.0 = Release|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Debug|x64.Build.0 = Debug|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Debug|x86.Build.0 = Debug|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Release|x64.ActiveCfg = Release|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Release|x64.Build.0 = Release|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Release|x86.ActiveCfg = Release|Any CPU
+		{DAA0A644-C83C-4F84-9994-A3226C7A77B5}.Release|x86.Build.0 = Release|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Debug|x64.Build.0 = Debug|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Debug|x86.Build.0 = Debug|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Release|x64.ActiveCfg = Release|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Release|x64.Build.0 = Release|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Release|x86.ActiveCfg = Release|Any CPU
+		{D6B87970-926D-4C46-8BE2-DA03047F837A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,8 @@ using HydraTentacle.Core.Models;
 using Hydra.AccessManagement;
 using Hydra.WebApi.Extensions;
 using Hydra.WebApi.Middlewares;
+using Hydra.MailManagement.Extensions;
+using Hydra.MailManagement.WebApi.Extensions;
 
 namespace HydraTentacle.WebApi
 {
@@ -19,14 +21,33 @@ namespace HydraTentacle.WebApi
             // Add services to the container.
 
             // Register Controllers from Hydra.WebApi
+            //Mail modülünün controller'ları ApplicationPart olarak bağlanıyor: MailController,
+            //MailTemplateController, MailAttachmentController ve BaseObjectMailController bu
+            //projede DEĞİL, Hydra.MailManagement.WebApi içinde yaşıyor. Kopyalanmıyorlar —
+            //modül güncellenince uçlar da güncelleniyor.
             builder.Services.AddControllers()
-                .AddApplicationPart(typeof(MainController<>).Assembly);
+                .AddApplicationPart(typeof(MainController<>).Assembly)
+                .AddHydraMailManagementControllers();
 
             // Add Tentacle Dependencies
             builder.Services.AddTentacleDependencies(builder.Configuration);
             
             // Add Hydra Dependencies Explicitly
-            builder.Services.AddHydraDependencies(builder.Configuration, typeof(HydraTentacle.Core.Models.Request.Request).Assembly);
+            //FluentEmail + SMTP taşıyıcısı ve HydraMailOptions ("MailSettings" bölümü).
+            //
+            //SIRA ÖNEMLİ: bu çağrı MailService/MailTemplateService'i SOMUT tip olarak kaydediyor,
+            //AddHydraDependencies'in attribute taraması da aynı somut tipleri kaydetmeye çalışıyor.
+            //Tarayıcı "zaten kayıtlı mı" diye bakıp atladığı için önce bunu çağırmak tek kayıt,
+            //dolayısıyla scope başına TEK instance bırakır. Ters sırada iki kayıt oluşurdu.
+            builder.Services.AddHydraMailManagement(builder.Configuration);
+
+            //Mail assembly'si de taranmalı: MailService/MailTemplateService [RegisterAsService]
+            //ile işaretli ve IService<Mail> / IService<MailTemplate> kayıtları buradan doğuyor.
+            //MailAttachment ve BaseObjectMail'in özel servisi yok, açık generic Service<> yeter.
+            builder.Services.AddHydraDependencies(
+                builder.Configuration,
+                typeof(HydraTentacle.Core.Models.Request.Request).Assembly,
+                typeof(Hydra.MailManagement.Entities.Mail).Assembly);
 
             builder.Services.AddDbContext<TentacleDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -60,6 +81,14 @@ namespace HydraTentacle.WebApi
 
             // Initialize Databases (Log & Main)
             Hydra.Services.DbInitializer.InitializeAsync<TentacleDbContext>(app.Services, app.Configuration);
+
+            //Controller'ları tarayıp eksik uç izinlerini oluştur. Sistem deny-by-default olduğu
+            //için bir ucu bir role verebilmek, önce o ucu tarif eden Permission kaydının var
+            //olmasına bağlı — bunları elle açmak sürdürülebilir değil. Idempotent: sadece yeni
+            //uçları ekler, mevcut kayıtlara ve rol bağlantılarına dokunmaz.
+            app.SyncHydraPermissions(
+                typeof(HydraTentacle.Core.Models.Request.Request).Assembly,
+                typeof(Hydra.MailManagement.WebApi.Controllers.MailController).Assembly);
 
             // Configure the HTTP request pipeline.
 

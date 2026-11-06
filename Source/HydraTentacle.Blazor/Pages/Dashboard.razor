@@ -7,6 +7,8 @@
 @using HydraTentacle.Core.Models.Request
 @using HydraTentacle.Core.Constants
 @using Hydra.Core.HumanResources
+@using Hydra.MailManagement.Entities
+@using Hydra.MailManagement.Enums
 
 @* Tentacle Dashboard — Stitch tasarımının Blazor'a uyarlanmış hali, GERÇEK veriye bağlı.
    Home/Login ile aynı desen: kendi kabuğunu (sidebar + topbar) içerir, EmptyLayout kullanır ve
@@ -182,6 +184,31 @@
                             <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="OrganizationUnit">
                                 <span class="material-symbols-outlined mr-sm text-lg">account_tree</span>
                                 Organization Units
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Mail Yönetimi -->
+                <div>
+                    <h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Mail Management</h3>
+                    <ul class="space-y-xs list-none p-0 m-0">
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="Mail">
+                                <span class="material-symbols-outlined mr-sm text-lg">mail</span>
+                                Mails
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="MailTemplate">
+                                <span class="material-symbols-outlined mr-sm text-lg">description</span>
+                                Templates
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-sm py-2 rounded text-on-surface hover:text-primary transition-colors font-label-md text-label-md no-underline" href="MailAttachment">
+                                <span class="material-symbols-outlined mr-sm text-lg">attach_file</span>
+                                Attachments
                             </a>
                         </li>
                     </ul>
@@ -413,6 +440,119 @@
                         </div>
                     </section>
 
+                    <!-- Mail Yönetimi -->
+                    <section class="space-y-lg">
+                        <div class="flex items-center justify-between">
+                            <h2 class="font-headline-md text-headline-md text-on-surface m-0">Mail Management</h2>
+                            <div class="flex items-center gap-sm">
+                                <a href="MailTemplate" class="px-sm py-1 border border-outline-variant rounded font-label-sm text-label-sm text-on-surface hover:border-primary transition-colors flex items-center gap-xs no-underline">
+                                    <span class="material-symbols-outlined text-sm">description</span> Templates
+                                </a>
+                                <a href="Mail/Create" class="px-sm py-1 border border-outline-variant rounded font-label-sm text-label-sm text-on-surface hover:border-primary transition-colors flex items-center gap-xs no-underline">
+                                    <span class="material-symbols-outlined text-sm">add</span> New Mail
+                                </a>
+                            </div>
+                        </div>
+
+                        @* Sayaçlar Request kartlarıyla aynı yolu izliyor: filtreli TableDTO ile
+                           tek satır çekip FilteredTotalRecordsCount okunuyor. Failed kartı
+                           kırmızı — bu ekrandaki tek "aksiyon gerektiren" rakam odur. *@
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
+                            <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
+                                <div class="flex justify-between items-start mb-md">
+                                    <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Total Mails</h3>
+                                    <span class="material-symbols-outlined text-primary">mail</span>
+                                </div>
+                                <div class="flex items-end justify-between">
+                                    <span class="font-display-lg text-display-lg text-on-surface">@(TotalMails.ToString("N0"))</span>
+                                </div>
+                            </div>
+                            <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
+                                <div class="flex justify-between items-start mb-md">
+                                    <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Queued</h3>
+                                    <span class="material-symbols-outlined text-primary-fixed-dim">schedule_send</span>
+                                </div>
+                                <div class="flex items-end justify-between">
+                                    <span class="font-display-lg text-display-lg text-on-surface">@(GetMailCount(MailStatus.Queued).ToString("N0"))</span>
+                                </div>
+                            </div>
+                            <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
+                                <div class="flex justify-between items-start mb-md">
+                                    <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Sent</h3>
+                                    <span class="material-symbols-outlined text-on-surface-variant">mark_email_read</span>
+                                </div>
+                                <div class="flex items-end justify-between">
+                                    <span class="font-display-lg text-display-lg text-on-surface">@(GetMailCount(MailStatus.Sent).ToString("N0"))</span>
+                                </div>
+                            </div>
+                            <div class="level-1-card rounded-lg p-lg flex flex-col justify-between">
+                                <div class="flex justify-between items-start mb-md">
+                                    <h3 class="font-label-md text-label-md text-on-surface-variant m-0">Failed</h3>
+                                    <span class="material-symbols-outlined text-error">error</span>
+                                </div>
+                                <div class="flex items-end justify-between">
+                                    <span class="font-display-lg text-display-lg text-on-surface">@(GetMailCount(MailStatus.Failed).ToString("N0"))</span>
+                                    <a href="Mail" class="font-label-sm text-label-sm text-error no-underline hover:underline">Review</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="level-1-card rounded-lg flex flex-col overflow-hidden">
+                            <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+                                <h3 class="font-label-md text-label-md text-on-surface m-0">Recent Mails</h3>
+                                <a href="Mail" class="text-primary hover:text-primary-container text-sm flex items-center gap-xs transition-colors no-underline">
+                                    View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse min-w-[720px]">
+                                    <thead>
+                                        <tr class="border-b border-outline-variant bg-surface-container-lowest/50">
+                                            <th class="p-md font-label-sm text-label-sm text-on-surface-variant w-12"></th>
+                                            <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Subject</th>
+                                            <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">To</th>
+                                            <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Template</th>
+                                            <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Status</th>
+                                            <th class="p-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-outline-variant">
+                                        @if (RecentMails?.Rows is { Count: > 0 } mailRows)
+                                        {
+                                            foreach (var row in mailRows)
+                                            {
+                                                var mailStatus = ParseEnum<MailStatus>(Value(row, "Status"));
+                                                <tr class="hover:bg-surface-container-lowest transition-colors">
+                                                    <td class="p-md text-center">
+                                                        <a class="text-on-surface-variant hover:text-primary transition-colors no-underline" href="@($"Mail/Details/{row.Id}")" title="Details">
+                                                            <span class="material-symbols-outlined text-lg align-middle">visibility</span>
+                                                        </a>
+                                                    </td>
+                                                    <td class="p-md font-body-md text-body-md text-on-surface font-medium">@Value(row, "Subject")</td>
+                                                    <td class="p-md font-label-md text-label-md text-on-surface-variant">@Value(row, "To")</td>
+                                                    <td class="p-md font-label-md text-label-md text-on-surface-variant">@Value(row, "MailTemplate_Code")</td>
+                                                    <td class="p-md">
+                                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border"
+                                                              style="@GetMailStatusPillStyle(mailStatus)">
+                                                            @(mailStatus?.ToString() ?? "\u2014")
+                                                        </span>
+                                                    </td>
+                                                    <td class="p-md font-mono-code text-mono-code text-on-surface-variant">@FormatDate(Value(row, "AddedDate"))</td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="6" class="p-lg text-center text-on-surface-variant font-body-md text-body-md">No mails yet.</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
                     <!-- Son Talepler -->
                     <section class="level-1-card rounded-lg flex flex-col overflow-hidden">
                         <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
@@ -489,6 +629,7 @@
     [Inject] public ApiClient<Request> RequestApi { get; set; } = default!;
     [Inject] public ApiClient<RequestCategory> CategoryApi { get; set; } = default!;
     [Inject] public ApiClient<Employee> EmployeeApi { get; set; } = default!;
+    [Inject] public ApiClient<Mail> MailApi { get; set; } = default!;
 
     private bool IsLoading = true;
     private string _searchText = string.Empty;
@@ -498,6 +639,9 @@
     private readonly Dictionary<RequestPriority, int> PriorityCounts = new();
     private List<CategorySlice> CategoryBreakdown = new();
     private TableDTO? RecentRequests;
+    private int TotalMails;
+    private readonly Dictionary<MailStatus, int> MailStatusCounts = new();
+    private TableDTO? RecentMails;
     private string DonutGradient = "conic-gradient(#1E293B 0deg 360deg)";
 
     private record CategorySlice(string Name, int Count);
@@ -529,6 +673,8 @@
             await LoadCategoryBreakdownAsync();
 
             RecentRequests = await RequestApi.SelectAsync(BuildRecentRequestsTable());
+
+            await LoadMailSummaryAsync();
         }
         finally
         {
@@ -644,6 +790,84 @@
             return;
 
         Navigation.NavigateTo($"Request?Name={Uri.EscapeDataString(_searchText.Trim())}");
+    }
+
+    /// <summary>Mail özeti: toplam + statü kırılımı + son 8 kayıt.
+    ///
+    /// Statü başına ayrı bir sayım çağrısı yapılıyor (5 enum üyesi → 5 istek). Request
+    /// kırılımıyla aynı desen ve aynı kısıt: API'de group-by dönen bir istatistik ucu
+    /// olsaydı tek çağrıya inerdi. Mail modülü henüz yeni olduğu için kayıt sayısı düşük,
+    /// bu maliyet bugün görünmüyor — ama ölçeklenmiyor, not düşüldü.
+    ///
+    /// Mail tabloları henüz oluşmamışsa (migration atılmadıysa) çağrılar hata döner;
+    /// dashboard'un tamamının çökmemesi için bu blok kendi içinde yutuyor, sayaçlar 0 kalır.</summary>
+    private async Task LoadMailSummaryAsync()
+    {
+        try
+        {
+            TotalMails = await SelectMailCountAsync();
+
+            foreach (var status in Enum.GetValues<MailStatus>())
+                MailStatusCounts[status] = await SelectMailCountAsync(status);
+
+            RecentMails = await MailApi.SelectAsync(BuildRecentMailsTable());
+        }
+        catch
+        {
+            TotalMails = 0;
+            MailStatusCounts.Clear();
+            RecentMails = null;
+        }
+    }
+
+    private async Task<int> SelectMailCountAsync(MailStatus? status = null)
+    {
+        var table = new TableDTO("Mail") { PageSize = 1, PageNumber = 1, ViewType = ViewType.ListView };
+
+        if (status != null)
+        {
+            table.AlterOrAddMetaColumn(
+                MetaColumnDTO.CreateColumnDTOWithEqualFilter("Status", null, (int)status.Value, useFilterToCreateViewComponent: false));
+        }
+
+        var result = await MailApi.SelectAsync(table);
+
+        return status != null
+                    ? result?.FilteredTotalRecordsCount ?? 0
+                    : result?.TotalRecordsCount ?? 0;
+    }
+
+    private TableDTO BuildRecentMailsTable()
+    {
+        var table = new TableDTO("Mail") { PageSize = 8, PageNumber = 1, ViewType = ViewType.ListView };
+
+        table.AlterOrAddMetaColumn(
+            MetaColumnDTO.CreateColumnDTOToOrder("AddedDate", null, Hydra.DataModels.SortingDirection.Descending));
+
+        return table;
+    }
+
+    private int GetMailCount(MailStatus status)
+        => MailStatusCounts.TryGetValue(status, out var count) ? count : 0;
+
+    private static string GetMailStatusColor(MailStatus status) => status switch
+    {
+        MailStatus.Draft => "#bbc9cd",      // on-surface-variant
+        MailStatus.Queued => "#2fd9f4",     // primary-fixed-dim
+        MailStatus.Sent => "#8aebff",       // primary
+        MailStatus.Delivered => "#22d3ee",  // primary-container
+        MailStatus.Failed => "#ffb4ab",     // error
+        _ => "#3c494c"
+    };
+
+    private static string GetMailStatusPillStyle(MailStatus? status)
+    {
+        if (status == null)
+            return "color:#bbc9cd; border-color:#3c494c;";
+
+        var color = GetMailStatusColor(status.Value);
+
+        return $"color:{color}; border-color:{color}59; background-color:{color}1a;";
     }
 
     private static object? Value(RowDTO row, string columnName) => row.GetValueByColumnName(columnName);

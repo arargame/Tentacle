@@ -1,4 +1,5 @@
 @page "/Employee/Details/{Id:guid}"
+@attribute [HydraRequirePermission("Employee", "Details")]
 @using Hydra.Core.HumanResources
 
 <PageTitle>Employee Details</PageTitle>

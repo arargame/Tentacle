@@ -1,0 +1,21 @@
+@page "/MailTemplate/Details/{Id:guid}"
+@attribute [HydraRequirePermission("MailTemplate", "Details")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>Mail Template Details</PageTitle>
+
+@* "Bu şablondan hangi mailler üretildi" sekmesi. Şablon silmeye çalışıldığında neden
+   engellendiğini (FK Restrict) gösteren yer de burası. *@
+
+<GenericDetailsView T="MailTemplate" Client="Client" Id="@Id" Title="Mail Template Details">
+    <CollectionViewSection Title="Mails"
+                           Controller="Mail"
+                           ForeignKeyName="MailTemplateId"
+                           ParentId="@Id" />
+</GenericDetailsView>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<MailTemplate> Client { get; set; } = default!;
+}

@@ -1,9 +1,33 @@
 @page "/Role/Details/{Id:guid}"
+@attribute [HydraRequirePermission("Role", "Details")]
 @using Hydra.AccessManagement
 
 <PageTitle>Role Details</PageTitle>
 
-<GenericDetailsView T="Role" Client="Client" Id="@Id" Title="Role Details" />
+@* Çoka-çok ilişkiler burada yönetiliyor. Her CollectionViewSection bir sekme olur
+   (GenericDetailsView, IDetailsTabsHost üzerinden sekmeleri kendisi kurar).
+
+   RightKeyName/RightTableName verildiği için bölüm cross-table modunda: başlıkta "Link"
+   butonu çoklu seçim modalını açar, satırlardaki "Unlink" bağı koparır. Köprü kaydı elle
+   form doldurarak açılmaz — GedenLines'taki Link/Unlink kalıbının Hydra karşılığı. *@
+
+<GenericDetailsView T="Role" Client="Client" Id="@Id" Title="Role Details">
+    <CollectionViewSection Title="Permissions"
+                           Controller="RolePermission"
+                           ForeignKeyName="RoleId"
+                           ParentId="@Id"
+                           RightKeyName="PermissionId"
+                           RightTableName="Permission"
+                           RightDisplayColumn="Name" />
+
+    <CollectionViewSection Title="Users"
+                           Controller="RoleSystemUser"
+                           ForeignKeyName="RoleId"
+                           ParentId="@Id"
+                           RightKeyName="UserId"
+                           RightTableName="SystemUser"
+                           RightDisplayColumn="Email" />
+</GenericDetailsView>
 
 @code {
     [Parameter] public Guid Id { get; set; }

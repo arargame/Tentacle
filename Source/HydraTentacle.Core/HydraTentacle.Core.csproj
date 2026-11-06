@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Hydra\Hydra.csproj" />
+    <!-- Mail modülü: Mail/MailTemplate/MailAttachment/BaseObjectMail entity'leri
+         TentacleDbContext içinde DbSet olarak yaşıyor. -->
+    <ProjectReference Include="..\..\..\Hydra\Hydra.MailManagement\Hydra.MailManagement.csproj" />
   </ItemGroup>
 
   <ItemGroup>

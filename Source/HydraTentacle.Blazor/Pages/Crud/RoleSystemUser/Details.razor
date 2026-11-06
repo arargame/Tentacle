@@ -1,0 +1,13 @@
+@page "/RoleSystemUser/Details/{Id:guid}"
+@attribute [HydraRequirePermission("RoleSystemUser", "Details")]
+@using Hydra.AccessManagement
+
+<PageTitle>Role Member Details</PageTitle>
+
+<GenericDetailsView T="RoleSystemUser" Client="Client" Id="@Id" Title="Role Member Details" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<RoleSystemUser> Client { get; set; } = default!;
+}

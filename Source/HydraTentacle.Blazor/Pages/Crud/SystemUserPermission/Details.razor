@@ -1,0 +1,13 @@
+@page "/SystemUserPermission/Details/{Id:guid}"
+@attribute [HydraRequirePermission("SystemUserPermission", "Details")]
+@using Hydra.AccessManagement
+
+<PageTitle>Direct User Permission Details</PageTitle>
+
+<GenericDetailsView T="SystemUserPermission" Client="Client" Id="@Id" Title="Direct User Permission Details" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<SystemUserPermission> Client { get; set; } = default!;
+}

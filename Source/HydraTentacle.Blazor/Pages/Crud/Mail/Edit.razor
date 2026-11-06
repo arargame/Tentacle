@@ -1,0 +1,13 @@
+@page "/Mail/Update/{Id:guid}"
+@attribute [HydraRequirePermission("Mail", "Update")]
+@using Hydra.MailManagement.Entities
+
+<PageTitle>Edit Mail</PageTitle>
+
+<GenericEditView T="Mail" Client="Client" Id="@Id" Title="Edit Mail" />
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [Inject] public ApiClient<Mail> Client { get; set; } = default!;
+}

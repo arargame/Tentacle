@@ -1,0 +1,11 @@
+@page "/RolePermission/Create"
+@attribute [HydraRequirePermission("RolePermission", "Create")]
+@using Hydra.AccessManagement
+
+<PageTitle>New Role Permission</PageTitle>
+
+<GenericCreateView T="RolePermission" Client="Client" Title="New Role Permission" />
+
+@code {
+    [Inject] public ApiClient<RolePermission> Client { get; set; } = default!;
+}

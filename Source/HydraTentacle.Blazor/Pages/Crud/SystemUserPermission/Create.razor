@@ -1,0 +1,11 @@
+@page "/SystemUserPermission/Create"
+@attribute [HydraRequirePermission("SystemUserPermission", "Create")]
+@using Hydra.AccessManagement
+
+<PageTitle>New Direct User Permission</PageTitle>
+
+<GenericCreateView T="SystemUserPermission" Client="Client" Title="New Direct User Permission" />
+
+@code {
+    [Inject] public ApiClient<SystemUserPermission> Client { get; set; } = default!;
+}
