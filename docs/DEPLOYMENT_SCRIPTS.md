@@ -39,7 +39,21 @@ Bu doküman, `Tentacle/Deploy/` dizininde yer alan `.bat` scriptlerinin işlevle
 
 ---
 
-### 4. `3_Update_Database.bat` (EF Core Veri Tabanı Güncelleyici)
+### 4. `Quick_Restart.bat` (Hızlı Yeniden Başlatıcı — Artımlı Derleme)
+- **Amaç:** Geliştirme esnasında yapılan kod değişikliklerini 3-4 saniyede devreye almak.
+- **Farkı:** `0_Run_All.bat` gibi zaman alan `dotnet restore` (paket taraması) yapmaz. Sadece değişen dosyaları (`--no-restore`) derleyip servisleri derlemesiz başlatır.
+- **Kullanım:** Kod değişikliğinden sonra sıfırdan beklemek istemediğinizde doğrudan çalıştırın.
+
+---
+
+### 5. `Watch_All.bat` (Canlı Geliştirme — Hot Reload Modu)
+- **Amaç:** Her değişiklikte BAT dosyasını tekrar tekrar çalıştırma zorunluluğunu tamamen ortadan kaldırır.
+- **Nasıl Çalışır:** WebApi ve Blazor'ı `dotnet watch` ile başlatır.
+- **Avantajı:** Siz veya yapay zeka bir `.razor` veya `.cs` dosyasını kaydettiği anda değişiklik arka planda otomatik algılanır ve Hot Reload ile 1 saniyede ekrana yansır.
+
+---
+
+### 6. `3_Update_Database.bat` (EF Core Veri Tabanı Güncelleyici)
 - **Amaç:** Entity Framework Core migration değişikliklerini veri tabanına uygulamak.
 - **Çalıştırılan Komut:**
   ```cmd
