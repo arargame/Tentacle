@@ -24,15 +24,15 @@ namespace HydraTentacle.Core.DTOs
                 attributeToFilter: new AttributeToFilter(nameof(ContainsFilter))
             );
 
+            SetConfigurationsViaBooleanPropertyInfo(
+                propertyInfo: ReflectionHelper.GetPropertyOf<RequestCategoryDTO>(x => x.IsAssignable),
+                displayName: "Assignable"
+            );
+
             SetConfigurationsViaStringPropertyInfo(
                 propertyInfo: ReflectionHelper.GetPropertyOf<RequestCategoryDTO>(x => x.Description),
                 displayName: "Description",
                 htmlElementTypeInCreationAndEdit: HtmlElementType.TextArea
-            );
-
-            SetConfigurationsViaBooleanPropertyInfo(
-                propertyInfo: ReflectionHelper.GetPropertyOf<RequestCategoryDTO>(x => x.IsAssignable),
-                displayName: "Assignable"
             );
 
             SetConfigurationsForBaseObjectMembers(x => x.ModifiedDate);

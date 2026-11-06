@@ -28,17 +28,17 @@ namespace HydraTentacle.Core.DTOs
                 attributeToFilter: new AttributeToFilter(nameof(ContainsFilter))
             );
 
-            SetConfigurationsViaStringPropertyInfo(
-                propertyInfo: ReflectionHelper.GetPropertyOf<EmployeeDTO>(x => x.Description),
-                displayName: "Description",
-                htmlElementTypeInCreationAndEdit: HtmlElementType.TextArea
-            );
-
             SetConfigurationsForNavigations(
                 leftTableKeyName: "PositionId",
                 rightTableName: "Position",
                 columnNameToDisplay: "Name",
                 displayName: "Position"
+            );
+
+            SetConfigurationsViaStringPropertyInfo(
+                propertyInfo: ReflectionHelper.GetPropertyOf<EmployeeDTO>(x => x.Description),
+                displayName: "Description",
+                htmlElementTypeInCreationAndEdit: HtmlElementType.TextArea
             );
 
             SetConfigurationsForBaseObjectMembers();

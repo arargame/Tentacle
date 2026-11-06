@@ -13,13 +13,13 @@ set "BLAZOR=%ROOT_DIR%\Source\HydraTentacle.Blazor\HydraTentacle.Blazor.csproj"
 echo Onceki calisan ornekler sonlandiriliyor...
 taskkill /F /IM HydraTentacle.Blazor.exe 2>nul
 taskkill /F /IM HydraTentacle.WebApi.exe 2>nul
-timeout /t 1 /nobreak >nul
+ping -n 2 127.0.0.1 >nul
 
 echo.
 echo WebApi Hot Reload modunda baslatiliyor...
 start "HydraTentacle - WebApi (Watch)" cmd /k "dotnet watch --project \"%WEBAPI%\" run --launch-profile \"http\""
 
-timeout /t 3 /nobreak >nul
+ping -n 3 127.0.0.1 >nul
 
 echo Blazor UI Hot Reload modunda baslatiliyor...
 start "HydraTentacle - Blazor UI (Watch)" cmd /k "dotnet watch --project \"%BLAZOR%\" run --launch-profile \"http\""

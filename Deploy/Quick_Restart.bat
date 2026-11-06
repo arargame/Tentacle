@@ -12,7 +12,7 @@ set "SLN=%ROOT_DIR%\HydraTentacle.sln"
 echo [1/3] Onceki calisan ornekler sonlandiriliyor...
 taskkill /F /IM HydraTentacle.Blazor.exe 2>nul
 taskkill /F /IM HydraTentacle.WebApi.exe 2>nul
-timeout /t 1 /nobreak >nul
+ping -n 2 127.0.0.1 >nul
 
 echo.
 echo [2/3] Sadece degisen dosyalar derleniyor (Restore atlandi)...
@@ -27,7 +27,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo.
 echo [3/3] Servisler derlemesiz hizlica baslatiliyor...
 start "HydraTentacle - WebApi" "%~dp01_Run_WebApi.bat" --no-build
-timeout /t 2 /nobreak >nul
+ping -n 3 127.0.0.1 >nul
 start "HydraTentacle - Blazor UI" "%~dp02_Run_Blazor.bat" --no-build
 
 echo.
