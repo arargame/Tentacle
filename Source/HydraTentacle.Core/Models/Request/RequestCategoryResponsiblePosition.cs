@@ -11,12 +11,12 @@ namespace HydraTentacle.Core.Models.Request
         public Guid RequestCategoryId { get; set; }
         
         [ForeignKey("RequestCategoryId")]
-        public RequestCategory RequestCategory { get; set; } = null!;
+        public RequestCategory? RequestCategory { get; set; }
 
         [Required]
         public Guid PositionId { get; set; }
         
         [ForeignKey("PositionId")]
-        public Position Position { get; set; } = null!;
+        public Position? Position { get; set; }
     }
 }

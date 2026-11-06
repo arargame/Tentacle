@@ -13,12 +13,12 @@ namespace HydraTentacle.Core.Models.Request
         public Guid RequestCategoryId { get; set; }
         
         [ForeignKey("RequestCategoryId")]
-        public RequestCategory RequestCategory { get; set; } = null!;
+        public RequestCategory? RequestCategory { get; set; }
 
         public Guid CreatedByEmployeeId { get; set; }
         
         [ForeignKey("CreatedByEmployeeId")]
-        public Employee CreatedByEmployee { get; set; } = null!;
+        public Employee? CreatedByEmployee { get; set; }
 
         // Owner/Assignee
         public Guid? OwnerEmployeeId { get; set; }

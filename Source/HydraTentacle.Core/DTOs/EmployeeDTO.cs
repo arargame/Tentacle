@@ -34,11 +34,6 @@ namespace HydraTentacle.Core.DTOs
                 htmlElementTypeInCreationAndEdit: HtmlElementType.TextArea
             );
 
-            SetConfigurationsViaBooleanPropertyInfo(
-                propertyInfo: ReflectionHelper.GetPropertyOf<EmployeeDTO>(x => x.IsActiveEmployee),
-                displayName: "Active"
-            );
-
             SetConfigurationsForNavigations(
                 leftTableKeyName: "PositionId",
                 rightTableName: "Position",
