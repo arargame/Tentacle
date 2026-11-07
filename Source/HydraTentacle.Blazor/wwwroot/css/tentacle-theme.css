@@ -1052,18 +1052,99 @@ input:-webkit-autofill:active {
 }
 
 .hydra-details__pair-label {
-    color: var(--tnt-text-muted);
-    font-size: 0.8125rem;
-    font-weight: 500;
+    color: #859397;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
 }
 
 .hydra-details__pair-value {
-    color: var(--tnt-text);
+    color: #f1f5f9;
     font-size: 0.9375rem;
     font-weight: 500;
+    min-height: 1.5rem;
+    display: flex;
+    align-items: center;
 }
 
-.hydra-details__link { color: var(--tnt-cyan-soft); }
+.hydra-details__datetime {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.25rem 0.65rem;
+    background: rgba(34, 211, 238, 0.08);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    border-radius: 4px;
+    color: var(--tnt-cyan);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.hydra-details__datetime:hover {
+    background: rgba(34, 211, 238, 0.15);
+    border-color: var(--tnt-cyan);
+}
+
+.hydra-details__id-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid var(--tnt-card-border);
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.8125rem;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.hydra-details__id-pill:hover {
+    background: rgba(34, 211, 238, 0.1);
+    color: var(--tnt-cyan);
+    border-color: var(--tnt-cyan);
+}
+
+.hydra-details__bool {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+.hydra-details__bool--true {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.hydra-details__bool--false {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.hydra-details__link {
+    color: var(--tnt-cyan);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: all 0.15s ease;
+}
+.hydra-details__link:hover {
+    color: var(--tnt-cyan-soft);
+    text-decoration: underline;
+}
+
+.hydra-collection--hidden {
+    display: none !important;
+}
 
 /* --------------------------------------------------------- Sekmeler (Tabs) */
 
