@@ -96,8 +96,13 @@ GedenLines'ın `ResponseComponent` ve `CustomValidationMessageComponent` bileşe
    Kullanıcı formu kaydetmeye çalıştığında boş bırakılan zorunlu alanlar kırmızı çerçeveye alınır. Kullanıcı o alana bir karakter yazdığı anda `_fieldErrors.Remove(field.Name)` tetiklenir ve kırmızı çerçeve anında kaybolur.
 2. **Kapatılabilir Bildirim Banner'ları (Dismissable Alerts):**
    Oluşan hata veya başarı mesajları için sağ üst köşede kapatma `(X)` butonu bulunur; kullanıcı bildirimi okuduktan sonra kapatabilir.
-3. **Esnek Yönlendirme (`StayOnPageAfterSave`):**
-   Varsayılan olarak kayıttan sonra liste sayfasına dönülür (`/{BasePath}`). Ancak `StayOnPageAfterSave="true"` verilirse sayfada kalınır ve yeşil renkli başarı bildirimi (`Changes saved successfully.`) gösterilir.
+3. **Kutlama Ekranı ve Zengin Aksiyonlar (Celebration Screen & Post-Save Actions):**
+   Kayıt başarıyla oluşturulduğunda kullanıcıyı aniden listeden dışarı atmak yerine, yeşil renkli animasyonlu bir **Kutlama Kartı** karşılar:
+   - **"View Details" (Detayına Git):** Yeni oluşturulan kaydın detay sayfasına (`/{BasePath}/Details/{Id}`) tek tıkla geçiş sağlar.
+   - **"Back to List" (Listeye Dön):** Liste görünümüne anında döner.
+   - **"Create Another" (Yeni Ekle):** Formu temizleyip sıfırlayarak peş peşe hızlı veri girişi imkanı sunar.
+   - **"Continue Editing" (Düzenlemeye Devam Et):** Edit modunda değişiklik sonrası formda kalıp düzenlemeye devam etmeyi sağlar.
+   - **Otomatik Geri Sayım (Smart Auto-Redirect):** 5 saniyelik görsel geri sayım rozeti ("Redirecting to list in 5s... click to cancel") gösterilir; kullanıcı hiçbir şeye basmasa bile süre dolunca liste ekranına pürüzsüz yönlendirilir. İsterse rozete tıklayarak geri sayımı durdurup ekranda kalabilir.
 4. **Çift Tıklama Koruması (Debounce & Double-Submit Prevention):**
    `IsSaving` bayrağı true olduğu anda buton devre dışı kalır ve animasyonlu spinner belirir; mükerrer ağ istekleri engellenir.
 
