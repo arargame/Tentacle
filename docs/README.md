@@ -74,6 +74,7 @@ Sistemi en hızlı şekilde ayağa kaldırmak için `Deploy/` klasöründeki scr
 | [adding-a-new-object.md](adding-a-new-object.md) | **Yeni bir obje (entity) ekleme adımları** — entity'den şemaya, controller'dan Blazor ekranına, menüden izne kadar uçtan uca kontrol listesi. Örnek: `Hydra.MailManagement` (Mail / MailTemplate / MailAttachment) entegrasyonu. |
 | [login-to-dashboard-flow.md](login-to-dashboard-flow.md) | Login → JWT → Dashboard akışı ve Tentacle tarafındaki bağlantı adımları. |
 | [DEPLOYMENT_SCRIPTS.md](DEPLOYMENT_SCRIPTS.md) | `Deploy/` altındaki başlatma ve dağıtım scriptleri. |
+| [hydra-architecture-evaluation-cqrs-and-event-driven-roadmap.md](hydra-architecture-evaluation-cqrs-and-event-driven-roadmap.md) | **Hydra & Tentacle Mimari Değerlendirmesi** — Metadata Engine avantaj/dezavantajları, CQRS fizibilitesi (YAGNI analizi) ve In-Process Domain Events (Olay Güdümlü Mimari) yol haritası. |
 
 ---
 
